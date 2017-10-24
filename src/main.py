@@ -1,5 +1,14 @@
 # -*- coding: utf-8 -*-
+#!/usr/bin/python
+# actuellement lance via `python ./main.py -if '../sql-file/film.sql'`
 import re
+import json
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-if','--inputFile', help='SQL file schema to generate data')
+parser.add_argument('-of','--outputFile', help='json file which resume the schema')
+args = parser.parse_args()
 
 class DataGenerator:
 	def __init__(self, inputFile, outputFile):
@@ -8,14 +17,17 @@ class DataGenerator:
 		self.request = ''
 		self.createRequest = {}
 		self.dataSchema = {}
+		self.data = {}
 
 	def launch(self):
-		self.readFile()
+		self.readFileSql(self.inputFile)
 		self.extractCreateRequests(self.request)
+		self.generateJson(self.outputFile, self.dataSchema)
+		# print(self.dataSchema)
 
-	def readFile(self):
+	def readFileSql(self, inputFile):
 		try:
-			with open(self.inputFile, 'r') as file:
+			with open(inputFile, 'r') as file:
 				for line in file:
 					self.request += line 
 					# WIP
@@ -31,27 +43,61 @@ class DataGenerator:
 			exit(3)
 
 	def extractCreateRequests(self, request):
-		# pattern = r'(CREATE TABLE (nom de la table) (un truc qui prend tout ce qu\'il y a avant le ";"); truc de merde ne comprenant pas de CREATE TABLE )+ '
-		pattern = r'CREATE TABLE ([a-z]+) \((.+)\);'
-		match = re.findall(pattern, request)
-		for num, name in enumerate(match):
-			self.saveSchema(name[0], name[1])
-			print(num, name)
-		# print (match)
+		tablePattern = r'CREATE TABLE ([a-z]+) \((.+)\);'
+		tableMatch = re.findall(tablePattern, request)
+		for table in tableMatch:
+			tableName = table[0]
+			tableRequest = table[1]
+			self.dataSchema[tableName] = {}
+			self.dataSchema[tableName]['column'] = {}
+			columnMatch = tableRequest.split(",")
+			self.dataSchema[tableName]['column'] = self.extractColumns(columnMatch)
+			# print(num, name)
 
-	def saveSchema(self, tableName, createRequest):
-		self.dataSchema.tableName = {}
-		self.dataSchema.tableName.name = tableName
-		self.dataSchema.tableName.request = createRequest
-		# separer les colonnes puis itérer
+	def extractColumns(self, columnTable):
+		# WIP
+		columnPattern = r'(\S+) (\S+) ?\(?(\d+)?\)? (.*)'
+		columnData = {}
+		for column in columnTable:
+			match = re.findall(columnPattern, column)
+			if match:
+				columName = match[0][0]
+				columnData[columName] = {}
+				if (columName.lower().strip().find('primary') != -1):
+					patternPrimaryKey = r'primary key ?\((.+)\)'
+					matchPrimaryColumn = re.findall(patternPrimaryKey, column.lower())
+					primaryKeys = matchPrimaryColumn[0].split(",")
+					print(columnData)
+					for key in primaryKeys:
+						if (not columnData.has_key(key)):
+							columnData[key] = {}
+						columnData[key]['primary'] = True
+				else:
+					columnType = match[0][1]
+					columnData[columName]['name'] = columName
+					columnData[columName]['type'] = columnType if columnType else None
+					columnData[columName]['nullable'] = (column.lower().find('not null') != -1)
+					try:
+						columnData[columName]['size'] = int(match[0][2])
+					except Exception as e:
+						columnData[columName]['size'] = None
+					
+		return columnData
 
-		print('fuck')
-
-	def saveColumn(self, columnRequest)
-		print('fuck')
+	def generateJson(self, outputFile, data):
+		try:
+			with open(outputFile, 'w') as file:
+				file.write(json.dumps(data, indent=2))
+		except Exception as e:
+			print('Erreur lors de la creation du fichier')
+			print(e)
+			exit(1)
 
 if __name__ == '__main__':
-	launcher = DataGenerator('../sql-file/film.sql', './data-schema.json')
-	launcher.launch();
-
-# launcher = DataGenerator('../sql-file/film.sql', './data-schema.json')
+	if (not args.inputFile):
+		parser.print_help()
+	else:
+		# verifier qu'il existe
+		outputFile = args.outputFile if args.outputFile else './data-schema.json'
+		launcher = DataGenerator(args.inputFile, outputFile)
+		launcher.launch()
