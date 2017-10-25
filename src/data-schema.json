@@ -1,0 +1,79 @@
+{
+  "films": {
+    "numberToCreate": 10, 
+    "columns": {
+      "Titre": {
+        "size": 255, 
+        "type": "VARCHAR", 
+        "name": "Titre", 
+        "nullable": true
+      }, 
+      "Realisateur": {
+        "size": 255, 
+        "type": "VARCHAR", 
+        "name": "Realisateur", 
+        "nullable": true
+      }, 
+      "idfilm": {
+        "primary": true
+      }, 
+      "PRIMARY": {}, 
+      "idFilm": {
+        "size": null, 
+        "type": "INT", 
+        "name": "idFilm", 
+        "nullable": true
+      }
+    }
+  }, 
+  "role": {
+    "numberToCreate": 10, 
+    "columns": {
+      "Personnage": {
+        "size": null, 
+        "type": "VARCHAR", 
+        "name": "Personnage", 
+        "nullable": false
+      }, 
+      "idFilm": {
+        "size": null, 
+        "type": "INT", 
+        "name": "idFilm", 
+        "nullable": true
+      }, 
+      "idActeur": {
+        "size": null, 
+        "type": "INT", 
+        "name": "idActeur", 
+        "nullable": true
+      }
+    }
+  }, 
+  "acteurs": {
+    "numberToCreate": 10, 
+    "columns": {
+      "Nom": {
+        "size": 255, 
+        "type": "VARCHAR", 
+        "name": "Nom", 
+        "nullable": true
+      }, 
+      "idacteur": {
+        "primary": true
+      }, 
+      "PRIMARY": {}, 
+      "Prenom": {
+        "size": 255, 
+        "type": "VARCHAR", 
+        "name": "Prenom", 
+        "nullable": true
+      }, 
+      "idActeur": {
+        "size": null, 
+        "type": "INT", 
+        "name": "idActeur", 
+        "nullable": true
+      }
+    }
+  }
+}
