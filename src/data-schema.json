@@ -36,6 +36,7 @@
         "size": null, 
         "type": "INT", 
         "name": "id", 
+        "primary": true, 
         "nullable": true
       }
     }
@@ -47,11 +48,12 @@
         "size": null, 
         "type": "INT", 
         "name": "id", 
+        "primary": true, 
         "nullable": true
       }, 
       "name": {
-        "size": null, 
-        "type": "VARCHAR(255)", 
+        "size": 255, 
+        "type": "VARCHAR", 
         "name": "name", 
         "nullable": true
       }
@@ -64,11 +66,12 @@
         "size": null, 
         "type": "INT", 
         "name": "id", 
+        "primary": true, 
         "nullable": true
       }, 
       "name": {
-        "size": null, 
-        "type": "VARCHAR(255)", 
+        "size": 255, 
+        "type": "VARCHAR", 
         "name": "name", 
         "nullable": true
       }
@@ -84,20 +87,20 @@
         "nullable": false
       }, 
       "main_variant": {
-        "size": null, 
-        "type": "TINYINT(1)", 
+        "size": 1, 
+        "type": "TINYINT", 
         "name": "main_variant", 
         "nullable": false
       }, 
       "author": {
-        "size": null, 
-        "type": "VARCHAR(255)", 
+        "size": 255, 
+        "type": "VARCHAR", 
         "name": "author", 
         "nullable": true
       }, 
       "visible": {
-        "size": null, 
-        "type": "TINYINT(1)", 
+        "size": 1, 
+        "type": "TINYINT", 
         "name": "visible", 
         "nullable": false
       }, 
@@ -111,6 +114,7 @@
         "size": null, 
         "type": "INT", 
         "name": "id", 
+        "primary": true, 
         "nullable": true
       }
     }
@@ -118,29 +122,30 @@
   "step": {
     "numberToCreate": 10, 
     "columns": {
-      "text": {
-        "size": null, 
-        "type": "VARCHAR(255)", 
-        "name": "text", 
-        "nullable": false
-      }, 
       "picture": {
         "size": null, 
         "type": "LONGTEXT", 
         "name": "picture", 
         "nullable": false
       }, 
-      "id": {
-        "size": null, 
-        "type": "INT", 
-        "name": "id", 
-        "nullable": true
+      "text": {
+        "size": 255, 
+        "type": "VARCHAR", 
+        "name": "text", 
+        "nullable": false
       }, 
       "variant_id": {
         "size": null, 
         "type": "INT", 
         "name": "variant_id", 
         "nullable": false
+      }, 
+      "id": {
+        "size": null, 
+        "type": "INT", 
+        "name": "id", 
+        "primary": true, 
+        "nullable": true
       }
     }
   }, 
@@ -148,8 +153,8 @@
     "numberToCreate": 10, 
     "columns": {
       "symbol": {
-        "size": null, 
-        "type": "VARCHAR(255)", 
+        "size": 255, 
+        "type": "VARCHAR", 
         "name": "symbol", 
         "nullable": true
       }, 
@@ -157,11 +162,12 @@
         "size": null, 
         "type": "INT", 
         "name": "id", 
+        "primary": true, 
         "nullable": true
       }, 
       "name": {
-        "size": null, 
-        "type": "VARCHAR(255)", 
+        "size": 255, 
+        "type": "VARCHAR", 
         "name": "name", 
         "nullable": true
       }
@@ -174,11 +180,12 @@
         "size": null, 
         "type": "INT", 
         "name": "id", 
+        "primary": true, 
         "nullable": true
       }, 
       "name": {
-        "size": null, 
-        "type": "VARCHAR(255)", 
+        "size": 255, 
+        "type": "VARCHAR", 
         "name": "name", 
         "nullable": true
       }

@@ -30,14 +30,13 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-if','--inputFile', help = 'SQL file schema to generate data')
 parser.add_argument('-of','--outputFile', help = 'json file which resume the schema')
 parser.add_argument('-jf','--jsonFile', help = 'json file which resume the schema to generate data')
-parser.add_argument('-y','--yes', help = 'permit to ignore the json verification and use deffault value')
+parser.add_argument('-y','--yes', help = 'permit to ignore the json verification and use default value')
 args = parser.parse_args()
 
 class DataGenerator:
-	def __init__(self, inputFile = None, jsonFile = None, outputFile = None, type = 'csv'):
+	def __init__(self, inputFile = None, jsonFile = None, type = 'csv'):
 		self.inputFile = inputFile
 		self.jsonFile = jsonFile
-		self.outputFile = outputFile
 		self.request = ''
 		self.createRequest = {}
 		self.dataSchema = {}
@@ -47,14 +46,16 @@ class DataGenerator:
 		if (self.jsonFile):
 			self.dataSchema = self.readJsonFile(self.jsonFile)
 			self.data = self.generateDatas(self.dataSchema)
-			self.generateJsonFile('data.json', self.data)
+			# self.generateJsonFile('data.json', self.data)
+			return self.data
 		elif (self.inputFile):
 			self.request = self.readFileSql(self.inputFile)
 			self.dataSchema = self.extractCreateRequests(self.request)
+			return self.dataSchema
 			if (not self.dataSchema):
 				print ('fichier impossible a parser, verifier qu\'il sagit bien d\'un fichier sql en entree')
-			else:
-				self.generateJsonFile(self.outputFile, self.dataSchema)
+			# else:
+				# self.generateJsonFile(self.outputFile, self.dataSchema)
 
 	def readFileSql(self, inputFile):
 		totalRequest = ''
@@ -96,13 +97,11 @@ class DataGenerator:
 			data[tableName]['columns'] = {}
 			data[tableName]['numberToCreate'] = 10
 			columnMatch = tableRequest.split(",")
-			data[tableName]['columns'] = self.extractColumns(columnMatch)
+			data[tableName]['columns'] = self.extractColumnsFromCreateRequest(columnMatch)
 		return data
 
-	def extractColumns(self, columnTable):
-		# todo a revoir, non fonctionnel pour cuisine, pas d'espace entre type et size
-		# columnPattern = r'(\S+) (\S+) ?\(?(\d+)?\)? ?(.*)'
-		columnPattern = r'(\S+) (\S+) ?\(?(\d+)?\)? (.*)' #fonctionne pour film
+	def extractColumnsFromCreateRequest(self, columnTable):
+		columnPattern = r'(\S+) ([^ (]+)(?: ?\(([^)]+)\))? ?(.+)?'
 		columnData = {}
 		for column in columnTable:
 			match = re.findall(columnPattern, column)
@@ -110,6 +109,7 @@ class DataGenerator:
 				columName = match[0][0]
 				columnData[columName] = {} if (not columnData.has_key(columName)) else columnData[columName]
 				if (columName.lower().strip().find('primary') != -1):
+					del columnData[columName]
 					patternPrimaryKey = r'PRIMARY KEY ?\((.+)\)'
 					matchPrimaryColumn = re.findall(patternPrimaryKey, column)
 					if(len(matchPrimaryColumn) > 0):
@@ -139,42 +139,22 @@ class DataGenerator:
 		return columnData
 
 	def generateDatas(self, dataSchema):
-		# print(dataSchema)
 		data = {}
 		for tableName in dataSchema:
-			# pass
 			data[tableName] = []
 			numberOfRow = dataSchema[tableName]['numberToCreate']
 			for i in range(numberOfRow):
 				data[tableName].append(self.generateNewRow(dataSchema[tableName]['columns'], numberOfRow))
-				# print(i)
-			# print(dataSchema[tableName])
-		# print('-----------------------')
-		# print(data)
 		return data
-
-	def generateJsonFile(self, outputFile, data):
-		try:
-			with open(outputFile, 'w') as file:
-				file.write(json.dumps(data, indent=2))
-		except Exception as e:
-			print('Erreur lors de la creation du fichier')
-			print(e)
-			exit(1)
 
 	def generateNewRow(self, columns, numberOfRow):
 		newRow = {}
 		for column in columns:
-			# print column
-			if (column.strip().lower().find('primary') == -1):
-				newRow[column] = self.generateDataColumn(columns[column], numberOfRow)
-		# print(newRow)
-		# print('--------------')
+			newRow[column] = self.generateDataColumn(columns[column], numberOfRow)
 		return newRow
 
 	def generateDataColumn(self, column, numberOfRow):
 		generatedData = None
-		# print(column)
 		if (column.has_key('type')):
 			if column['type'].strip().lower() == 'varchar':
 				generatedData = fake.sentence()
@@ -208,17 +188,51 @@ class DataGenerator:
 				generatedData = fake.catch_phrase_verb()
 			elif column['type'].strip().lower() == 'company':
 				generatedData = fake.company()
+			else:
+				generatedData = None
 		return generatedData
+
+class FileCreator:
+	def __init__(self, outputFile = None, extension = 'json', data = {}, dataType = None):
+		self.extensionFile = extension
+		self.data = data
+		if (not outputFile):
+			if (not dataType):
+				self.outputFile = 'default-output-file.txt'
+			else:
+				self.outputFile = 'default-output-file.' + dataType
+		else:
+			self.outputFile = outputFile
+		self.launch()
+
+	def launch(self):
+		self.chooseFormat(self.extensionFile)
+
+	def chooseFormat(self, extension = None):
+		if (extension == 'csv'):
+			pass
+		else:
+			self.generateJsonFile(self.data, self.outputFile)
+
+	def generateJsonFile(self, data, outputFile):
+		try:
+			with open(outputFile, 'w') as file:
+				file.write(json.dumps(data, indent=2))
+		except Exception as e:
+			print('Erreur lors de la creation du fichier')
+			print(e)
+			exit(1)
 
 if __name__ == '__main__':
 	if (args.jsonFile):
-		outputFile = args.outputFile if args.outputFile else './data-schema.json'
-		launcher = DataGenerator(jsonFile = args.jsonFile, outputFile = outputFile)
-		launcher.launch()
+		outputFile = args.outputFile if args.outputFile else './data.json'
+		launcher = DataGenerator(jsonFile = args.jsonFile)
+		data = launcher.launch()
+		maker = FileCreator(data = data, outputFile = outputFile)
 	elif (args.inputFile):
 		outputFile = args.outputFile if args.outputFile else './data-schema.json'
-		launcher = DataGenerator(inputFile = args.inputFile, outputFile = outputFile)
-		launcher.launch()
+		launcher = DataGenerator(inputFile = args.inputFile)
+		dataSchema = launcher.launch()
+		maker = FileCreator(data = dataSchema, outputFile = outputFile)
 	else:
 		parser.print_help()
-		# verifier qu'il existe
