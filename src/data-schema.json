@@ -1,77 +1,185 @@
 {
-  "films": {
+  "grade": {
     "numberToCreate": 10, 
     "columns": {
-      "Titre": {
-        "size": 255, 
-        "type": "VARCHAR", 
-        "name": "Titre", 
-        "nullable": true
-      }, 
-      "Realisateur": {
-        "size": 255, 
-        "type": "VARCHAR", 
-        "name": "Realisateur", 
-        "nullable": true
-      }, 
-      "idfilm": {
-        "primary": true
-      }, 
-      "PRIMARY": {}, 
-      "idFilm": {
+      "comment": {
         "size": null, 
-        "type": "INT", 
-        "name": "idFilm", 
-        "nullable": true
-      }
-    }
-  }, 
-  "role": {
-    "numberToCreate": 10, 
-    "columns": {
-      "Personnage": {
-        "size": null, 
-        "type": "VARCHAR", 
-        "name": "Personnage", 
+        "type": "LONGTEXT", 
+        "name": "comment", 
         "nullable": false
       }, 
-      "idFilm": {
+      "type_id": {
         "size": null, 
         "type": "INT", 
-        "name": "idFilm", 
+        "name": "type_id", 
         "nullable": true
       }, 
-      "idActeur": {
+      "unit_id": {
         "size": null, 
         "type": "INT", 
-        "name": "idActeur", 
+        "name": "unit_id", 
+        "nullable": false
+      }, 
+      "value": {
+        "size": null, 
+        "type": "INT", 
+        "name": "value", 
+        "nullable": false
+      }, 
+      "variant_id": {
+        "size": null, 
+        "type": "INT", 
+        "name": "variant_id", 
+        "nullable": true
+      }, 
+      "id": {
+        "size": null, 
+        "type": "INT", 
+        "name": "id", 
         "nullable": true
       }
     }
   }, 
-  "acteurs": {
+  "recipe": {
     "numberToCreate": 10, 
     "columns": {
-      "Nom": {
-        "size": 255, 
-        "type": "VARCHAR", 
-        "name": "Nom", 
-        "nullable": true
-      }, 
-      "idacteur": {
-        "primary": true
-      }, 
-      "PRIMARY": {}, 
-      "Prenom": {
-        "size": 255, 
-        "type": "VARCHAR", 
-        "name": "Prenom", 
-        "nullable": true
-      }, 
-      "idActeur": {
+      "id": {
         "size": null, 
         "type": "INT", 
-        "name": "idActeur", 
+        "name": "id", 
+        "nullable": true
+      }, 
+      "name": {
+        "size": null, 
+        "type": "VARCHAR(255)", 
+        "name": "name", 
+        "nullable": true
+      }
+    }
+  }, 
+  "material": {
+    "numberToCreate": 10, 
+    "columns": {
+      "id": {
+        "size": null, 
+        "type": "INT", 
+        "name": "id", 
+        "nullable": true
+      }, 
+      "name": {
+        "size": null, 
+        "type": "VARCHAR(255)", 
+        "name": "name", 
+        "nullable": true
+      }
+    }
+  }, 
+  "variant": {
+    "numberToCreate": 10, 
+    "columns": {
+      "comment": {
+        "size": null, 
+        "type": "LONGTEXT", 
+        "name": "comment", 
+        "nullable": false
+      }, 
+      "main_variant": {
+        "size": null, 
+        "type": "TINYINT(1)", 
+        "name": "main_variant", 
+        "nullable": false
+      }, 
+      "author": {
+        "size": null, 
+        "type": "VARCHAR(255)", 
+        "name": "author", 
+        "nullable": true
+      }, 
+      "visible": {
+        "size": null, 
+        "type": "TINYINT(1)", 
+        "name": "visible", 
+        "nullable": false
+      }, 
+      "recipe_id": {
+        "size": null, 
+        "type": "INT", 
+        "name": "recipe_id", 
+        "nullable": false
+      }, 
+      "id": {
+        "size": null, 
+        "type": "INT", 
+        "name": "id", 
+        "nullable": true
+      }
+    }
+  }, 
+  "step": {
+    "numberToCreate": 10, 
+    "columns": {
+      "text": {
+        "size": null, 
+        "type": "VARCHAR(255)", 
+        "name": "text", 
+        "nullable": false
+      }, 
+      "picture": {
+        "size": null, 
+        "type": "LONGTEXT", 
+        "name": "picture", 
+        "nullable": false
+      }, 
+      "id": {
+        "size": null, 
+        "type": "INT", 
+        "name": "id", 
+        "nullable": true
+      }, 
+      "variant_id": {
+        "size": null, 
+        "type": "INT", 
+        "name": "variant_id", 
+        "nullable": false
+      }
+    }
+  }, 
+  "unit": {
+    "numberToCreate": 10, 
+    "columns": {
+      "symbol": {
+        "size": null, 
+        "type": "VARCHAR(255)", 
+        "name": "symbol", 
+        "nullable": true
+      }, 
+      "id": {
+        "size": null, 
+        "type": "INT", 
+        "name": "id", 
+        "nullable": true
+      }, 
+      "name": {
+        "size": null, 
+        "type": "VARCHAR(255)", 
+        "name": "name", 
+        "nullable": true
+      }
+    }
+  }, 
+  "ingredient": {
+    "numberToCreate": 10, 
+    "columns": {
+      "id": {
+        "size": null, 
+        "type": "INT", 
+        "name": "id", 
+        "nullable": true
+      }, 
+      "name": {
+        "size": null, 
+        "type": "VARCHAR(255)", 
+        "name": "name", 
         "nullable": true
       }
     }

@@ -47,15 +47,14 @@ class DataGenerator:
 		if (self.jsonFile):
 			self.dataSchema = self.readJsonFile(self.jsonFile)
 			self.data = self.generateDatas(self.dataSchema)
-			# print(self.dataSchema)
+			self.generateJsonFile('data.json', self.data)
 		elif (self.inputFile):
 			self.request = self.readFileSql(self.inputFile)
 			self.dataSchema = self.extractCreateRequests(self.request)
 			if (not self.dataSchema):
 				print ('fichier impossible a parser, verifier qu\'il sagit bien d\'un fichier sql en entree')
 			else:
-				self.generateJson(self.outputFile, self.dataSchema)
-		# print(self.dataSchema)
+				self.generateJsonFile(self.outputFile, self.dataSchema)
 
 	def readFileSql(self, inputFile):
 		totalRequest = ''
@@ -88,24 +87,22 @@ class DataGenerator:
 
 	def extractCreateRequests(self, request):
 		data = {}
-		tablePattern = r'CREATE TABLE ([a-z]+) \((.+)\);'
+		tablePattern = r'CREATE TABLE ([a-z]+) \((.+)\).*;'
 		tableMatch = re.findall(tablePattern, request)
 		for table in tableMatch:
 			tableName = table[0]
 			tableRequest = table[1]
-			# self.dataSchema[tableName] = {}
 			data[tableName] = {}
-			# self.dataSchema[tableName]['columns'] = {}
 			data[tableName]['columns'] = {}
 			data[tableName]['numberToCreate'] = 10
 			columnMatch = tableRequest.split(",")
-			# self.dataSchema[tableName]['columns'] = self.extractColumns(columnMatch)
 			data[tableName]['columns'] = self.extractColumns(columnMatch)
-			# print(num, name)
 		return data
 
 	def extractColumns(self, columnTable):
-		columnPattern = r'(\S+) (\S+) ?\(?(\d+)?\)? (.*)'
+		# todo a revoir, non fonctionnel pour cuisine, pas d'espace entre type et size
+		# columnPattern = r'(\S+) (\S+) ?\(?(\d+)?\)? ?(.*)'
+		columnPattern = r'(\S+) (\S+) ?\(?(\d+)?\)? (.*)' #fonctionne pour film
 		columnData = {}
 		for column in columnTable:
 			match = re.findall(columnPattern, column)
@@ -113,13 +110,23 @@ class DataGenerator:
 				columName = match[0][0]
 				columnData[columName] = {} if (not columnData.has_key(columName)) else columnData[columName]
 				if (columName.lower().strip().find('primary') != -1):
-					patternPrimaryKey = r'primary key ?\((.+)\)'
-					matchPrimaryColumn = re.findall(patternPrimaryKey, column.lower())
-					primaryKeys = matchPrimaryColumn[0].split(",")
-					for key in primaryKeys:
-						if (not columnData.has_key(key)):
-							columnData[key] = {}
-						columnData[key]['primary'] = True
+					patternPrimaryKey = r'PRIMARY KEY ?\((.+)\)'
+					matchPrimaryColumn = re.findall(patternPrimaryKey, column)
+					if(len(matchPrimaryColumn) > 0):
+						primaryKeys = matchPrimaryColumn[0].split(",")
+						for key in primaryKeys:
+							# print(key)
+							if (not columnData.has_key(key)):
+								columnData[key] = {}
+							columnData[key]['primary'] = True
+				elif (columName.lower().strip().find('index') != -1):
+					del columnData[columName]
+					pass
+					# todo
+				elif (columName.lower().strip().find('unique') != -1):
+					# todo
+					del columnData[columName]
+					pass
 				else:
 					columnType = match[0][1]
 					columnData[columName]['name'] = columName
@@ -128,8 +135,7 @@ class DataGenerator:
 					try:
 						columnData[columName]['size'] = int(match[0][2])
 					except Exception as e:
-						columnData[columName]['size'] = None
-					
+						columnData[columName]['size'] = None	
 		return columnData
 
 	def generateDatas(self, dataSchema):
@@ -143,10 +149,11 @@ class DataGenerator:
 				data[tableName].append(self.generateNewRow(dataSchema[tableName]['columns'], numberOfRow))
 				# print(i)
 			# print(dataSchema[tableName])
-			# print('-----------------------')
-		# print(dataSchema)
+		# print('-----------------------')
+		# print(data)
+		return data
 
-	def generateJson(self, outputFile, data):
+	def generateJsonFile(self, outputFile, data):
 		try:
 			with open(outputFile, 'w') as file:
 				file.write(json.dumps(data, indent=2))
@@ -161,6 +168,8 @@ class DataGenerator:
 			# print column
 			if (column.strip().lower().find('primary') == -1):
 				newRow[column] = self.generateDataColumn(columns[column], numberOfRow)
+		# print(newRow)
+		# print('--------------')
 		return newRow
 
 	def generateDataColumn(self, column, numberOfRow):
@@ -169,7 +178,17 @@ class DataGenerator:
 		if (column.has_key('type')):
 			if column['type'].strip().lower() == 'varchar':
 				generatedData = fake.sentence()
+			if column['type'].strip().lower().find('varchar') != -1:
+				generatedData = fake.sentence()
+			elif column['type'].strip().lower() == 'LONGTEXT'.lower():
+				generatedData = fake.paragraph()
+			elif column['type'].strip().lower() == 'tinyint':
+				generatedData = fake.boolean()
+			elif column['type'].strip().lower().find('tinyint') != -1:
+				generatedData = fake.boolean()
 			elif column['type'].strip().lower() == 'int':
+				generatedData = random.randint(1, numberOfRow)
+			elif column['type'].strip().lower().find('int') != -1:
 				generatedData = random.randint(1, numberOfRow)
 			elif column['type'].strip().lower() == 'name':
 				generatedData = fake.name()
