@@ -6,6 +6,6 @@ CREATE TABLE acteurs (idActeur INT not null AUTO_INCREMENT, Nom VARCHAR (255) no
 
 de la merde
 
-CREATE TABLE role (idActeur INT not null, idFilm INT not null , Personnage VARCHAR (255));
+CREATE TABLE role (idActeur INT(10) not null, idFilm INT not null , Personnage VARCHAR (255));
 
 encore du bullshit

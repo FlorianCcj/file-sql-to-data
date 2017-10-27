@@ -1,4 +1,19 @@
 <?php
+// http://www.jlo-conseil.com/24eme-critere-de-discrimination-domiciliation-bancaire
+// sli.do : permet de poser des questions sur une presentation
+// todoist
+// ansible
+// GPG (GNU protect)
+// 2FA, U2F, YubiKey : securité via clé usb
+// Hubic : sauvegarde sur le cloud
+
+// graphql, AMP
+
+// crypto : halite + libsodium https://github.com/paragonie/{halite, sodium_compat}
+// defuse/php_encryption
+// http://simonsingh.net/The_Black_Chamber
+// www.schneier.com
+
 class Demi-journee1 {
 	function Cocktail-temp-reel-pour-l-olympia(sale2) {
 		echo "cf nodejs et socket.io";
@@ -121,5 +136,96 @@ class demi-journne2 {
 
 	function ligthing-talks(sale1) {
 
+	}
+}
+
+class demi-journee3 {
+	function le-process-qualite(salle1) {
+		$test = <<<EOL
+			symfony/phpunit-bridge a mettre dans le CI
+		EOL
+	}
+
+	function teletravail-entre-mythe-et-realite() {
+		https://chstudio.fr/forum-afup
+	}
+
+	crypto() {
+		$recup = <<<EOL
+			que des ressources
+		EOL;
+	}
+
+	interface() {
+		$recup = <<<EOL
+			Sebastien LAVENANT de naoned (lavenant@s3b.fr)
+
+			
+
+		EOL;
+	}
+}
+
+class demi-journee4 {
+	function graphQl(salle1) {
+		$test = <<<EOL
+			francois zaninotto de marmelab
+			backend as a service
+			GraphiQl
+			blog de marmelab
+		EOL
+			
+	}
+
+	function travail-de-qualité() {
+		$test = <<<EOL
+			phpmetrix : annalyse de code php
+			https://github.com/Herzult/SimplePHPEasyPlus
+			questionnaire istqb
+		EOL
+	}
+
+	function git() {
+		$recup = <<<EOL
+			Jonathan Van Belle
+			me@grummfy.be
+			atoum, hoa
+			git
+				rebase ? 
+			git alias
+				who = shortlog -sne
+				undo = reset --soft HEAD^
+				oneline = log --pretty=oneline --abrev-commit --graph --decorate
+				lc = !git oneline ORIG_HEAD.. --stat -no-merges # change since last pull
+			git extension
+				creer un script
+				chmod +X
+				commence par git-
+				dans un dossier du $PATH
+
+				#see /usr/share/bash-completion/completion/git
+				_git_author ()
+				{
+					case "$cur" in
+					*)
+						__gitcomp "perso pro"
+						return
+						;;
+					esac
+				}
+
+				#~/.bashrc
+				source /path/to/autocomplete
+			creation d'extension
+		EOL;
+	}
+
+	function() {
+		$recup = <<<EOL
+			Sebastien LAVENANT de naoned (lavenant@s3b.fr)
+
+
+
+		EOL;
 	}
 }

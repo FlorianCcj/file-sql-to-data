@@ -1,11 +1,6 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/python
 
-# sudo pip install Faker
-
-# actuellement lance via 
-# `python ./main.py -if '../sql-file/film.sql'`
-# `python ./main.py -jf './data-schema.json'`
 import re
 import json
 import argparse
@@ -144,52 +139,55 @@ class DataGenerator:
 			data[tableName] = []
 			numberOfRow = dataSchema[tableName]['numberToCreate']
 			for i in range(numberOfRow):
-				data[tableName].append(self.generateNewRow(dataSchema[tableName]['columns'], numberOfRow))
+				data[tableName].append(self.generateNewRow(dataSchema[tableName]['columns'], numberOfRow, id = i))
 		return data
 
-	def generateNewRow(self, columns, numberOfRow):
+	def generateNewRow(self, columns, numberOfRow, id):
 		newRow = {}
 		for column in columns:
-			newRow[column] = self.generateDataColumn(columns[column], numberOfRow)
+			newRow[column] = self.generateDataColumn(columns[column], numberOfRow, id = id )
 		return newRow
 
-	def generateDataColumn(self, column, numberOfRow):
+	def generateDataColumn(self, column, numberOfRow, id):
 		generatedData = None
-		if (column.has_key('type')):
-			if column['type'].strip().lower() == 'varchar':
-				generatedData = fake.sentence()
-			if column['type'].strip().lower().find('varchar') != -1:
-				generatedData = fake.sentence()
-			elif column['type'].strip().lower() == 'LONGTEXT'.lower():
-				generatedData = fake.paragraph()
-			elif column['type'].strip().lower() == 'tinyint':
-				generatedData = fake.boolean()
-			elif column['type'].strip().lower().find('tinyint') != -1:
-				generatedData = fake.boolean()
-			elif column['type'].strip().lower() == 'int':
-				generatedData = random.randint(1, numberOfRow)
-			elif column['type'].strip().lower().find('int') != -1:
-				generatedData = random.randint(1, numberOfRow)
-			elif column['type'].strip().lower() == 'name':
-				generatedData = fake.name()
-			elif column['type'].strip().lower() == 'adress':
-				generatedData = fake.adress()
-			elif column['type'].strip().lower() == 'first_name':
-				generatedData = fake.first_name()
-			elif column['type'].strip().lower() == 'last_name':
-				generatedData = fake.last_name()
-			elif column['type'].strip().lower() == 'credit_card_number':
-				generatedData = fake.credit_card_number()
-			elif column['type'].strip().lower() == 'military_ship':
-				generatedData = fake.military_ship()
-			elif column['type'].strip().lower() == 'color':
-				generatedData = fake.hex_color()
-			elif column['type'].strip().lower() == 'catch_phrase_verb':
-				generatedData = fake.catch_phrase_verb()
-			elif column['type'].strip().lower() == 'company':
-				generatedData = fake.company()
-			else:
-				generatedData = None
+		if (column['name'] == 'id'):
+			generatedData = id+1
+		else:
+			if (column.has_key('type')):
+				if column['type'].strip().lower() == 'varchar':
+					generatedData = fake.sentence()
+				elif column['type'].strip().lower().find('varchar') != -1:
+					generatedData = fake.sentence()
+				elif column['type'].strip().lower() == 'LONGTEXT'.lower():
+					generatedData = fake.paragraph()
+				elif column['type'].strip().lower() == 'tinyint':
+					generatedData = fake.boolean()
+				elif column['type'].strip().lower().find('tinyint') != -1:
+					generatedData = fake.boolean()
+				elif column['type'].strip().lower() == 'int':
+					generatedData = random.randint(1, numberOfRow)
+				elif column['type'].strip().lower().find('int') != -1:
+					generatedData = random.randint(1, numberOfRow)
+				elif column['type'].strip().lower() == 'name':
+					generatedData = fake.name()
+				elif column['type'].strip().lower() == 'adress':
+					generatedData = fake.adress()
+				elif column['type'].strip().lower() == 'first_name':
+					generatedData = fake.first_name()
+				elif column['type'].strip().lower() == 'last_name':
+					generatedData = fake.last_name()
+				elif column['type'].strip().lower() == 'credit_card_number':
+					generatedData = fake.credit_card_number()
+				elif column['type'].strip().lower() == 'military_ship':
+					generatedData = fake.military_ship()
+				elif column['type'].strip().lower() == 'color':
+					generatedData = fake.hex_color()
+				elif column['type'].strip().lower() == 'catch_phrase_verb':
+					generatedData = fake.catch_phrase_verb()
+				elif column['type'].strip().lower() == 'company':
+					generatedData = fake.company()
+				else:
+					generatedData = None
 		return generatedData
 
 class FileCreator:
@@ -236,3 +234,30 @@ if __name__ == '__main__':
 		maker = FileCreator(data = dataSchema, outputFile = outputFile)
 	else:
 		parser.print_help()
+
+
+
+def reflexion():
+	'''
+		referenciel, foreign key, unique
+
+		unique:
+			del si un unique ou si la primary key ne correspond pas
+
+			recup unique et primary key
+			si unique recup un tableau [colonneQuiDoitEtreUnique, row]
+
+		referentiel:
+			type: 
+				ref
+			data: fichier
+
+		foreign key 1toN:
+			type: foreign key, 1toN
+			foreign-key: [table, colonne]
+
+		foreign key NtoN:
+			type: foreign key NtoN:
+			foreign key: et la .... c'est le drame
+	'''
+	pass
