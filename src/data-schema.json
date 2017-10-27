@@ -3,41 +3,47 @@
     "numberToCreate": 10, 
     "columns": {
       "comment": {
+        "unique": false, 
         "size": null, 
         "type": "LONGTEXT", 
         "name": "comment", 
         "nullable": false
       }, 
       "type_id": {
+        "unique": false, 
         "size": null, 
         "type": "INT", 
         "name": "type_id", 
         "nullable": true
       }, 
       "unit_id": {
+        "unique": false, 
         "size": null, 
         "type": "INT", 
         "name": "unit_id", 
         "nullable": false
       }, 
       "value": {
+        "unique": false, 
         "size": null, 
         "type": "INT", 
         "name": "value", 
         "nullable": false
       }, 
       "variant_id": {
+        "unique": false, 
         "size": null, 
         "type": "INT", 
         "name": "variant_id", 
         "nullable": true
       }, 
       "id": {
-        "size": null, 
-        "type": "INT", 
         "name": "id", 
+        "nullable": true, 
         "primary": true, 
-        "nullable": true
+        "unique": false, 
+        "type": "INT", 
+        "size": null
       }
     }
   }, 
@@ -45,13 +51,15 @@
     "numberToCreate": 10, 
     "columns": {
       "id": {
-        "size": null, 
-        "type": "INT", 
         "name": "id", 
+        "nullable": true, 
         "primary": true, 
-        "nullable": true
+        "unique": false, 
+        "type": "INT", 
+        "size": null
       }, 
       "name": {
+        "unique": true, 
         "size": 255, 
         "type": "VARCHAR", 
         "name": "name", 
@@ -63,13 +71,15 @@
     "numberToCreate": 10, 
     "columns": {
       "id": {
-        "size": null, 
-        "type": "INT", 
         "name": "id", 
+        "nullable": true, 
         "primary": true, 
-        "nullable": true
+        "unique": false, 
+        "type": "INT", 
+        "size": null
       }, 
       "name": {
+        "unique": true, 
         "size": 255, 
         "type": "VARCHAR", 
         "name": "name", 
@@ -81,41 +91,47 @@
     "numberToCreate": 10, 
     "columns": {
       "comment": {
+        "unique": false, 
         "size": null, 
         "type": "LONGTEXT", 
         "name": "comment", 
         "nullable": false
       }, 
       "main_variant": {
+        "unique": false, 
         "size": 1, 
         "type": "TINYINT", 
         "name": "main_variant", 
         "nullable": false
       }, 
       "author": {
+        "unique": false, 
         "size": 255, 
         "type": "VARCHAR", 
         "name": "author", 
         "nullable": true
       }, 
       "visible": {
+        "unique": false, 
         "size": 1, 
         "type": "TINYINT", 
         "name": "visible", 
         "nullable": false
       }, 
       "recipe_id": {
+        "unique": false, 
         "size": null, 
         "type": "INT", 
         "name": "recipe_id", 
         "nullable": false
       }, 
       "id": {
-        "size": null, 
-        "type": "INT", 
         "name": "id", 
+        "nullable": true, 
         "primary": true, 
-        "nullable": true
+        "unique": false, 
+        "type": "INT", 
+        "size": null
       }
     }
   }, 
@@ -123,29 +139,33 @@
     "numberToCreate": 10, 
     "columns": {
       "picture": {
+        "unique": false, 
         "size": null, 
         "type": "LONGTEXT", 
         "name": "picture", 
         "nullable": false
       }, 
       "text": {
+        "unique": false, 
         "size": 255, 
         "type": "VARCHAR", 
         "name": "text", 
         "nullable": false
       }, 
       "variant_id": {
+        "unique": false, 
         "size": null, 
         "type": "INT", 
         "name": "variant_id", 
         "nullable": false
       }, 
       "id": {
-        "size": null, 
-        "type": "INT", 
         "name": "id", 
+        "nullable": true, 
         "primary": true, 
-        "nullable": true
+        "unique": false, 
+        "type": "INT", 
+        "size": null
       }
     }
   }, 
@@ -153,19 +173,22 @@
     "numberToCreate": 10, 
     "columns": {
       "symbol": {
+        "unique": false, 
         "size": 255, 
         "type": "VARCHAR", 
         "name": "symbol", 
         "nullable": true
       }, 
       "id": {
-        "size": null, 
-        "type": "INT", 
         "name": "id", 
+        "nullable": true, 
         "primary": true, 
-        "nullable": true
+        "unique": false, 
+        "type": "INT", 
+        "size": null
       }, 
       "name": {
+        "unique": true, 
         "size": 255, 
         "type": "VARCHAR", 
         "name": "name", 
@@ -177,13 +200,15 @@
     "numberToCreate": 10, 
     "columns": {
       "id": {
-        "size": null, 
-        "type": "INT", 
         "name": "id", 
+        "nullable": true, 
         "primary": true, 
-        "nullable": true
+        "unique": false, 
+        "type": "INT", 
+        "size": null
       }, 
       "name": {
+        "unique": false, 
         "size": 255, 
         "type": "VARCHAR", 
         "name": "name", 

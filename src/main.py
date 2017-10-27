@@ -36,6 +36,8 @@ class DataGenerator:
 		self.createRequest = {}
 		self.dataSchema = {}
 		self.data = {}
+		self.unique = {}
+		self.uniqueDatas = {}
 
 	def launch(self):
 		if (self.jsonFile):
@@ -92,10 +94,10 @@ class DataGenerator:
 			data[tableName]['columns'] = {}
 			data[tableName]['numberToCreate'] = 10
 			columnMatch = tableRequest.split(",")
-			data[tableName]['columns'] = self.extractColumnsFromCreateRequest(columnMatch)
+			data[tableName]['columns'] = self.extractColumnsFromCreateRequest(columnMatch, tableName)
 		return data
 
-	def extractColumnsFromCreateRequest(self, columnTable):
+	def extractColumnsFromCreateRequest(self, columnTable, tableName):
 		columnPattern = r'(\S+) ([^ (]+)(?: ?\(([^)]+)\))? ?(.+)?'
 		columnData = {}
 		for column in columnTable:
@@ -103,7 +105,7 @@ class DataGenerator:
 			if match:
 				columName = match[0][0]
 				columnData[columName] = {} if (not columnData.has_key(columName)) else columnData[columName]
-				if (columName.lower().strip().find('primary') != -1):
+				if (columName.lower().strip().find('primary') != -1): # est-ce qu il faudrait pas le mettre sur column au lieu de columnName
 					del columnData[columName]
 					patternPrimaryKey = r'PRIMARY KEY ?\((.+)\)'
 					matchPrimaryColumn = re.findall(patternPrimaryKey, column)
@@ -118,8 +120,15 @@ class DataGenerator:
 					del columnData[columName]
 					pass
 					# todo
-				elif (columName.lower().strip().find('unique') != -1):
-					# todo
+				elif (column.lower().strip().find('unique') != -1):
+					uniquePattern = r'\((.*)\)'
+					matchUnique = re.findall(uniquePattern, column)
+					uniqueColumnName = matchUnique[0]
+					if (not self.unique.has_key(tableName)):
+						self.unique[tableName] = {}
+					if (not self.unique[tableName].has_key(uniqueColumnName)):
+						self.unique[tableName][uniqueColumnName] = {}
+					self.unique[tableName][uniqueColumnName]['unique'] = True
 					del columnData[columName]
 					pass
 				else:
@@ -131,7 +140,20 @@ class DataGenerator:
 						columnData[columName]['size'] = int(match[0][2])
 					except Exception as e:
 						columnData[columName]['size'] = None	
+		columnData = self.isThisTableSColumnsUnique(tableName, columnData, self.unique)
 		return columnData
+
+	def isThisTableSColumnsUnique(self, tableName, tableColumns, uniqueTable):
+		for column in tableColumns:
+			if (uniqueTable.has_key(tableName)):
+				if uniqueTable[tableName].has_key(column):
+					tableColumns[column]['unique'] = True
+				else:
+					tableColumns[column]['unique'] = False
+			else:
+				tableColumns[column]['unique'] = False
+		return tableColumns
+			# check il il est dans le tablea self.unique
 
 	def generateDatas(self, dataSchema):
 		data = {}
@@ -139,13 +161,16 @@ class DataGenerator:
 			data[tableName] = []
 			numberOfRow = dataSchema[tableName]['numberToCreate']
 			for i in range(numberOfRow):
-				data[tableName].append(self.generateNewRow(dataSchema[tableName]['columns'], numberOfRow, id = i))
+				data[tableName].append(self.generateNewRow(dataSchema[tableName]['columns'], numberOfRow, i, tableName))
 		return data
 
-	def generateNewRow(self, columns, numberOfRow, id):
+	def generateNewRow(self, columns, numberOfRow, id, tableName):
 		newRow = {}
 		for column in columns:
-			newRow[column] = self.generateDataColumn(columns[column], numberOfRow, id = id )
+			# todo
+			# ici si la colonne est unique alors je stock les valeurs dans le tableau uniqueDatas 
+			# et je recommence la generation aleatoire tant que la valeur retourne est dedans
+			newRow[column] = self.generateDataColumn(columns[column], numberOfRow, id = id)
 		return newRow
 
 	def generateDataColumn(self, column, numberOfRow, id):
