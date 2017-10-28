@@ -32,13 +32,18 @@ class DataGenerator:
 	def __init__(self, inputFile = None, jsonFile = None, type = 'csv'):
 		self.inputFile = inputFile
 		self.jsonFile = jsonFile
-		self.request = ''
+		
 		self.createRequest = {}
+		self.request = ''
+		
 		self.dataSchema = {}
 		self.data = {}
+		self.tableNameGeneratedData = []
+
 		self.unique = {}
 		self.uniqueDatas = {}
 		self.primaryColumn = {}
+		
 		self.timeout = 50
 
 	def launch(self):
@@ -182,13 +187,40 @@ class DataGenerator:
 		print('### Generation de la data ###')
 		data = {}
 		for tableName in dataSchema:
-			data[tableName] = []
+			data[tableName] = self.generateTableData(tableName, dataSchema)
+		return data
+
+	def generateTableData(self, tableName, dataSchema):
+		if (not tableName in self.tableNameGeneratedData):
+			tableData = []
 			numberOfRow = dataSchema[tableName]['numberToCreate']
 			for i in range(numberOfRow):
-				data[tableName].append(self.generateNewRow(dataSchema[tableName]['columns'], numberOfRow, i, tableName))
-			print(data[tableName])
-			print('----------------------------------------------------')
-		return data
+				tableData.append(self.generateNewRow(dataSchema[tableName]['columns'], numberOfRow, i, tableName))
+				newEntreePrimary = self.primaryColumnKeeper(tableName, tableData[i])
+				if (not self.uniqueDatas[tableName].has_key('primaryKey')):
+					self.uniqueDatas[tableName]['primaryKey'] = []
+				timeout = 0
+				while (newEntreePrimary in self.uniqueDatas[tableName]['primaryKey'] and timeout < self.timeout):
+					timeout += 1
+					del tableData[i]
+					tableData.append(self.generateNewRow(dataSchema[tableName]['columns'], numberOfRow, i, tableName))
+					newEntreePrimary = self.primaryColumnKeeper(tableName, tableData[i])
+				self.uniqueDatas[tableName]['primaryKey'].append(newEntreePrimary)
+				if (timeout == 50):
+					print "Tentative de generation dans la table `%s` a echoué a cause de la PRIMARY KEY constraint" % tableName
+			self.tableNameGeneratedData.append(tableName)
+			return tableData
+		else:
+			return self.data[tableName]
+
+	def primaryColumnKeeper(self, tableName, newData):
+		returnPrimary = None
+		if (self.primaryColumn.has_key(tableName)):
+			if (len(self.primaryColumn[tableName]) > 0):
+				returnPrimary = {}
+				for primaryColumnIterator in self.primaryColumn[tableName]:
+					returnPrimary[primaryColumnIterator] = newData[primaryColumnIterator]
+		return returnPrimary
 
 	def generateNewRow(self, columns, numberOfRow, id, tableName):
 		print('### Generation d une entree pour la table %s ###'% tableName)
@@ -306,14 +338,6 @@ if __name__ == '__main__':
 
 def reflexion():
 	'''
-		referenciel, foreign key, unique
-
-		unique:
-			del si un unique ou si la primary key ne correspond pas
-
-			recup unique et primary key
-			si unique recup un tableau [colonneQuiDoitEtreUnique, row]
-
 		referentiel:
 			type: 
 				ref
