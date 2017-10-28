@@ -1,406 +1,750 @@
 {
+  "recipe_type": [
+    {
+      "id": 1, 
+      "name": "Laborum fuga consectetur esse praesentium ea."
+    }, 
+    {
+      "id": 2, 
+      "name": "Reiciendis molestiae ullam neque pariatur."
+    }, 
+    {
+      "id": 3, 
+      "name": "Fugit neque dolor sed excepturi ut autem."
+    }, 
+    {
+      "id": 4, 
+      "name": "Nulla cumque aut commodi ad."
+    }, 
+    {
+      "id": 5, 
+      "name": "Quas aperiam deserunt mollitia voluptates."
+    }, 
+    {
+      "id": 6, 
+      "name": "Dicta nam saepe ut."
+    }, 
+    {
+      "id": 7, 
+      "name": "Aspernatur laudantium ex assumenda quo."
+    }, 
+    {
+      "id": 8, 
+      "name": "Nobis maxime enim voluptatum."
+    }, 
+    {
+      "id": 9, 
+      "name": "Dolor quibusdam quibusdam accusamus quaerat expedita esse."
+    }, 
+    {
+      "id": 10, 
+      "name": "Nobis suscipit amet aperiam."
+    }
+  ], 
   "grade": [
     {
-      "comment": "Id est debitis sapiente sed illo nobis. Fugiat nesciunt earum. Iusto eligendi voluptatibus quae omnis vitae.", 
-      "type_id": 5, 
-      "unit_id": 7, 
-      "value": 5, 
-      "variant_id": 7, 
+      "comment": "Dolor incidunt repellat quaerat voluptates vitae modi. Sint maxime corrupti.", 
+      "type_id": 1, 
+      "unit_id": 9, 
+      "value": 2, 
+      "variant_id": 5, 
       "id": 1
     }, 
     {
-      "comment": "Non quae perspiciatis perspiciatis. Odio quasi vitae laboriosam. Quasi facilis facilis vero aspernatur.", 
-      "type_id": 5, 
+      "comment": "Velit quia rerum nemo recusandae rem officia. Deserunt eveniet fuga quaerat.", 
+      "type_id": 3, 
       "unit_id": 3, 
-      "value": 3, 
-      "variant_id": 5, 
+      "value": 8, 
+      "variant_id": 7, 
       "id": 2
     }, 
     {
-      "comment": "Excepturi perferendis nobis recusandae iure. Repellat nam fugit officiis.", 
-      "type_id": 4, 
-      "unit_id": 7, 
-      "value": 10, 
-      "variant_id": 7, 
+      "comment": "Corrupti iusto nihil quo eveniet occaecati. Culpa iure et officiis veritatis ullam explicabo ullam. Corporis neque consectetur incidunt harum. Sed velit porro ducimus fugit ex.", 
+      "type_id": 7, 
+      "unit_id": 2, 
+      "value": 7, 
+      "variant_id": 6, 
       "id": 3
     }, 
     {
-      "comment": "Quaerat id tempore porro. Commodi asperiores sequi velit voluptatem. Rerum unde magni quisquam.", 
-      "type_id": 3, 
-      "unit_id": 1, 
-      "value": 9, 
-      "variant_id": 5, 
+      "comment": "Commodi minus suscipit impedit suscipit repellat. Repellat impedit ratione nobis maiores. Quidem laboriosam earum fugiat est dolorem.", 
+      "type_id": 7, 
+      "unit_id": 4, 
+      "value": 4, 
+      "variant_id": 4, 
       "id": 4
     }, 
     {
-      "comment": "Veniam nulla perspiciatis molestiae temporibus. Temporibus eveniet iste tempora totam. Non optio dolor possimus voluptates ad.", 
-      "type_id": 10, 
-      "unit_id": 1, 
-      "value": 10, 
-      "variant_id": 2, 
+      "comment": "Dolorem et fugiat veritatis quia impedit necessitatibus. Nisi reiciendis velit minima rerum sit asperiores. Corporis odio architecto accusamus qui voluptates assumenda.", 
+      "type_id": 1, 
+      "unit_id": 3, 
+      "value": 3, 
+      "variant_id": 3, 
       "id": 5
     }, 
     {
-      "comment": "Vero porro rerum quibusdam. In recusandae aut neque aliquam doloribus.", 
-      "type_id": 10, 
-      "unit_id": 7, 
-      "value": 8, 
-      "variant_id": 6, 
+      "comment": "Rerum autem nisi soluta fugit quasi. Odit doloribus eaque asperiores. Incidunt repellendus non veniam veritatis.", 
+      "type_id": 9, 
+      "unit_id": 3, 
+      "value": 9, 
+      "variant_id": 7, 
       "id": 6
     }, 
     {
-      "comment": "Quod modi nulla ipsum sint. Fuga tempora deleniti et illum eum iure. Consectetur facilis hic voluptas ex mollitia ipsa.", 
-      "type_id": 3, 
+      "comment": "Aliquid vero possimus voluptatibus commodi. Vel ipsam tempora blanditiis totam quae.", 
+      "type_id": 4, 
       "unit_id": 10, 
-      "value": 10, 
-      "variant_id": 8, 
+      "value": 7, 
+      "variant_id": 7, 
       "id": 7
     }, 
     {
-      "comment": "Rerum deleniti nihil earum. Tempora distinctio perspiciatis accusamus totam. Quos sapiente nobis eveniet eaque saepe esse.", 
-      "type_id": 7, 
-      "unit_id": 1, 
-      "value": 4, 
-      "variant_id": 3, 
+      "comment": "Ipsam beatae inventore nihil eaque.", 
+      "type_id": 5, 
+      "unit_id": 10, 
+      "value": 3, 
+      "variant_id": 5, 
       "id": 8
     }, 
     {
-      "comment": "Provident quos minus veritatis quae. A odio temporibus aut aliquid deserunt.", 
-      "type_id": 9, 
-      "unit_id": 7, 
+      "comment": "Odio iste maxime est. Dolore perspiciatis fugiat fuga illo ut ea saepe.", 
+      "type_id": 8, 
+      "unit_id": 8, 
       "value": 10, 
-      "variant_id": 9, 
+      "variant_id": 1, 
       "id": 9
     }, 
     {
-      "comment": "Asperiores voluptatem consequuntur quia. Odit tenetur harum quis cum ipsa. A voluptatum sunt rerum ipsum delectus molestiae doloremque.", 
-      "type_id": 5, 
-      "unit_id": 10, 
-      "value": 7, 
-      "variant_id": 9, 
+      "comment": "Doloremque nam quisquam itaque expedita. Iusto accusantium repudiandae suscipit nam temporibus. Quaerat eius tempore qui debitis.", 
+      "type_id": 7, 
+      "unit_id": 4, 
+      "value": 6, 
+      "variant_id": 5, 
       "id": 10
     }
   ], 
   "recipe": [
     {
       "id": 1, 
-      "name": "Atque maiores odit accusamus."
+      "name": "Enim quidem asperiores repellat."
     }, 
     {
       "id": 2, 
-      "name": "Praesentium doloremque vitae blanditiis laborum."
+      "name": "Sapiente molestias doloribus voluptate tempore magni."
     }, 
     {
       "id": 3, 
-      "name": "Minima quaerat minima modi."
+      "name": "Laboriosam dolore illum dignissimos quidem odit consectetur."
     }, 
     {
       "id": 4, 
-      "name": "Doloremque porro ipsa assumenda repellendus possimus nemo."
+      "name": "Consequuntur odio similique."
     }, 
     {
       "id": 5, 
-      "name": "Voluptatum eligendi corporis maxime voluptatibus impedit."
+      "name": "Facere sint maxime mollitia pariatur modi."
     }, 
     {
       "id": 6, 
-      "name": "Nihil nihil placeat."
+      "name": "Eos totam accusantium."
     }, 
     {
       "id": 7, 
-      "name": "Eos occaecati eos asperiores repudiandae aliquam."
+      "name": "Explicabo facere voluptate est."
     }, 
     {
       "id": 8, 
-      "name": "Beatae optio non vitae."
+      "name": "Explicabo itaque omnis veritatis saepe expedita in dolor."
     }, 
     {
       "id": 9, 
-      "name": "Ea voluptatum corporis laborum quae."
+      "name": "Officia assumenda tempora laboriosam totam a."
     }, 
     {
       "id": 10, 
-      "name": "Asperiores qui necessitatibus quas veritatis natus."
+      "name": "Eum quaerat voluptatem aperiam laboriosam."
+    }
+  ], 
+  "grade_type": [
+    {
+      "id": 1, 
+      "name": "Officiis eos quis."
+    }, 
+    {
+      "id": 2, 
+      "name": "Sed id voluptatum."
+    }, 
+    {
+      "id": 3, 
+      "name": "Rerum distinctio expedita ut nisi quae."
+    }, 
+    {
+      "id": 4, 
+      "name": "Voluptate est maxime omnis adipisci dignissimos et."
+    }, 
+    {
+      "id": 5, 
+      "name": "Ea ullam quas."
+    }, 
+    {
+      "id": 6, 
+      "name": "Voluptates quos dolores ducimus placeat voluptatibus quibusdam."
+    }, 
+    {
+      "id": 7, 
+      "name": "Iure cum repudiandae."
+    }, 
+    {
+      "id": 8, 
+      "name": "Dolorem tempora deleniti beatae vitae."
+    }, 
+    {
+      "id": 9, 
+      "name": "Exercitationem ipsum aut a."
+    }, 
+    {
+      "id": 10, 
+      "name": "Neque dolorum ducimus."
     }
   ], 
   "material": [
     {
       "id": 1, 
-      "name": "Assumenda quis at cupiditate ut quo placeat."
+      "name": "Animi repudiandae suscipit in consequatur mollitia."
     }, 
     {
       "id": 2, 
-      "name": "Qui a magnam facilis aliquam dolore."
+      "name": "Atque ad fugiat illo earum omnis."
     }, 
     {
       "id": 3, 
-      "name": "Veritatis maxime ab molestiae."
+      "name": "Eligendi consequatur temporibus quidem unde fugit."
     }, 
     {
       "id": 4, 
-      "name": "Corrupti cum officia quae."
+      "name": "Animi quam excepturi eaque sint nam eligendi."
     }, 
     {
       "id": 5, 
-      "name": "Quae voluptas quos impedit nihil."
+      "name": "Ex rerum nesciunt quis distinctio et."
     }, 
     {
       "id": 6, 
-      "name": "Autem ea quisquam fuga."
+      "name": "Illum laborum autem."
     }, 
     {
       "id": 7, 
-      "name": "Facere consequatur neque optio cum."
+      "name": "Fugit quos illo cumque esse quos."
     }, 
     {
       "id": 8, 
-      "name": "Laboriosam et quae consequuntur tempore unde nihil."
+      "name": "Deserunt sunt qui voluptate ducimus fugiat vel recusandae."
     }, 
     {
       "id": 9, 
-      "name": "Assumenda voluptas minus illo suscipit."
+      "name": "Nostrum rem consequuntur esse."
     }, 
     {
       "id": 10, 
-      "name": "Exercitationem perferendis provident dicta aliquid."
+      "name": "Ex modi voluptas laudantium labore."
     }
   ], 
   "variant": [
     {
-      "comment": "Consectetur repellat inventore facilis qui nesciunt quia. Illo culpa quidem itaque. Placeat voluptatem eum quam.", 
-      "main_variant": false, 
-      "author": "Aut inventore quibusdam atque ab.", 
-      "visible": true, 
-      "recipe_id": 7, 
+      "comment": "Fuga explicabo consequatur laborum earum. Consequuntur odio atque explicabo sequi sapiente.", 
+      "main_variant": true, 
+      "author": "Officia fuga quasi laboriosam.", 
+      "visible": false, 
+      "recipe_id": 9, 
       "id": 1
     }, 
     {
-      "comment": "Cum ad sint tenetur magnam veritatis necessitatibus. Rem dolorum maiores minus nesciunt labore. Tenetur est est similique.", 
-      "main_variant": false, 
-      "author": "Mollitia expedita pariatur dolor.", 
+      "comment": "Provident accusantium veritatis assumenda aspernatur culpa porro. Animi nemo officia placeat iste error dolorem cumque.", 
+      "main_variant": true, 
+      "author": "Consequatur aliquid voluptas officia veritatis alias architecto voluptates.", 
       "visible": true, 
       "recipe_id": 5, 
       "id": 2
     }, 
     {
-      "comment": "Omnis ipsam quis dolores quasi asperiores. Quae nostrum fuga illo maiores at omnis. Incidunt tempore illo ipsum repudiandae cum sit.", 
+      "comment": "Perspiciatis quidem dolores atque placeat totam. Similique rem voluptate aut itaque ratione nesciunt.", 
       "main_variant": false, 
-      "author": "Magnam doloremque excepturi molestias.", 
-      "visible": false, 
-      "recipe_id": 3, 
+      "author": "Atque aliquid ex dignissimos.", 
+      "visible": true, 
+      "recipe_id": 7, 
       "id": 3
     }, 
     {
-      "comment": "Alias libero dolorum pariatur. Harum labore accusamus et.", 
-      "main_variant": false, 
-      "author": "Laudantium velit perspiciatis officiis eos iusto.", 
-      "visible": true, 
-      "recipe_id": 9, 
+      "comment": "Sint natus laboriosam quos perspiciatis minus illum.", 
+      "main_variant": true, 
+      "author": "Alias magnam eveniet saepe quod nisi unde.", 
+      "visible": false, 
+      "recipe_id": 3, 
       "id": 4
     }, 
     {
-      "comment": "Modi unde ut placeat nulla quis. Enim qui asperiores consequatur facere. Ad voluptatem atque consectetur impedit sint culpa.", 
-      "main_variant": true, 
-      "author": "Incidunt error voluptatem quam iste beatae voluptas.", 
-      "visible": true, 
-      "recipe_id": 2, 
+      "comment": "Voluptatem culpa veniam id sapiente ducimus. A distinctio modi sequi cupiditate doloribus totam.", 
+      "main_variant": false, 
+      "author": "Debitis aspernatur eveniet dignissimos tempore et earum.", 
+      "visible": false, 
+      "recipe_id": 5, 
       "id": 5
     }, 
     {
-      "comment": "Possimus laboriosam expedita omnis aspernatur illo. Fuga nostrum ipsa eligendi ad incidunt.", 
-      "main_variant": true, 
-      "author": "Natus dolores dolores.", 
+      "comment": "Blanditiis officiis autem minus delectus. Neque reiciendis qui eos esse ipsum quod.", 
+      "main_variant": false, 
+      "author": "Culpa fugit modi blanditiis atque eaque cum animi.", 
       "visible": true, 
-      "recipe_id": 10, 
+      "recipe_id": 1, 
       "id": 6
     }, 
     {
-      "comment": "Expedita distinctio labore error. Dicta vel soluta iusto totam occaecati. Et non quam recusandae.", 
-      "main_variant": true, 
-      "author": "Officiis eum saepe ex quisquam suscipit ad.", 
+      "comment": "Animi et blanditiis dolore tempore. Commodi maiores aspernatur enim odit repellendus. Nisi enim est cupiditate laborum.", 
+      "main_variant": false, 
+      "author": "Nihil id explicabo.", 
       "visible": true, 
-      "recipe_id": 5, 
+      "recipe_id": 3, 
       "id": 7
     }, 
     {
-      "comment": "Officiis expedita aut suscipit. Molestiae ex aliquid. Sequi animi earum repellat modi.", 
-      "main_variant": true, 
-      "author": "Corrupti eius voluptates id nemo minima odio.", 
+      "comment": "Atque accusantium id quisquam quidem iste officiis. Illum culpa expedita dolores.", 
+      "main_variant": false, 
+      "author": "Adipisci amet nemo illum nisi labore reprehenderit molestiae.", 
       "visible": false, 
-      "recipe_id": 4, 
+      "recipe_id": 9, 
       "id": 8
     }, 
     {
-      "comment": "Enim quos est hic.", 
-      "main_variant": false, 
-      "author": "Doloremque officiis quisquam deserunt.", 
-      "visible": false, 
-      "recipe_id": 9, 
+      "comment": "Laudantium porro earum numquam.", 
+      "main_variant": true, 
+      "author": "Tempora illum tempora nihil beatae.", 
+      "visible": true, 
+      "recipe_id": 5, 
       "id": 9
     }, 
     {
-      "comment": "Non aliquid tempora modi laudantium ut eum. Repellendus neque sed neque ad architecto alias consequatur.", 
+      "comment": "Dicta optio magni perspiciatis in dolorem at.", 
       "main_variant": false, 
-      "author": "Cum doloribus veniam hic quia.", 
-      "visible": false, 
+      "author": "Ratione fugit ea.", 
+      "visible": true, 
       "recipe_id": 5, 
       "id": 10
     }
   ], 
+  "ingredientQuantity": [
+    {
+      "unit_id": 4, 
+      "ingredient_id": 5, 
+      "variant_id": 8, 
+      "id": 1, 
+      "quantity": 9
+    }, 
+    {
+      "unit_id": 5, 
+      "ingredient_id": 6, 
+      "variant_id": 3, 
+      "id": 2, 
+      "quantity": 9
+    }, 
+    {
+      "unit_id": 5, 
+      "ingredient_id": 4, 
+      "variant_id": 2, 
+      "id": 3, 
+      "quantity": 10
+    }, 
+    {
+      "unit_id": 3, 
+      "ingredient_id": 5, 
+      "variant_id": 3, 
+      "id": 4, 
+      "quantity": 2
+    }, 
+    {
+      "unit_id": 2, 
+      "ingredient_id": 1, 
+      "variant_id": 2, 
+      "id": 5, 
+      "quantity": 4
+    }, 
+    {
+      "unit_id": 4, 
+      "ingredient_id": 1, 
+      "variant_id": 6, 
+      "id": 6, 
+      "quantity": 5
+    }, 
+    {
+      "unit_id": 6, 
+      "ingredient_id": 1, 
+      "variant_id": 2, 
+      "id": 7, 
+      "quantity": 9
+    }, 
+    {
+      "unit_id": 5, 
+      "ingredient_id": 2, 
+      "variant_id": 9, 
+      "id": 8, 
+      "quantity": 2
+    }, 
+    {
+      "unit_id": 10, 
+      "ingredient_id": 6, 
+      "variant_id": 6, 
+      "id": 9, 
+      "quantity": 7
+    }, 
+    {
+      "unit_id": 8, 
+      "ingredient_id": 4, 
+      "variant_id": 1, 
+      "id": 10, 
+      "quantity": 3
+    }
+  ], 
   "step": [
     {
-      "picture": "Unde harum voluptatibus a ut dolor. Ipsa doloribus porro debitis. Eligendi error sint labore beatae tempore earum.", 
-      "text": "Maxime natus accusamus aut officiis unde.", 
+      "picture": "Architecto deleniti harum fugit fugit. Nobis adipisci ex nobis. Dignissimos vel recusandae deleniti.", 
+      "text": "Quis id maiores.", 
       "id": 1, 
-      "variant_id": 10
+      "variant_id": 4
     }, 
     {
-      "picture": "At explicabo ut porro facere quo. Numquam perspiciatis amet delectus nemo minus.", 
-      "text": "Ut at praesentium voluptatem dignissimos excepturi excepturi.", 
+      "picture": "Totam omnis labore ipsum minima. Consequuntur alias error necessitatibus minima deserunt veritatis.", 
+      "text": "Ab libero vero possimus voluptas asperiores officiis itaque.", 
       "id": 2, 
-      "variant_id": 8
+      "variant_id": 9
     }, 
     {
-      "picture": "Excepturi sed reiciendis rerum possimus doloribus repudiandae. Cupiditate id odit labore quisquam repudiandae. Maiores consectetur expedita modi unde hic. Occaecati cum ab numquam.", 
-      "text": "Totam aperiam unde perspiciatis quis.", 
+      "picture": "Iste reiciendis quidem sed maiores. Cumque cumque eveniet adipisci eius culpa quam.", 
+      "text": "Consectetur tempora deleniti incidunt repudiandae deleniti.", 
       "id": 3, 
-      "variant_id": 8
-    }, 
-    {
-      "picture": "Tempora reiciendis sapiente similique odio repellendus accusantium eius. Veritatis sequi modi cupiditate.", 
-      "text": "Dicta accusamus culpa molestias commodi magnam.", 
-      "id": 4, 
-      "variant_id": 2
-    }, 
-    {
-      "picture": "Quia quasi vero aut illo vero consequatur totam. Eaque repellendus consequuntur. Corrupti perferendis reiciendis asperiores amet porro necessitatibus.", 
-      "text": "Porro ut minima corporis iusto magnam.", 
-      "id": 5, 
       "variant_id": 1
     }, 
     {
-      "picture": "Magnam perferendis amet tempore. Aperiam architecto quasi reprehenderit aperiam. Quia veritatis blanditiis.", 
-      "text": "Aspernatur deleniti voluptate fuga alias.", 
-      "id": 6, 
+      "picture": "Labore dolorem et temporibus illo harum ipsa. Optio doloribus magnam ullam quae. Quis quis amet quasi quasi. Tempore quam beatae reiciendis at.", 
+      "text": "Excepturi esse necessitatibus consequatur commodi praesentium.", 
+      "id": 4, 
+      "variant_id": 3
+    }, 
+    {
+      "picture": "Quisquam facere id quaerat itaque pariatur. Numquam est natus dolor quod ipsa nisi. Animi porro eos fugiat quia.", 
+      "text": "Magnam incidunt itaque suscipit aspernatur autem.", 
+      "id": 5, 
       "variant_id": 5
     }, 
     {
-      "picture": "Laboriosam illum necessitatibus eaque. Sint totam commodi provident quam ducimus. Unde recusandae illo harum ea in dignissimos excepturi.", 
-      "text": "Perferendis asperiores ipsa culpa repellat cupiditate consequatur.", 
+      "picture": "Commodi recusandae id perferendis vel.", 
+      "text": "Qui et velit ex.", 
+      "id": 6, 
+      "variant_id": 4
+    }, 
+    {
+      "picture": "Magnam iste est libero fugiat tempore ipsam. Laudantium nesciunt autem doloremque doloribus culpa tempora.", 
+      "text": "Facere magnam accusantium qui amet ad minus.", 
       "id": 7, 
+      "variant_id": 4
+    }, 
+    {
+      "picture": "Magnam labore dolorum. Ullam error laboriosam adipisci in quos sit. Tempora autem reprehenderit sunt voluptate sapiente adipisci fuga.", 
+      "text": "Quasi necessitatibus qui deserunt mollitia sed.", 
+      "id": 8, 
+      "variant_id": 4
+    }, 
+    {
+      "picture": "Doloremque aspernatur facilis. Quisquam accusantium quod voluptates libero in. Quo praesentium excepturi quae modi iusto id.", 
+      "text": "Aperiam laboriosam illo unde repellat odio.", 
+      "id": 9, 
+      "variant_id": 1
+    }, 
+    {
+      "picture": "Ut provident officia sequi quam. Eaque dolores consectetur dolorum facere nisi quod.", 
+      "text": "Facilis ipsa eum aperiam voluptates nam.", 
+      "id": 10, 
+      "variant_id": 10
+    }
+  ], 
+  "materialQuantity": [
+    {
+      "variant_id": 9, 
+      "id": 1, 
+      "material_id": 1, 
+      "quantity": 6
+    }, 
+    {
+      "variant_id": 1, 
+      "id": 2, 
+      "material_id": 10, 
+      "quantity": 3
+    }, 
+    {
+      "variant_id": 10, 
+      "id": 3, 
+      "material_id": 9, 
+      "quantity": 10
+    }, 
+    {
+      "variant_id": 10, 
+      "id": 4, 
+      "material_id": 1, 
+      "quantity": 7
+    }, 
+    {
+      "variant_id": 5, 
+      "id": 5, 
+      "material_id": 8, 
+      "quantity": 7
+    }, 
+    {
+      "variant_id": 2, 
+      "id": 6, 
+      "material_id": 6, 
+      "quantity": 6
+    }, 
+    {
+      "variant_id": 2, 
+      "id": 7, 
+      "material_id": 5, 
+      "quantity": 3
+    }, 
+    {
+      "variant_id": 7, 
+      "id": 8, 
+      "material_id": 2, 
+      "quantity": 6
+    }, 
+    {
+      "variant_id": 6, 
+      "id": 9, 
+      "material_id": 10, 
+      "quantity": 10
+    }, 
+    {
+      "variant_id": 10, 
+      "id": 10, 
+      "material_id": 8, 
+      "quantity": 8
+    }
+  ], 
+  "variant_material_quantity": [
+    {
+      "material_quantity_id": 4, 
+      "variant_id": 5
+    }, 
+    {
+      "material_quantity_id": 6, 
+      "variant_id": 4
+    }, 
+    {
+      "material_quantity_id": 9, 
+      "variant_id": 10
+    }, 
+    {
+      "material_quantity_id": 1, 
+      "variant_id": 10
+    }, 
+    {
+      "material_quantity_id": 9, 
+      "variant_id": 2
+    }, 
+    {
+      "material_quantity_id": 1, 
       "variant_id": 7
     }, 
     {
-      "picture": "Eveniet cum veniam dolores. Adipisci quidem accusamus hic quos sapiente.", 
-      "text": "Sit praesentium illum corrupti doloremque reprehenderit saepe.", 
-      "id": 8, 
-      "variant_id": 9
+      "material_quantity_id": 2, 
+      "variant_id": 10
     }, 
     {
-      "picture": "Magni in adipisci excepturi in commodi maiores. Temporibus est eligendi sint voluptas a natus. Quos voluptatum labore accusantium porro.", 
-      "text": "Veniam nulla consequatur.", 
-      "id": 9, 
-      "variant_id": 9
+      "material_quantity_id": 4, 
+      "variant_id": 1
     }, 
     {
-      "picture": "Sunt reiciendis quo omnis voluptatibus repellendus veniam. Voluptatibus cumque error provident.", 
-      "text": "Dolore provident dolores voluptas corporis qui.", 
-      "id": 10, 
+      "material_quantity_id": 4, 
+      "variant_id": 7
+    }, 
+    {
+      "material_quantity_id": 7, 
+      "variant_id": 5
+    }
+  ], 
+  "variant_recipe_type": [
+    {
+      "recipe_type_id": 5, 
+      "variant_id": 6
+    }, 
+    {
+      "recipe_type_id": 9, 
+      "variant_id": 7
+    }, 
+    {
+      "recipe_type_id": 8, 
+      "variant_id": 10
+    }, 
+    {
+      "recipe_type_id": 9, 
+      "variant_id": 3
+    }, 
+    {
+      "recipe_type_id": 10, 
+      "variant_id": 8
+    }, 
+    {
+      "recipe_type_id": 7, 
       "variant_id": 2
+    }, 
+    {
+      "recipe_type_id": 7, 
+      "variant_id": 4
+    }, 
+    {
+      "recipe_type_id": 3, 
+      "variant_id": 9
+    }, 
+    {
+      "recipe_type_id": 7, 
+      "variant_id": 7
+    }, 
+    {
+      "recipe_type_id": 5, 
+      "variant_id": 7
+    }
+  ], 
+  "variant_ingredient_quantity": [
+    {
+      "ingredient_quantity_id": 3, 
+      "variant_id": 9
+    }, 
+    {
+      "ingredient_quantity_id": 3, 
+      "variant_id": 9
+    }, 
+    {
+      "ingredient_quantity_id": 8, 
+      "variant_id": 9
+    }, 
+    {
+      "ingredient_quantity_id": 10, 
+      "variant_id": 10
+    }, 
+    {
+      "ingredient_quantity_id": 3, 
+      "variant_id": 5
+    }, 
+    {
+      "ingredient_quantity_id": 5, 
+      "variant_id": 8
+    }, 
+    {
+      "ingredient_quantity_id": 5, 
+      "variant_id": 9
+    }, 
+    {
+      "ingredient_quantity_id": 9, 
+      "variant_id": 7
+    }, 
+    {
+      "ingredient_quantity_id": 9, 
+      "variant_id": 2
+    }, 
+    {
+      "ingredient_quantity_id": 5, 
+      "variant_id": 4
     }
   ], 
   "unit": [
     {
-      "symbol": "Culpa beatae deserunt placeat earum at neque.", 
+      "symbol": "Distinctio facilis praesentium odit voluptatem sed eveniet.", 
       "id": 1, 
-      "name": "Expedita doloribus aperiam quae."
+      "name": "Mollitia nisi modi at neque."
     }, 
     {
-      "symbol": "Omnis fugiat culpa doloribus vitae provident cumque.", 
+      "symbol": "Nobis veritatis explicabo aut officia quae molestiae.", 
       "id": 2, 
-      "name": "Recusandae magni rem voluptates rerum voluptas praesentium."
+      "name": "Facere non porro."
     }, 
     {
-      "symbol": "Necessitatibus est cumque ratione odit.", 
+      "symbol": "Eos earum necessitatibus a pariatur ipsam voluptas.", 
       "id": 3, 
-      "name": "Libero ex error expedita mollitia cum."
+      "name": "Saepe fugit possimus explicabo ducimus accusamus nisi."
     }, 
     {
-      "symbol": "Enim ullam temporibus facere odio.", 
+      "symbol": "Voluptatem sapiente voluptatibus sint.", 
       "id": 4, 
-      "name": "Sit dolorum perspiciatis porro necessitatibus totam."
+      "name": "Corporis iusto placeat voluptate sed voluptatum velit."
     }, 
     {
-      "symbol": "Et atque accusantium eius numquam voluptate soluta.", 
+      "symbol": "Similique eum nulla iure unde.", 
       "id": 5, 
-      "name": "Quod accusamus officiis magnam laborum accusantium nam neque."
+      "name": "Nostrum omnis odit provident animi."
     }, 
     {
-      "symbol": "Rem accusamus vitae.", 
+      "symbol": "Fugit vero facilis perferendis.", 
       "id": 6, 
-      "name": "Praesentium quam dolor hic consequuntur vitae ea."
+      "name": "Exercitationem eum eveniet vel aliquam ab."
     }, 
     {
-      "symbol": "Iusto ipsum deserunt blanditiis quos officia.", 
+      "symbol": "Debitis nisi sequi fugit quibusdam delectus asperiores consequuntur.", 
       "id": 7, 
-      "name": "Labore at placeat cum odit sapiente."
+      "name": "Voluptatibus quia laboriosam rerum accusantium quam quod fugiat."
     }, 
     {
-      "symbol": "Et commodi distinctio consequatur.", 
+      "symbol": "Ipsum neque velit harum sed tempore.", 
       "id": 8, 
-      "name": "Officiis quis porro consequatur consectetur nesciunt aliquam."
+      "name": "Explicabo distinctio rerum illo beatae fugiat eum asperiores."
     }, 
     {
-      "symbol": "Ipsa possimus possimus dolor quaerat.", 
+      "symbol": "Reiciendis fugiat alias assumenda optio laboriosam quo incidunt.", 
       "id": 9, 
-      "name": "Necessitatibus impedit tempore quae voluptatem."
+      "name": "Quis excepturi placeat recusandae eos."
     }, 
     {
-      "symbol": "Adipisci laboriosam blanditiis provident.", 
+      "symbol": "Voluptates esse distinctio error.", 
       "id": 10, 
-      "name": "Aliquam ratione laborum assumenda animi numquam."
+      "name": "Labore maiores facere inventore expedita deleniti."
     }
   ], 
   "ingredient": [
     {
       "id": 1, 
-      "name": "Voluptas facilis corporis tempora."
+      "name": "Culpa ipsam asperiores."
     }, 
     {
       "id": 2, 
-      "name": "Atque cupiditate delectus pariatur exercitationem voluptate consequuntur illum."
+      "name": "Architecto quos nostrum fuga fugit excepturi."
     }, 
     {
       "id": 3, 
-      "name": "Explicabo est consequuntur tempore omnis."
+      "name": "Magni repellendus voluptas voluptas voluptates."
     }, 
     {
       "id": 4, 
-      "name": "Vel quas eveniet veniam recusandae quasi atque."
+      "name": "Numquam cupiditate consequuntur corrupti earum odit quas repellat."
     }, 
     {
       "id": 5, 
-      "name": "Dolore reiciendis a itaque."
+      "name": "Nesciunt maxime quod recusandae."
     }, 
     {
       "id": 6, 
-      "name": "Itaque natus placeat."
+      "name": "Unde nobis repellat."
     }, 
     {
       "id": 7, 
-      "name": "Libero nisi enim culpa incidunt fugiat ut."
+      "name": "Sapiente atque unde autem."
     }, 
     {
       "id": 8, 
-      "name": "A eos sequi."
+      "name": "Fugit saepe rem nostrum doloribus."
     }, 
     {
       "id": 9, 
-      "name": "Atque ut quod delectus."
+      "name": "Quis quam neque totam laborum consectetur."
     }, 
     {
       "id": 10, 
-      "name": "Cupiditate quis possimus optio corrupti aliquam aliquam voluptate."
+      "name": "Qui molestiae voluptates voluptate."
     }
   ]
 }

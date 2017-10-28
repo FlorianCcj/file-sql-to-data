@@ -1,41 +1,67 @@
 {
+  "recipe_type": {
+    "numberToCreate": 10, 
+    "columns": {
+      "id": {
+        "name": "id", 
+        "nullable": true, 
+        "primary": true, 
+        "unique": false, 
+        "type": "INT", 
+        "size": null
+      }, 
+      "name": {
+        "name": "name", 
+        "nullable": true, 
+        "primary": false, 
+        "unique": true, 
+        "type": "VARCHAR", 
+        "size": 255
+      }
+    }
+  }, 
   "grade": {
     "numberToCreate": 10, 
     "columns": {
       "comment": {
-        "unique": false, 
-        "size": null, 
-        "type": "LONGTEXT", 
         "name": "comment", 
-        "nullable": false
+        "nullable": false, 
+        "primary": false, 
+        "unique": false, 
+        "type": "LONGTEXT", 
+        "size": null
       }, 
       "type_id": {
-        "unique": false, 
-        "size": null, 
-        "type": "INT", 
         "name": "type_id", 
-        "nullable": true
+        "nullable": true, 
+        "primary": false, 
+        "unique": false, 
+        "type": "INT", 
+        "size": null
       }, 
       "unit_id": {
-        "unique": false, 
-        "size": null, 
-        "type": "INT", 
         "name": "unit_id", 
-        "nullable": false
+        "nullable": false, 
+        "primary": false, 
+        "unique": false, 
+        "type": "INT", 
+        "size": null
       }, 
       "value": {
-        "unique": false, 
-        "size": null, 
-        "type": "INT", 
         "name": "value", 
-        "nullable": false
+        "nullable": false, 
+        "primary": false, 
+        "unique": false, 
+        "type": "INT", 
+        "size": null
       }, 
       "variant_id": {
-        "unique": false, 
-        "size": null, 
-        "type": "INT", 
         "name": "variant_id", 
-        "nullable": true
+        "nullable": true, 
+        "primary": false, 
+        "unique": false, 
+        "type": "INT", 
+        "size": null
       }, 
       "id": {
         "name": "id", 
@@ -59,11 +85,33 @@
         "size": null
       }, 
       "name": {
-        "unique": true, 
-        "size": 255, 
-        "type": "VARCHAR", 
         "name": "name", 
-        "nullable": true
+        "nullable": true, 
+        "primary": false, 
+        "unique": true, 
+        "type": "VARCHAR", 
+        "size": 255
+      }
+    }
+  }, 
+  "grade_type": {
+    "numberToCreate": 10, 
+    "columns": {
+      "id": {
+        "name": "id", 
+        "nullable": true, 
+        "primary": true, 
+        "unique": false, 
+        "type": "INT", 
+        "size": null
+      }, 
+      "name": {
+        "name": "name", 
+        "nullable": true, 
+        "primary": false, 
+        "unique": true, 
+        "type": "VARCHAR", 
+        "size": 255
       }
     }
   }, 
@@ -79,11 +127,12 @@
         "size": null
       }, 
       "name": {
-        "unique": true, 
-        "size": 255, 
-        "type": "VARCHAR", 
         "name": "name", 
-        "nullable": true
+        "nullable": true, 
+        "primary": false, 
+        "unique": true, 
+        "type": "VARCHAR", 
+        "size": 255
       }
     }
   }, 
@@ -91,39 +140,44 @@
     "numberToCreate": 10, 
     "columns": {
       "comment": {
-        "unique": false, 
-        "size": null, 
-        "type": "LONGTEXT", 
         "name": "comment", 
-        "nullable": false
+        "nullable": false, 
+        "primary": false, 
+        "unique": false, 
+        "type": "LONGTEXT", 
+        "size": null
       }, 
       "main_variant": {
-        "unique": false, 
-        "size": 1, 
-        "type": "TINYINT", 
         "name": "main_variant", 
-        "nullable": false
+        "nullable": false, 
+        "primary": false, 
+        "unique": false, 
+        "type": "TINYINT", 
+        "size": 1
       }, 
       "author": {
-        "unique": false, 
-        "size": 255, 
-        "type": "VARCHAR", 
         "name": "author", 
-        "nullable": true
+        "nullable": true, 
+        "primary": false, 
+        "unique": false, 
+        "type": "VARCHAR", 
+        "size": 255
       }, 
       "visible": {
-        "unique": false, 
-        "size": 1, 
-        "type": "TINYINT", 
         "name": "visible", 
-        "nullable": false
+        "nullable": false, 
+        "primary": false, 
+        "unique": false, 
+        "type": "TINYINT", 
+        "size": 1
       }, 
       "recipe_id": {
-        "unique": false, 
-        "size": null, 
-        "type": "INT", 
         "name": "recipe_id", 
-        "nullable": false
+        "nullable": false, 
+        "primary": false, 
+        "unique": false, 
+        "type": "INT", 
+        "size": null
       }, 
       "id": {
         "name": "id", 
@@ -135,32 +189,180 @@
       }
     }
   }, 
+  "ingredientQuantity": {
+    "numberToCreate": 10, 
+    "columns": {
+      "unit_id": {
+        "name": "unit_id", 
+        "nullable": true, 
+        "primary": false, 
+        "unique": false, 
+        "type": "INT", 
+        "size": null
+      }, 
+      "ingredient_id": {
+        "name": "ingredient_id", 
+        "nullable": true, 
+        "primary": false, 
+        "unique": false, 
+        "type": "INT", 
+        "size": null
+      }, 
+      "variant_id": {
+        "name": "variant_id", 
+        "nullable": true, 
+        "primary": false, 
+        "unique": false, 
+        "type": "INT", 
+        "size": null
+      }, 
+      "id": {
+        "name": "id", 
+        "nullable": true, 
+        "primary": true, 
+        "unique": false, 
+        "type": "INT", 
+        "size": null
+      }, 
+      "quantity": {
+        "name": "quantity", 
+        "nullable": true, 
+        "primary": false, 
+        "unique": false, 
+        "type": "INT", 
+        "size": null
+      }
+    }
+  }, 
   "step": {
     "numberToCreate": 10, 
     "columns": {
       "picture": {
-        "unique": false, 
-        "size": null, 
-        "type": "LONGTEXT", 
         "name": "picture", 
-        "nullable": false
+        "nullable": false, 
+        "primary": false, 
+        "unique": false, 
+        "type": "LONGTEXT", 
+        "size": null
       }, 
       "text": {
-        "unique": false, 
-        "size": 255, 
-        "type": "VARCHAR", 
         "name": "text", 
-        "nullable": false
+        "nullable": false, 
+        "primary": false, 
+        "unique": false, 
+        "type": "VARCHAR", 
+        "size": 255
       }, 
       "variant_id": {
-        "unique": false, 
-        "size": null, 
-        "type": "INT", 
         "name": "variant_id", 
-        "nullable": false
+        "nullable": false, 
+        "primary": false, 
+        "unique": false, 
+        "type": "INT", 
+        "size": null
       }, 
       "id": {
         "name": "id", 
+        "nullable": true, 
+        "primary": true, 
+        "unique": false, 
+        "type": "INT", 
+        "size": null
+      }
+    }
+  }, 
+  "materialQuantity": {
+    "numberToCreate": 10, 
+    "columns": {
+      "material_id": {
+        "name": "material_id", 
+        "nullable": true, 
+        "primary": false, 
+        "unique": false, 
+        "type": "INT", 
+        "size": null
+      }, 
+      "variant_id": {
+        "name": "variant_id", 
+        "nullable": true, 
+        "primary": false, 
+        "unique": false, 
+        "type": "INT", 
+        "size": null
+      }, 
+      "id": {
+        "name": "id", 
+        "nullable": true, 
+        "primary": true, 
+        "unique": false, 
+        "type": "INT", 
+        "size": null
+      }, 
+      "quantity": {
+        "name": "quantity", 
+        "nullable": true, 
+        "primary": false, 
+        "unique": false, 
+        "type": "INT", 
+        "size": null
+      }
+    }
+  }, 
+  "variant_material_quantity": {
+    "numberToCreate": 10, 
+    "columns": {
+      "material_quantity_id": {
+        "name": "material_quantity_id", 
+        "nullable": true, 
+        "primary": true, 
+        "unique": false, 
+        "type": "INT", 
+        "size": null
+      }, 
+      "variant_id": {
+        "name": "variant_id", 
+        "nullable": true, 
+        "primary": true, 
+        "unique": false, 
+        "type": "INT", 
+        "size": null
+      }
+    }
+  }, 
+  "variant_recipe_type": {
+    "numberToCreate": 10, 
+    "columns": {
+      "recipe_type_id": {
+        "name": "recipe_type_id", 
+        "nullable": true, 
+        "primary": true, 
+        "unique": false, 
+        "type": "INT", 
+        "size": null
+      }, 
+      "variant_id": {
+        "name": "variant_id", 
+        "nullable": true, 
+        "primary": true, 
+        "unique": false, 
+        "type": "INT", 
+        "size": null
+      }
+    }
+  }, 
+  "variant_ingredient_quantity": {
+    "numberToCreate": 10, 
+    "columns": {
+      "ingredient_quantity_id": {
+        "name": "ingredient_quantity_id", 
+        "nullable": true, 
+        "primary": true, 
+        "unique": false, 
+        "type": "INT", 
+        "size": null
+      }, 
+      "variant_id": {
+        "name": "variant_id", 
         "nullable": true, 
         "primary": true, 
         "unique": false, 
@@ -173,11 +375,12 @@
     "numberToCreate": 10, 
     "columns": {
       "symbol": {
-        "unique": false, 
-        "size": 255, 
-        "type": "VARCHAR", 
         "name": "symbol", 
-        "nullable": true
+        "nullable": true, 
+        "primary": false, 
+        "unique": false, 
+        "type": "VARCHAR", 
+        "size": 255
       }, 
       "id": {
         "name": "id", 
@@ -188,11 +391,12 @@
         "size": null
       }, 
       "name": {
-        "unique": true, 
-        "size": 255, 
-        "type": "VARCHAR", 
         "name": "name", 
-        "nullable": true
+        "nullable": true, 
+        "primary": false, 
+        "unique": true, 
+        "type": "VARCHAR", 
+        "size": 255
       }
     }
   }, 
@@ -208,11 +412,12 @@
         "size": null
       }, 
       "name": {
-        "unique": false, 
-        "size": 255, 
-        "type": "VARCHAR", 
         "name": "name", 
-        "nullable": true
+        "nullable": true, 
+        "primary": false, 
+        "unique": false, 
+        "type": "VARCHAR", 
+        "size": 255
       }
     }
   }
