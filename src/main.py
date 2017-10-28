@@ -186,6 +186,8 @@ class DataGenerator:
 			numberOfRow = dataSchema[tableName]['numberToCreate']
 			for i in range(numberOfRow):
 				data[tableName].append(self.generateNewRow(dataSchema[tableName]['columns'], numberOfRow, i, tableName))
+			print(data[tableName])
+			print('----------------------------------------------------')
 		return data
 
 	def generateNewRow(self, columns, numberOfRow, id, tableName):
