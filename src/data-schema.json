@@ -32,18 +32,28 @@
         "size": null
       }, 
       "type_id": {
-        "type": "foreign key", 
+        "name": "type_id", 
+        "nullable": true, 
         "foreignKey": {
           "column": "id", 
           "table": "grade_type"
-        }
+        }, 
+        "primary": false, 
+        "unique": false, 
+        "type": "foreign key", 
+        "size": null
       }, 
       "unit_id": {
-        "type": "foreign key", 
+        "name": "unit_id", 
+        "nullable": false, 
         "foreignKey": {
           "column": "id", 
           "table": "unit"
-        }
+        }, 
+        "primary": false, 
+        "unique": false, 
+        "type": "foreign key", 
+        "size": null
       }, 
       "value": {
         "name": "value", 
@@ -54,11 +64,16 @@
         "size": null
       }, 
       "variant_id": {
-        "type": "foreign key", 
+        "name": "variant_id", 
+        "nullable": true, 
         "foreignKey": {
           "column": "id", 
           "table": "variant"
-        }
+        }, 
+        "primary": false, 
+        "unique": false, 
+        "type": "foreign key", 
+        "size": null
       }, 
       "id": {
         "name": "id", 
@@ -169,11 +184,16 @@
         "size": 1
       }, 
       "recipe_id": {
-        "type": "foreign key", 
+        "name": "recipe_id", 
+        "nullable": false, 
         "foreignKey": {
           "column": "id", 
           "table": "recipe"
-        }
+        }, 
+        "primary": false, 
+        "unique": false, 
+        "type": "foreign key", 
+        "size": null
       }, 
       "id": {
         "name": "id", 
@@ -189,25 +209,40 @@
     "numberToCreate": 10, 
     "columns": {
       "unit_id": {
-        "type": "foreign key", 
+        "name": "unit_id", 
+        "nullable": true, 
         "foreignKey": {
           "column": "id", 
           "table": "unit"
-        }
+        }, 
+        "primary": false, 
+        "unique": false, 
+        "type": "foreign key", 
+        "size": null
       }, 
       "ingredient_id": {
-        "type": "foreign key", 
+        "name": "ingredient_id", 
+        "nullable": true, 
         "foreignKey": {
           "column": "id", 
           "table": "ingredient"
-        }
+        }, 
+        "primary": false, 
+        "unique": false, 
+        "type": "foreign key", 
+        "size": null
       }, 
       "variant_id": {
-        "type": "foreign key", 
+        "name": "variant_id", 
+        "nullable": true, 
         "foreignKey": {
           "column": "id", 
           "table": "variant"
-        }
+        }, 
+        "primary": false, 
+        "unique": false, 
+        "type": "foreign key", 
+        "size": null
       }, 
       "id": {
         "name": "id", 
@@ -247,11 +282,16 @@
         "size": 255
       }, 
       "variant_id": {
-        "type": "foreign key", 
+        "name": "variant_id", 
+        "nullable": false, 
         "foreignKey": {
           "column": "id", 
           "table": "variant"
-        }
+        }, 
+        "primary": false, 
+        "unique": false, 
+        "type": "foreign key", 
+        "size": null
       }, 
       "id": {
         "name": "id", 
@@ -267,18 +307,28 @@
     "numberToCreate": 10, 
     "columns": {
       "material_id": {
-        "type": "foreign key", 
+        "name": "material_id", 
+        "nullable": true, 
         "foreignKey": {
           "column": "id", 
           "table": "material"
-        }
+        }, 
+        "primary": false, 
+        "unique": false, 
+        "type": "foreign key", 
+        "size": null
       }, 
       "variant_id": {
-        "type": "foreign key", 
+        "name": "variant_id", 
+        "nullable": true, 
         "foreignKey": {
           "column": "id", 
           "table": "variant"
-        }
+        }, 
+        "primary": false, 
+        "unique": false, 
+        "type": "foreign key", 
+        "size": null
       }, 
       "id": {
         "name": "id", 
@@ -302,18 +352,28 @@
     "numberToCreate": 10, 
     "columns": {
       "material_quantity_id": {
-        "type": "foreign key", 
+        "name": "material_quantity_id", 
+        "nullable": true, 
         "foreignKey": {
           "column": "id", 
           "table": "materialQuantity"
-        }
+        }, 
+        "primary": true, 
+        "unique": false, 
+        "type": "foreign key", 
+        "size": null
       }, 
       "variant_id": {
-        "type": "foreign key", 
+        "name": "variant_id", 
+        "nullable": true, 
         "foreignKey": {
           "column": "id", 
           "table": "variant"
-        }
+        }, 
+        "primary": true, 
+        "unique": false, 
+        "type": "foreign key", 
+        "size": null
       }
     }
   }, 
@@ -321,18 +381,28 @@
     "numberToCreate": 10, 
     "columns": {
       "recipe_type_id": {
-        "type": "foreign key", 
+        "name": "recipe_type_id", 
+        "nullable": true, 
         "foreignKey": {
           "column": "id", 
           "table": "recipe_type"
-        }
+        }, 
+        "primary": true, 
+        "unique": false, 
+        "type": "foreign key", 
+        "size": null
       }, 
       "variant_id": {
-        "type": "foreign key", 
+        "name": "variant_id", 
+        "nullable": true, 
         "foreignKey": {
           "column": "id", 
           "table": "variant"
-        }
+        }, 
+        "primary": true, 
+        "unique": false, 
+        "type": "foreign key", 
+        "size": null
       }
     }
   }, 
@@ -340,18 +410,28 @@
     "numberToCreate": 10, 
     "columns": {
       "ingredient_quantity_id": {
-        "type": "foreign key", 
+        "name": "ingredient_quantity_id", 
+        "nullable": true, 
         "foreignKey": {
           "column": "id", 
           "table": "ingredientQuantity"
-        }
+        }, 
+        "primary": true, 
+        "unique": false, 
+        "type": "foreign key", 
+        "size": null
       }, 
       "variant_id": {
-        "type": "foreign key", 
+        "name": "variant_id", 
+        "nullable": true, 
         "foreignKey": {
           "column": "id", 
           "table": "variant"
-        }
+        }, 
+        "primary": true, 
+        "unique": false, 
+        "type": "foreign key", 
+        "size": null
       }
     }
   }, 

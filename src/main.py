@@ -44,6 +44,7 @@ class DataGenerator:
 		self.uniqueDatas = {}
 		self.primaryColumn = {}
 		self.foreignKeys = {}
+		self.foreignKeysData = {}
 		
 		self.timeout = 50
 		self.defaultNumberToCreate = 10
@@ -54,6 +55,7 @@ class DataGenerator:
 			self.dataSchema = self.readJsonFile(self.jsonFile)
 			self.primaryColumn = self.extractPrimaryColumn(self.dataSchema);
 			self.data = self.generateDatas(self.dataSchema)
+			self.data = self.generateForeignKey(self.dataSchema)
 			# self.generateJsonFile('data.json', self.data)
 			return self.data
 		elif (self.inputFile):
@@ -186,8 +188,8 @@ class DataGenerator:
 			if foreignKeys.has_key(tableName):
 				for columnName in dataSchema[tableName]['columns']:
 					if foreignKeys[tableName]['columns'].has_key(columnName):
-						data[tableName]['columns'][columnName] = foreignKeys[tableName]['columns'][columnName]
-		pass
+						for dataSColumn in foreignKeys[tableName]['columns'][columnName]:
+							data[tableName]['columns'][columnName][dataSColumn] = foreignKeys[tableName]['columns'][columnName][dataSColumn]
 		return dataSchema
 
 	def isThisTableSColumnsUnique(self, tableName, tableColumns, uniqueTable):
@@ -210,7 +212,7 @@ class DataGenerator:
 			tableName = tableName.strip()
 			primaryColumn[tableName] = []
 			for columName in dataSchema[tableName]['columns']:
-				if dataSchema[tableName]['columns'][columName.strip()]['primary']:
+				if dataSchema[tableName]['columns'][columName.strip()].has_key('primary') and dataSchema[tableName]['columns'][columName.strip()]['primary']:
 					primaryColumn[tableName].append(columName)
 		print primaryColumn
 		return primaryColumn
@@ -221,6 +223,47 @@ class DataGenerator:
 		for tableName in dataSchema:
 			data[tableName] = self.generateTableData(tableName, dataSchema)
 		return data
+
+	def generateForeignKey(self, dataSchema):
+		print('### Liaison de la data ###')
+		data = {}
+		# WIP
+		# je me balade dans le schema
+		# si une colonne est foreign key et que la cle foreign key est active
+		#		je recupere la liste des cle source et je rand dedans
+		# si il y a une primary key dessus je boucle pour en generer une nouvelle
+		for tableName in dataSchema:
+			for columnName in dataSchema[tableName]['columns']:
+				if dataSchema[tableName]['columns'][columnName]['type'] == 'foreign key' and dataSchema[tableName]['columns'][columnName].has_key('foreignKey'):
+					# alors c'est une foreign key donc on joue
+					srcTableName = dataSchema[tableName]['columns'][columnName]['foreignKey']['table']
+					srcColumnName = dataSchema[tableName]['columns'][columnName]['foreignKey']['column']
+					if (not self.foreignKeysData.has_key(srcTableName)):
+						self.foreignKeysData[srcTableName] = {}
+					if (not self.foreignKeysData[srcTableName].has_key(srcColumnName)):
+						self.foreignKeysData[srcTableName][srcColumnName] = {}
+					if (self.foreignKeysData[srcTableName][srcColumnName] == {}):
+						self.foreignKeysData[srcTableName][srcColumnName] = self.generateForeignKeyData(srcTableName, srcColumnName)
+					self.generateForeignKeyColumn(self.foreignKeysData[srcTableName][srcColumnName])
+			# data[tableName] = self.generateTableData(tableName, dataSchema)
+		return data
+
+	def generateForeignKeyColumn(self, dataToRand):
+		# prend au rand et renvoit
+		pass
+
+	def generateForeignKeyData(self, tableName, columnName):
+		# on recupere toute les colonnes du tableName et on les renvois en tableau
+		dataForForeignKeys = [];
+		if (self.data.has_key(tableName)):
+			for data in self.data[tableName]:
+				if (data.has_key(columnName)):
+					dataForForeignKeys.append(data[columnName])
+				else:
+					print('[ERREUR][FK] la foreign key %s(%s) n existe pas'%tableName, columnName)
+		else:
+			print('[ERREUR] [FK] la table %s(%s) pour recuperer la foreign key n existe pas'%tableName, columnName)		
+		return dataForForeignKeys
 
 	def generateTableData(self, tableName, dataSchema):
 		if (not tableName in self.tableNameGeneratedData):
@@ -239,7 +282,7 @@ class DataGenerator:
 					newEntreePrimary = self.primaryColumnKeeper(tableName, tableData[i])
 				self.uniqueDatas[tableName]['primaryKey'].append(newEntreePrimary)
 				if (timeout == 50):
-					print "Tentative de generation dans la table `%s` a echoué a cause de la PRIMARY KEY constraint" % tableName
+					print "Tentative de generation dans la table %s a echoue a cause de la PRIMARY KEY constraint" % tableName
 			self.tableNameGeneratedData.append(tableName)
 			return tableData
 		else:
@@ -279,7 +322,7 @@ class DataGenerator:
 		return newRow
 
 	def generateDataColumn(self, column, numberOfRow, id):
-		print('### Generation d une column d une entree ###')
+		# print('### Generation d une column d une entree ###')
 		generatedData = None
 		if (column['name'] == 'id'):
 			generatedData = id+1
