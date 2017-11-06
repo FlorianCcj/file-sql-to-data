@@ -43,8 +43,10 @@ class DataGenerator:
 		self.unique = {}
 		self.uniqueDatas = {}
 		self.primaryColumn = {}
+		self.foreignKeys = {}
 		
 		self.timeout = 50
+		self.defaultNumberToCreate = 10
 
 	def launch(self):
 		print('### Lancement de la generation de données ###')
@@ -57,9 +59,11 @@ class DataGenerator:
 		elif (self.inputFile):
 			self.request = self.readFileSql(self.inputFile)
 			self.dataSchema = self.extractCreateRequests(self.request)
-			return self.dataSchema
+			self.foreignKeys = self.extractForeignKey(self.request);
+			self.dataSchema = self.mergeSchemaAndForeignKeys(self.dataSchema, self.foreignKeys)
 			if (not self.dataSchema):
 				print ('fichier impossible a parser, verifier qu\'il sagit bien d\'un fichier sql en entree')
+			return self.dataSchema
 
 	def readFileSql(self, inputFile):
 		print('### Lecture du fichier SQL ###')
@@ -101,7 +105,7 @@ class DataGenerator:
 			tableRequest = table[1]
 			data[tableName] = {}
 			data[tableName]['columns'] = {}
-			data[tableName]['numberToCreate'] = 10
+			data[tableName]['numberToCreate'] = self.defaultNumberToCreate
 			columnPattern = r'(?!\([^ )]+),(?! ?[^ (]+\))'
 			columnMatch = re.split(columnPattern, tableRequest) 
 			data[tableName]['columns'] = self.extractColumnsFromCreateRequest(columnMatch, tableName)
@@ -157,6 +161,34 @@ class DataGenerator:
 						columnData[columName]['size'] = None	
 		columnData = self.isThisTableSColumnsUnique(tableName, columnData, self.unique)
 		return columnData
+
+	def extractForeignKey(self, request):
+		print('### Recuperation des differente ALTER TABLE ###')
+		data = {}
+		# besoin de recuperer table et column de destination table et column source
+		foreignKeyPattern = r'ALTER TABLE ([^ ]+) ADD CONSTRAINT FK\_[^ ]+ FOREIGN KEY \(([^ ]+)\) REFERENCES ([^ ]+) \(([^ ]+)\)'
+		foreignKeysMatch = re.findall(foreignKeyPattern, request)
+		# print (foreignKeysMatch)
+		for foreignKey in foreignKeysMatch:
+			# print(foreignKey)
+			# print('----------------------------------------------')
+			destTableName = foreignKey[0].strip()
+			destColumName = foreignKey[1].strip()
+			srcTableName = foreignKey[2].strip()
+			srcColumName = foreignKey[3].strip()
+			data[destTableName] = {'columns': {}} if (not data.has_key(destTableName)) else data[destTableName]
+			data[destTableName]['columns'][destColumName] = {'type': 'foreign key', 'foreignKey': {'table': srcTableName, 'column': srcColumName}}
+ 		return data
+
+	def mergeSchemaAndForeignKeys(self, dataSchema, foreignKeys):
+		data = dataSchema;
+		for tableName in dataSchema:
+			if foreignKeys.has_key(tableName):
+				for columnName in dataSchema[tableName]['columns']:
+					if foreignKeys[tableName]['columns'].has_key(columnName):
+						data[tableName]['columns'][columnName] = foreignKeys[tableName]['columns'][columnName]
+		pass
+		return dataSchema
 
 	def isThisTableSColumnsUnique(self, tableName, tableColumns, uniqueTable):
 		print('### Recuperation des colonnes Uniques ###')
@@ -350,5 +382,12 @@ def reflexion():
 		foreign key NtoN:
 			type: foreign key NtoN:
 			foreign key: et la .... c'est le drame
+	'''
+	pass
+
+def foreignKey():
+	'''
+		foreign key 1 to N
+			
 	'''
 	pass
