@@ -5,6 +5,7 @@ import re
 import json
 import argparse
 import random
+from lxml import etree
 from faker import Faker
 fake = Faker()
 
@@ -56,7 +57,6 @@ class DataGenerator:
 			self.primaryColumn = self.extractPrimaryColumn(self.dataSchema);
 			self.data = self.generateDatas(self.dataSchema)
 			self.data = self.generateForeignKey(self.dataSchema, self.data)
-			# self.generateJsonFile('data.json', self.data)
 			return self.data
 		elif (self.inputFile):
 			self.request = self.readFileSql(self.inputFile)
@@ -210,11 +210,11 @@ class DataGenerator:
 		primaryColumn = {}
 		for tableName in dataSchema:
 			tableName = tableName.strip()
-			primaryColumn[tableName] = []
+			primaryColumn[tableName] = [] 
 			for columName in dataSchema[tableName]['columns']:
 				if dataSchema[tableName]['columns'][columName.strip()].has_key('primary') and dataSchema[tableName]['columns'][columName.strip()]['primary']:
 					primaryColumn[tableName].append(columName)
-		print primaryColumn
+			
 		return primaryColumn
 
 	def generateDatas(self, dataSchema):
@@ -227,7 +227,6 @@ class DataGenerator:
 	def generateForeignKey(self, dataSchema, data):
 		print('### Liaison de la data ###')
 		newData = data
-		# WIP
 		for tableName in dataSchema:
 			for columnName in dataSchema[tableName]['columns']:
 				if (dataSchema[tableName]['columns'][columnName]['type'] == 'foreign key' and dataSchema[tableName]['columns'][columnName].has_key('foreignKey')):
@@ -243,9 +242,7 @@ class DataGenerator:
 						timeout = 0
 						transformData = newData[tableName][numerousOfData]
 						transformData[columnName] = self.generateForeignKeyColumn(self.foreignKeysData[srcTableName][srcColumnName])
-						# WIP
 						if (self.primaryColumn.has_key(tableName) and columnName in self.primaryColumn[tableName]):
-						# a faire que si les colonnes en question sont dans les primary key BOUFON
 							newEntreePrimary = self.primaryColumnKeeper(tableName, transformData)	
 						# todo : a factoriser dans une fonction
 							while (newEntreePrimary in self.uniqueDatas[tableName]['primaryKey'] and timeout < self.timeout):
@@ -259,13 +256,10 @@ class DataGenerator:
 		return newData
 
 	def generateForeignKeyColumn(self, dataToRand):
-		# prend au rand et renvoit
-		# todo
 		randomNum = random.randint(0, len(dataToRand)-1)
 		return dataToRand[randomNum]
 
 	def generateForeignKeyData(self, tableName, columnName):
-		# on recupere toute les colonnes du tableName et on les renvois en tableau
 		dataForForeignKeys = [];
 		if (self.data.has_key(tableName)):
 			for data in self.data[tableName]:
@@ -347,6 +341,8 @@ class DataGenerator:
 					generatedData = fake.paragraph()
 				elif column['type'].strip().lower() == 'tinyint':
 					generatedData = fake.boolean()
+				elif column['type'].strip().lower() == 'boolean':
+					generatedData = fake.boolean()
 				elif column['type'].strip().lower().find('tinyint') != -1:
 					generatedData = fake.boolean()
 				elif column['type'].strip().lower() == 'int':
@@ -374,18 +370,29 @@ class DataGenerator:
 				else:
 					generatedData = None
 		return generatedData
+		# [
+		# 'varchar', 'longtext', 
+		# 'boolean', 'tinyint', 'int', 
+		# 'name', 'adress', 'first_name', 'last_name', 'credit_card_number', 'military_ship', 'color',  'catch_phrase_verb', 'company'
+		#
+		# ]
 
 class FileCreator:
-	def __init__(self, outputFile = None, extension = 'json', data = {}, dataType = None):
+	def __init__(self, outputFile = None, extension = None, data = {}, dataType = None):
 		self.extensionFile = extension
 		self.data = data
+		self.outputFile = {}
 		if (not outputFile):
 			if (not dataType):
-				self.outputFile = 'default-output-file.txt'
+				self.outputFile['name'] = 'default-output-file'
+				self.outputFile['ext'] = 'txt'
+				self.outputFile['total'] = self.outputFile['name']+'.'+self.outputFile['ext']
 			else:
-				self.outputFile = 'default-output-file.' + dataType
+				self.outputFile['name'] = 'default-output-file'
+				self.outputFile['ext'] = dataType
+				self.outputFile['total'] = self.outputFile['name']+'.'+self.outputFile['ext']
 		else:
-			self.outputFile = outputFile
+				self.outputFile['total'] = outputFile
 		self.launch()
 
 	def launch(self):
@@ -394,8 +401,12 @@ class FileCreator:
 	def chooseFormat(self, extension = None):
 		if (extension == 'csv'):
 			pass
+		elif (extension == 'json'):
+			self.generateJsonFile(self.data, self.outputFile['total'])
 		else:
-			self.generateJsonFile(self.data, self.outputFile)
+			# WIP
+			self.generateJsonFile(self.data, self.outputFile['total']+'.json')
+			self.generateXmlFile(self.data, self.outputFile['total']+'.xml')
 
 	def generateJsonFile(self, data, outputFile):
 		try:
@@ -404,6 +415,24 @@ class FileCreator:
 		except Exception as e:
 			print('Erreur lors de la creation du fichier')
 			print(e)
+			exit(1)
+
+	def generateXmlFile(self, data, outputFile):
+		root = etree.Element('data')
+		for tableName in data:
+			table = etree.SubElement(root, tableName)
+			for elementOfTable in data[tableName]:
+				elementOfXml = etree.SubElement(table, 'element')
+				if(elementOfTable.has_key('id')):
+					elementOfXml.set('id', str(elementOfTable['id']))
+				columnOfXml = None
+				for columnOfTable in elementOfTable:
+					columnOfXml = etree.SubElement(elementOfXml, columnOfTable).text = str(elementOfTable[columnOfTable])
+		try:
+			with open(outputFile, 'w') as fic:
+				fic.write(etree.tostring(root, pretty_print=True).decode('utf-8'))
+		except IOError:
+			print('Problème rencontré lors de l\'écriture...')
 			exit(1)
 
 if __name__ == '__main__':
