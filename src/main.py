@@ -407,6 +407,7 @@ class FileCreator:
 			# WIP
 			self.generateJsonFile(self.data, self.outputFile['total']+'.json')
 			self.generateXmlFile(self.data, self.outputFile['total']+'.xml')
+			self.generateSqlFile(self.data, self.outputFile['total']+'.sql')
 
 	def generateJsonFile(self, data, outputFile):
 		try:
@@ -435,6 +436,37 @@ class FileCreator:
 			print('Problème rencontré lors de l\'écriture...')
 			exit(1)
 
+	def generateSqlFile(self, data, outputFile):
+		fichier = open(outputFile, "w")
+		eolSymbole = '\n'
+		
+
+		fichier.write("pwet")
+		fichier.write(eolSymbole)
+		fichier.write("INSERT INTO table_name (column1, column2, column3, ...)")
+		fichier.write(eolSymbole)
+		fichier.write("VALUES (value1, value2, value3, ...); ")
+		fichier.write(eolSymbole)
+
+		for tableName in data:
+			beginInsertValueLign = 'INSERT INTO ' + str(tableName) + ' (' 
+			for columnName in data[tableName][0]:
+				beginInsertValueLign = beginInsertValueLign + columnName + ', '
+			beginInsertValueLign = beginInsertValueLign + ') '
+			endInsertValueLignInitial = 'VALUES ('
+			for element in data[tableName]:
+				endInsertValueLign = endInsertValueLignInitial
+				for column in element:
+					endInsertValueLign = endInsertValueLign + str(element[column]) + ', '
+				endInsertValueLign = endInsertValueLign + ');'
+				fichier.write(beginInsertValueLign)	
+				fichier.write(eolSymbole)
+				fichier.write(endInsertValueLign)	
+				fichier.write(eolSymbole)
+				fichier.write(eolSymbole)
+
+		fichier.close()
+
 if __name__ == '__main__':
 	if (args.jsonFile):
 		outputFile = args.outputFile if args.outputFile else './data.json'
@@ -458,19 +490,7 @@ def reflexion():
 				ref
 			data: fichier
 
-		foreign key 1toN:
-			type: foreign key, 1toN
-			foreign-key: [table, colonne]
-
-		foreign key NtoN:
-			type: foreign key NtoN:
-			foreign key: et la .... c'est le drame
-	'''
-	pass
-
-def foreignKey():
-	'''
-		foreign key 1 to N
-			
+		generation csv
+		generation sql
 	'''
 	pass

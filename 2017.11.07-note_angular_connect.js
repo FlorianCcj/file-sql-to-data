@@ -51,6 +51,11 @@ class demi_journee_1 {
 		
 	}
 	angular_animation_movie() {
-		
+		yearofmoo.com
 	}
+
+	Service worker
+	server side rendering
+	aot compilation
+	
 }
