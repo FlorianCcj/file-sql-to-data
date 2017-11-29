@@ -57,5 +57,19 @@ class demi_journee_1 {
 	Service worker
 	server side rendering
 	aot compilation
-	
+
+	angular_element() {
+
+	}
+	angular_forms() {
+
+	}
+
+	testing_angular_app() {
+		serenity-js
+
+	}
+	graphql-codegen.com
+	urigo/whatsapp-server-graphql-live-rxjs-meteor
+	github.com/urigo
 }
