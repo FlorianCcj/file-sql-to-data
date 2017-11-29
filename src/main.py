@@ -420,15 +420,19 @@ class FileCreator:
 
 	def generateXmlFile(self, data, outputFile):
 		root = etree.Element('data')
-		for tableName in data:
-			table = etree.SubElement(root, tableName)
-			for elementOfTable in data[tableName]:
-				elementOfXml = etree.SubElement(table, 'element')
-				if(elementOfTable.has_key('id')):
-					elementOfXml.set('id', str(elementOfTable['id']))
-				columnOfXml = None
-				for columnOfTable in elementOfTable:
-					columnOfXml = etree.SubElement(elementOfXml, columnOfTable).text = str(elementOfTable[columnOfTable])
+		try:
+			for tableName in data:
+				table = etree.SubElement(root, tableName)
+				for elementOfTable in data[tableName]:
+					elementOfXml = etree.SubElement(table, 'element')
+					if(elementOfTable.has_key('id')):
+						elementOfXml.set('id', str(elementOfTable['id']))
+					columnOfXml = None
+					for columnOfTable in elementOfTable:
+						columnOfXml = etree.SubElement(elementOfXml, columnOfTable).text = str(elementOfTable[columnOfTable])
+		except:
+			print('Erreur de formmat pour la creation de format Xml')
+			exit(1)
 		try:
 			with open(outputFile, 'w') as fic:
 				fic.write(etree.tostring(root, pretty_print=True).decode('utf-8'))
@@ -440,30 +444,30 @@ class FileCreator:
 		fichier = open(outputFile, "w")
 		eolSymbole = '\n'
 		
-
-		fichier.write("pwet")
-		fichier.write(eolSymbole)
-		fichier.write("INSERT INTO table_name (column1, column2, column3, ...)")
-		fichier.write(eolSymbole)
-		fichier.write("VALUES (value1, value2, value3, ...); ")
-		fichier.write(eolSymbole)
-
-		for tableName in data:
-			beginInsertValueLign = 'INSERT INTO ' + str(tableName) + ' (' 
-			for columnName in data[tableName][0]:
-				beginInsertValueLign = beginInsertValueLign + columnName + ', '
-			beginInsertValueLign = beginInsertValueLign + ') '
-			endInsertValueLignInitial = 'VALUES ('
-			for element in data[tableName]:
-				endInsertValueLign = endInsertValueLignInitial
-				for column in element:
-					endInsertValueLign = endInsertValueLign + str(element[column]) + ', '
-				endInsertValueLign = endInsertValueLign + ');'
+		try:
+			for tableName in data:
+				beginInsertValueLign = 'INSERT INTO ' + str(tableName) + ' (' 
+				for columnName in data[tableName][0]:
+					beginInsertValueLign = beginInsertValueLign + columnName + ', '
+				beginInsertValueLign = beginInsertValueLign[:len(beginInsertValueLign)-2] + ') VALUES '
 				fichier.write(beginInsertValueLign)	
 				fichier.write(eolSymbole)
-				fichier.write(endInsertValueLign)	
+
+				endInsertValueLignInitial = '('
+				for element in data[tableName]:
+					endInsertValueLign = endInsertValueLignInitial
+					for column in element:
+						endInsertValueLign = endInsertValueLign + str(element[column]) + ', '
+					endInsertValueLign = endInsertValueLign[:len(endInsertValueLign)-2] + ')'
+					
+					fichier.write(endInsertValueLign)	
+					fichier.write(eolSymbole)
+				fichier.write(';')
 				fichier.write(eolSymbole)
-				fichier.write(eolSymbole)
+		except:
+			print('Erreur de formmat pour la creation de format Sql')
+			exit(1)
+
 
 		fichier.close()
 
