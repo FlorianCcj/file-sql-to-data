@@ -47,11 +47,13 @@ class DataGenerator:
 		self.foreignKeys = {}
 		self.foreignKeysData = {}
 		
+		self.refData = {}
+
 		self.timeout = 50
 		self.defaultNumberToCreate = 10
 
 	def launch(self):
-		print('### Lancement de la generation de données ###')
+		print('### Lancement de la generation de donnees ###')
 		if (self.jsonFile):
 			self.dataSchema = self.readJsonFile(self.jsonFile)
 			self.primaryColumn = self.extractPrimaryColumn(self.dataSchema);
@@ -59,8 +61,13 @@ class DataGenerator:
 			self.data = self.generateForeignKey(self.dataSchema, self.data)
 			return self.data
 		elif (self.inputFile):
+			# recuperation de la donnee
 			self.request = self.readFileSql(self.inputFile)
+			# extraction de chaque requete
+			# extraction des columns
 			self.dataSchema = self.extractCreateRequests(self.request)
+			# recuperation des primary
+			# creation des donnees
 			self.foreignKeys = self.extractForeignKey(self.request);
 			self.dataSchema = self.mergeSchemaAndForeignKeys(self.dataSchema, self.foreignKeys)
 			if (not self.dataSchema):
@@ -81,7 +88,7 @@ class DataGenerator:
 			print('Droit de lecture absent sur le fichier {} !'.format(e.filename))
 			exit(2)
 		except Exception as e:
-			print('Une erreur a empêché l\'ouverture du fichier : {}'.format(e.strerror))
+			print('Une erreur a empeche l\'ouverture du fichier : {}'.format(e.strerror))
 			exit(3)
 		return totalRequest
 
@@ -320,7 +327,9 @@ class DataGenerator:
 					newData = self.generateDataColumn(columns[columnName], numberOfRow, id = id)
 					timeout += 1
 				if timeout == self.timeout:
-					print "[error] [unique generation] Tentative de generation de données unique dans la table `%s` pour la colonne `%s` echoué" % tableName, columnName
+					# todo : comprendre pourquoi ca marche pas 
+					# print("[error] [unique generation] Tentative de generation de donnees unique dans la table %s pour la colonne %s echoue" %tableName , columnName)
+					print("[error] [unique generation] Tentative de generation de donnees unique dans la table pour la colonne echoue")
 
 			self.uniqueDatas[tableName][columnName]['unique'].append(newData)
 			newRow[columnName] = newData
@@ -367,16 +376,30 @@ class DataGenerator:
 					generatedData = fake.catch_phrase_verb()
 				elif column['type'].strip().lower() == 'company':
 					generatedData = fake.company()
+				elif column['type'].strip().lower() == 'ref':
+					generatedData = self.takeRefData(column)
 				else:
 					generatedData = None
 		return generatedData
-		# [
-		# 'varchar', 'longtext', 
-		# 'boolean', 'tinyint', 'int', 
-		# 'name', 'adress', 'first_name', 'last_name', 'credit_card_number', 'military_ship', 'color',  'catch_phrase_verb', 'company'
-		#
-		# ]
 
+	def takeRefData(self, column):
+		refRecupData = None
+		if (column.has_key('refFile')):
+			print(column['refFile'])
+			if (not self.refData.has_key(column['refFile'])):
+				self.refData[column['refFile']] = self.readJsonFile(column['refFile'])
+			if (self.refData[column['refFile']]):
+				refRecupData = random.choice(self.refData[column['refFile']])
+			else:
+				refRecupData = None
+		return refRecupData
+			# si les donnees interne n'ont pas la cle column.refFile
+			# 	ouvrir
+			# 	recuperer les donnees
+			# 	les mettre dans les donnees interne
+			# si les donnees internes on la cle et qu il n est pas vide
+			# 	recurer une donnee aleatoire dans les data
+			# sinon retourner 'null'
 class FileCreator:
 	def __init__(self, outputFile = None, extension = None, data = {}, dataType = None):
 		self.extensionFile = extension
@@ -437,7 +460,7 @@ class FileCreator:
 			with open(outputFile, 'w') as fic:
 				fic.write(etree.tostring(root, pretty_print=True).decode('utf-8'))
 		except IOError:
-			print('Problème rencontré lors de l\'écriture...')
+			print('Problème rencontre lors de l\'ecriture...')
 			exit(1)
 
 	def generateSqlFile(self, data, outputFile):

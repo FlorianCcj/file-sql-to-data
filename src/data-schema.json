@@ -17,6 +17,15 @@
         "unique": true, 
         "type": "first_name", 
         "size": 255
+      }, 
+      "test": {
+        "name": "test", 
+        "nullable": true, 
+        "primary": false, 
+        "unique": true, 
+        "type": "ref",
+        "refFile": "./ref.json", 
+        "size": 255
       }
     }
   }, 
