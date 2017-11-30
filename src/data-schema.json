@@ -101,7 +101,7 @@
         "nullable": true, 
         "primary": false, 
         "unique": true, 
-        "type": "VARCHAR", 
+        "type": "name", 
         "size": 255
       }
     }

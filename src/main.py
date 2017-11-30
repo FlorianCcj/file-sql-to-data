@@ -464,6 +464,7 @@ class FileCreator:
 					fichier.write(eolSymbole)
 				fichier.write(';')
 				fichier.write(eolSymbole)
+				fichier.write(eolSymbole)
 		except:
 			print('Erreur de formmat pour la creation de format Sql')
 			exit(1)
