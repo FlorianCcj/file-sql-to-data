@@ -86,13 +86,13 @@ class SchemaExtractor:
     if match:
       columDirective = match[0][0].strip()
       if (columnRequest.lower().strip().find(self.primaryKeySearchKey) != -1):
-        columnData = {self.primaryKeyKey: {}}
         # todo
         # patternPrimaryKey = r'PRIMARY KEY ?\((.+)\)'
         # matchPrimaryColumn = re.findall(patternPrimaryKey, columnRequest)
         # if(len(matchPrimaryColumn) > 0):
           # primaryKeys = matchPrimaryColumn[0].split(",")
           # for key in primaryKeys:
+        columnData = {self.primaryKeyKey: {}}
       elif (columDirective.lower().strip().find(self.indexSearchKey) != -1):
         columnData = {self.indexKey: {}}
       elif (columnRequest.lower().strip().find(self.uniqueSearchKey) != -1):
@@ -100,7 +100,6 @@ class SchemaExtractor:
         matchUnique = re.findall(uniquePattern, columnRequest)
         uniqueColumnName = matchUnique[0].strip()
         columnData = {self.uniqueKey: {self.tableNameKey: tableName, self.columnNameKey: uniqueColumnName}}
-        # todo
       else:
         columnType = match[0][1]
         columnData[self.nameKey] = columDirective
