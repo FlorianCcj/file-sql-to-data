@@ -1,0 +1,16 @@
+<data>
+  <recipe_type/>
+  <grade/>
+  <recipe/>
+  <grade_type/>
+  <material/>
+  <variant/>
+  <ingredientQuantity/>
+  <step/>
+  <materialQuantity/>
+  <variant_material_quantity/>
+  <variant_recipe_type/>
+  <variant_ingredient_quantity/>
+  <unit/>
+  <ingredient/>
+</data>
