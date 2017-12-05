@@ -13,6 +13,7 @@ import sys
 sys.path.append('./modules/')
 from ArrayToFile import * 
 import FileReader
+import FileCreator
 from SchemaExtractorFromSqlFile import * 
 
 parser = argparse.ArgumentParser()
@@ -32,6 +33,7 @@ class Test:
 	def launcher(self):
 		self.request = FileReader.readFileSql(self.inputFile)
 		self.schemaExtractor.autoExtract(self.request)
+		FileCreator.generateJsonFile(self.schemaExtractor.columnsDataByTable, './data-schema.json')
 
 Test()
 
