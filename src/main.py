@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/python
 
+# extraction du schema
+# mis dans l'ordre pour creation
+# generation des data
+
 import re
 import json
 import argparse
@@ -34,6 +38,69 @@ class Test:
 		self.request = FileReader.readFileSql(self.inputFile)
 		self.schemaExtractor.autoExtract(self.request)
 		FileCreator.generateJsonFile(self.schemaExtractor.columnsDataByTable, './data-schema.json')
+		# ordonnancer
+		dataScemaOrdered = self.testOrderData(self.schemaExtractor.columnsDataByTable)
+		FileCreator.generateJsonFile(dataScemaOrdered, './data-schema-ordered.json')
+		# ajouter le nombre de data a creer
+		# ajouter les referentiels dans la DB
+		# creer les fichier
+
+	def testOrderData(self, dataSchemaWithForeignKey):
+		columnKey = self.schemaExtractor.columnKey
+		typeKey = self.schemaExtractor.typeKey
+		foreignKeyKey = self.schemaExtractor.foreignKeyKey
+		tableNameKey = self.schemaExtractor.tableNameKey
+		orderKey = 'order'
+		timeout = 50
+		numberOfTable = len(dataSchemaWithForeignKey)
+		tableAlreadyDone = []
+		numberOfTableDone = len(tableAlreadyDone)
+		tryTime = 0
+		while len(tableAlreadyDone) != numberOfTable and tryTime <= timeout:
+			print('------------------')
+			print(len(tableAlreadyDone))
+			print(numberOfTable)
+			print(tryTime)
+			print(timeout)
+			tryTime += 1 # init
+			# tryTime += 0 # add
+			save = True
+			for tableName in dataSchemaWithForeignKey:
+				if tableName not in tableAlreadyDone:
+					foreignKeyCounter = 0
+					tableForeignKey = [] # add
+					for columnName in dataSchemaWithForeignKey[tableName][columnKey]:
+						if dataSchemaWithForeignKey[tableName][columnKey][columnName][typeKey] == foreignKeyKey:
+							foreignKeyCounter += 1
+							# if dataSchemaWithForeignKey[tableName][columnKey][columnName][foreignKeyKey]: # add
+							# 	if 'tableName' in dataSchemaWithForeignKey[tableName][columnKey][columnName][foreignKeyKey]: # add
+							# 		tableForeignKey.append(dataSchemaWithForeignKey[tableName][columnKey][columnName][foreignKeyKey]['tableName']) # add
+							if tableNameKey not in dataSchemaWithForeignKey[tableName][columnKey][columnName][foreignKeyKey].keys():
+								save = False
+							else:
+								if dataSchemaWithForeignKey[tableName][columnKey][columnName][foreignKeyKey][tableNameKey] not in tableAlreadyDone:
+									save = False 
+
+					if(foreignKeyCounter == 0):
+						save = True
+					if(save == True): # init
+					# if(True == True):
+						dataSchemaWithForeignKey[tableName][orderKey] = len(tableAlreadyDone) # init 
+						# dataSchemaWithForeignKey[tableName][orderKey] = tableForeignKey 
+						# dataSchemaWithForeignKey[tableName][orderKey] = foreignKeyCounter 
+						tableAlreadyDone.append(tableName)
+						tryTime = 0
+			numberOfTableDone = len(tableAlreadyDone)
+			print('+++++++++++++++')
+			print(len(tableAlreadyDone))
+			print(numberOfTable)
+			print(tryTime)
+			print(timeout)
+		if (tryTime == timeout):
+			print('[Erreur][order] erreur lors de l ordonnancement des tables, l une d elle a une foreign key qui n existe pas')
+		return dataSchemaWithForeignKey
+
+
 
 Test()
 
@@ -92,156 +159,6 @@ class DataGenerator:
 			if (not self.dataSchema):
 				print ('fichier impossible a parser, verifier qu\'il sagit bien d\'un fichier sql en entree')
 			return self.dataSchema
-
-	def readFileSql(self, inputFile):
-		print('### Lecture du fichier SQL ###')
-		totalRequest = ''
-		try:
-			with open(inputFile, 'r') as file:
-				for line in file:
-					totalRequest += line 
-		except FileNotFoundError as e:
-			print('Le fichier {} n\'existe pas !'.format(e.filename))
-			exit(1)
-		except PermissionError as e:
-			print('Droit de lecture absent sur le fichier {} !'.format(e.filename))
-			exit(2)
-		except Exception as e:
-			print('Une erreur a empeche l\'ouverture du fichier : {}'.format(e.strerror))
-			exit(3)
-		return totalRequest
-
-	def readJsonFile(self, jsonFile):
-		print('### Lecture du fichier JSON ###')
-		try:
-			with open(jsonFile, 'r') as file:
-				dataSchema = json.load(file)
-		except Exception as e:
-			print('Erreur lors de la lecture du fichier')
-			print(e)
-			exit(1)
-		return dataSchema
-
-	def extractCreateRequests(self, request):
-		print('### Recuperation des differente CREATE TABLE ###')
-		data = {}
-		tablePattern = r'CREATE TABLE ([^ ]+) \((.+)\).*;'
-		tableMatch = re.findall(tablePattern, request)
-		for table in tableMatch:
-
-			tableName = table[0].strip()
-			tableRequest = table[1]
-			data[tableName] = {}
-			data[tableName]['columns'] = {}
-			data[tableName]['numberToCreate'] = self.defaultNumberToCreate
-			columnPattern = r'(?!\([^ )]+),(?! ?[^ (]+\))'
-			columnMatch = re.split(columnPattern, tableRequest) 
-			data[tableName]['columns'] = self.extractColumnsFromCreateRequest(columnMatch, tableName)
-		return data
-
-	def extractColumnsFromCreateRequest(self, columnRequestTable, tableName):
-		print('### Recuperation des columns au sein de la CREATE TABLE %s ###'% tableName)
-		columnPattern = r'([^ ]+) ([^ (]+)(?: ?\(([^)]+)\))? ?(.+)?'
-		columnData = {}
-		for columnRequest in columnRequestTable:
-			match = re.findall(columnPattern, columnRequest)
-			if match:
-				columName = match[0][0].strip()
-				columnData[columName] = {} if (not columnData.has_key(columName)) else columnData[columName]
-				if (columnRequest.lower().strip().find('primary') != -1): # est-ce qu il faudrait pas le mettre sur column au lieu de columnName
-					del columnData[columName]
-					patternPrimaryKey = r'PRIMARY KEY ?\((.+)\)'
-					matchPrimaryColumn = re.findall(patternPrimaryKey, columnRequest)
-					if(len(matchPrimaryColumn) > 0):
-						primaryKeys = matchPrimaryColumn[0].split(",")
-						for key in primaryKeys:
-							cleanKey = key.strip()
-							if (not columnData.has_key(cleanKey)):
-								columnData[cleanKey] = {}
-							columnData[cleanKey]['primary'] = True
-				elif (columName.lower().strip().find('index') != -1):
-					del columnData[columName]
-					pass
-					# todo
-				elif (columnRequest.lower().strip().find('unique') != -1):
-					uniquePattern = r'\((.*)\)'
-					matchUnique = re.findall(uniquePattern, columnRequest)
-					uniqueColumnName = matchUnique[0].strip()
-					if (not self.unique.has_key(tableName)):
-						self.unique[tableName] = {}
-					if (not self.unique[tableName].has_key(uniqueColumnName)):
-						self.unique[tableName][uniqueColumnName] = {}
-					self.unique[tableName][uniqueColumnName]['unique'] = True
-					del columnData[columName]
-					pass
-				else:
-					columnType = match[0][1]
-					columnData[columName]['name'] = columName
-					columnData[columName]['type'] = columnType if columnType else None
-					columnData[columName]['nullable'] = (columnRequest.lower().find('not null') != -1)
-					if (not columnData[columName].has_key('unique')):
-						columnData[columName]['unique'] = False
-					if (not columnData[columName].has_key('primary')):
-						columnData[columName]['primary'] = False
-					try:
-						columnData[columName]['size'] = int(match[0][2])
-					except Exception as e:
-						columnData[columName]['size'] = None	
-		columnData = self.isThisTableSColumnsUnique(tableName, columnData, self.unique)
-		return columnData
-
-	def extractForeignKey(self, request):
-		print('### Recuperation des differente ALTER TABLE ###')
-		data = {}
-		# besoin de recuperer table et column de destination table et column source
-		foreignKeyPattern = r'ALTER TABLE ([^ ]+) ADD CONSTRAINT FK\_[^ ]+ FOREIGN KEY \(([^ ]+)\) REFERENCES ([^ ]+) \(([^ ]+)\)'
-		foreignKeysMatch = re.findall(foreignKeyPattern, request)
-		# print (foreignKeysMatch)
-		for foreignKey in foreignKeysMatch:
-			# print(foreignKey)
-			# print('----------------------------------------------')
-			destTableName = foreignKey[0].strip()
-			destColumName = foreignKey[1].strip()
-			srcTableName = foreignKey[2].strip()
-			srcColumName = foreignKey[3].strip()
-			data[destTableName] = {'columns': {}} if (not data.has_key(destTableName)) else data[destTableName]
-			data[destTableName]['columns'][destColumName] = {'type': 'foreign key', 'foreignKey': {'table': srcTableName, 'column': srcColumName}}
- 		return data
-
-	def mergeSchemaAndForeignKeys(self, dataSchema, foreignKeys):
-		data = dataSchema;
-		for tableName in dataSchema:
-			if foreignKeys.has_key(tableName):
-				for columnName in dataSchema[tableName]['columns']:
-					if foreignKeys[tableName]['columns'].has_key(columnName):
-						for dataSColumn in foreignKeys[tableName]['columns'][columnName]:
-							data[tableName]['columns'][columnName][dataSColumn] = foreignKeys[tableName]['columns'][columnName][dataSColumn]
-		return dataSchema
-
-	def isThisTableSColumnsUnique(self, tableName, tableColumns, uniqueTable):
-		print('### Recuperation des colonnes Uniques ###')
-		for column in tableColumns:
-			if (uniqueTable.has_key(tableName)):
-				if uniqueTable[tableName].has_key(column):
-					tableColumns[column.strip()]['unique'] = True
-				else:
-					tableColumns[column.strip()]['unique'] = False
-			else:
-				tableColumns[column.strip()]['unique'] = False
-		return tableColumns
-			# check il il est dans le tablea self.unique
-
-	def extractPrimaryColumn(self, dataSchema):
-		print('### Recuperation des primary key ###')
-		primaryColumn = {}
-		for tableName in dataSchema:
-			tableName = tableName.strip()
-			primaryColumn[tableName] = [] 
-			for columName in dataSchema[tableName]['columns']:
-				if dataSchema[tableName]['columns'][columName.strip()].has_key('primary') and dataSchema[tableName]['columns'][columName.strip()]['primary']:
-					primaryColumn[tableName].append(columName)
-			
-		return primaryColumn
 
 	def generateDatas(self, dataSchema):
 		print('### Generation de la data ###')

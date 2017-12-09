@@ -20,14 +20,13 @@ class SchemaExtractor:
     self.foreignKeysColumns = {}
     self.dataSchema = {}
 
-    self.columnKey = "column"
-
     self.indexSearchKey = "index"
     self.primaryKeySearchKey = "primary"
     self.uniqueSearchKey = "unique"
 
     self.indexKey = "index"
     self.primaryKeyKey = "primary key"
+    self.foreignKeyKey = "foreignKey"
     self.uniqueKey = "unique"
     
     self.tableNameKey = "tableName"
@@ -38,7 +37,10 @@ class SchemaExtractor:
     self.nullableKey = "nullable"
     self.notNullableKey = "not null"
     self.sizeKey = "size"
+    
+    self.tableKey = "table"
     self.columnKey = "column"
+    self.columnsKey = "columns"
 
   def autoExtract(self, sqlRequest):
     self.request = sqlRequest
@@ -146,7 +148,7 @@ class SchemaExtractor:
       srcTableName = foreignKey[2].strip()
       srcColumName = foreignKey[3].strip()
       data[destTableName] = {self.columnKey: {}} if (destTableName not in data.keys()) else data[destTableName]
-      data[destTableName][self.columnKey][destColumName] = {'type': 'foreign key', 'foreignKey': {'table': srcTableName, 'column': srcColumName}}
+      data[destTableName][self.columnKey][destColumName] = {self.typeKey: self.foreignKeyKey, self.foreignKeyKey: {self.tableNameKey: srcTableName, self.columnNameKey: srcColumName}}
     self.foreignKeysColumns = data 
     return data
 
