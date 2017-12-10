@@ -11,3 +11,27 @@ def update_object(object_init, object_update_container):
     # todo : faire le cas des tableau
     new_object = object_update_container
   return new_object
+
+def fromDataToObjectToPrint(data):
+  objectToPrint = {}
+  lignToPrint = 0
+  for tableName in data:
+    beginInsertValueLign = 'INSERT INTO `' + str(tableName) + '` (' 
+    for columnName in data[tableName][0]:
+      beginInsertValueLign = beginInsertValueLign + '`' + str(columnName) + '`, '
+    beginInsertValueLign = beginInsertValueLign[:len(beginInsertValueLign)-2] + ') VALUES '
+    objectToPrint[lignToPrint] = beginInsertValueLign 
+    lignToPrint += 1
+
+    endInsertValueLignInitial = '('
+    for element in data[tableName]:
+      endInsertValueLign = endInsertValueLignInitial
+      for column in element:
+        endInsertValueLign = endInsertValueLign + str(element[column]) + ', '
+      endInsertValueLign = endInsertValueLign[:len(endInsertValueLign)-2] + '),'
+      objectToPrint[lignToPrint] = endInsertValueLign
+      lignToPrint += 1
+    objectToPrint[lignToPrint-1] = objectToPrint[lignToPrint-1][:len(endInsertValueLign)-1]
+    objectToPrint[lignToPrint] = ';'
+    lignToPrint += 1  
+  return objectToPrint

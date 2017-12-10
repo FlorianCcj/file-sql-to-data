@@ -1,12 +1,4 @@
-# extract createRequest
-# extract table name
-# extract column
-# extract unique
-# extract primary
-
 import re
-# todo  a supprimer apres
-import FileCreator 
 import tools
 
 class SchemaExtractor:
@@ -47,7 +39,7 @@ class SchemaExtractor:
     self.createRequests = self.extractCreateRequests(self.request)
     for tableName in self.createRequests:
       self.columnsRequests[tableName] = self.parseColumnsFromCreateRequest(self.createRequests[tableName], tableName)
-      self.columnsDataByTable[tableName] = {self.columnKey: {}}
+      self.columnsDataByTable[tableName] = {self.columnsKey: {}}
       for columnNumber in range(len(self.columnsRequests[tableName])):
         extractData = self.parseColumnDataFromColumnRequest(self.columnsRequests[tableName][columnNumber], tableName)
         if (self.indexKey in extractData.keys()):
@@ -55,33 +47,33 @@ class SchemaExtractor:
         elif (self.primaryKeyKey in extractData.keys()):
           for columnIndice in extractData[self.primaryKeyKey][self.columnNameKey]:
             columnName = columnIndice  
-            if columnName not in self.columnsDataByTable[tableName][self.columnKey].keys():
-              self.columnsDataByTable[tableName][self.columnKey][columnName] = {}
-            self.columnsDataByTable[tableName][self.columnKey][columnName][self.primaryKeyKey] = True
+            if columnName not in self.columnsDataByTable[tableName][self.columnsKey].keys():
+              self.columnsDataByTable[tableName][self.columnsKey][columnName] = {}
+            self.columnsDataByTable[tableName][self.columnsKey][columnName][self.primaryKeyKey] = True
 
             if(tableName not in self.primaryKeyColumns.keys()):
               self.primaryKeyColumns[tableName] = {}
             self.primaryKeyColumns[tableName][columnName] = {self.primaryKeyKey: True}
         elif (self.uniqueKey in extractData.keys()):
           columnName = extractData[self.uniqueKey][self.columnNameKey]
-          if columnName not in self.columnsDataByTable[tableName][self.columnKey].keys():
-            self.columnsDataByTable[tableName][self.columnKey][columnName] = {}
-          self.columnsDataByTable[tableName][self.columnKey][columnName][self.uniqueKey] = True
+          if columnName not in self.columnsDataByTable[tableName][self.columnsKey].keys():
+            self.columnsDataByTable[tableName][self.columnsKey][columnName] = {}
+          self.columnsDataByTable[tableName][self.columnsKey][columnName][self.uniqueKey] = True
           
           if(tableName not in self.uniqueColumns.keys()):
             self.uniqueColumns[tableName] = {}
           if(columnName not in self.uniqueColumns[tableName].keys()):
             self.uniqueColumns[tableName][columnName] = True
         else:
-          columnName = extractData[self.columnKey][self.nameKey]
-          if columnName not in self.columnsDataByTable[tableName][self.columnKey].keys():
-            self.columnsDataByTable[tableName][self.columnKey][columnName] = extractData[self.columnKey]
+          columnName = extractData[self.columnsKey][self.nameKey]
+          if columnName not in self.columnsDataByTable[tableName][self.columnsKey].keys():
+            self.columnsDataByTable[tableName][self.columnsKey][columnName] = extractData[self.columnsKey]
           else:
-            self.columnsDataByTable[tableName][self.columnKey][columnName].update(extractData[self.columnKey])
-          if self.uniqueKey not in self.columnsDataByTable[tableName][self.columnKey][columnName]:
-             self.columnsDataByTable[tableName][self.columnKey][columnName][self.uniqueKey] = False
-          if self.primaryKeyKey not in self.columnsDataByTable[tableName][self.columnKey][columnName]:
-             self.columnsDataByTable[tableName][self.columnKey][columnName][self.primaryKeyKey] = False 
+            self.columnsDataByTable[tableName][self.columnsKey][columnName].update(extractData[self.columnsKey])
+          if self.uniqueKey not in self.columnsDataByTable[tableName][self.columnsKey][columnName]:
+             self.columnsDataByTable[tableName][self.columnsKey][columnName][self.uniqueKey] = False
+          if self.primaryKeyKey not in self.columnsDataByTable[tableName][self.columnsKey][columnName]:
+             self.columnsDataByTable[tableName][self.columnsKey][columnName][self.primaryKeyKey] = False 
     self.parseAltertableRequests(self.request)
     self.columnsDataByTable = tools.update_object(self.columnsDataByTable, self.foreignKeysColumns)
 
@@ -134,7 +126,7 @@ class SchemaExtractor:
           columnData[self.sizeKey] = int(match[0][2])
         except Exception as e:
           columnData[self.sizeKey] = None
-        columnData = {self.columnKey: columnData}
+        columnData = {self.columnsKey: columnData}
     # je sais pas comment transferer dans les data local
     return columnData
 
@@ -147,8 +139,8 @@ class SchemaExtractor:
       destColumName = foreignKey[1].strip()
       srcTableName = foreignKey[2].strip()
       srcColumName = foreignKey[3].strip()
-      data[destTableName] = {self.columnKey: {}} if (destTableName not in data.keys()) else data[destTableName]
-      data[destTableName][self.columnKey][destColumName] = {self.typeKey: self.foreignKeyKey, self.foreignKeyKey: {self.tableNameKey: srcTableName, self.columnNameKey: srcColumName}}
+      data[destTableName] = {self.columnsKey: {}} if (destTableName not in data.keys()) else data[destTableName]
+      data[destTableName][self.columnsKey][destColumName] = {self.typeKey: self.foreignKeyKey, self.foreignKeyKey: {self.tableNameKey: srcTableName, self.columnNameKey: srcColumName}}
     self.foreignKeysColumns = data 
     return data
 
