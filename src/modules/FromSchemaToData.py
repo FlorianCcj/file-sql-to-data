@@ -21,10 +21,16 @@ class DataGenerator:
   def launcher(self, schema, schemaExtractor):
     self.schemaInit = schema
     self.schemaExtractor = schemaExtractor
+    self.completeSchema(schema)
+    self.data = self.generateDatas(self.schema_to_work)
+
+  def completeSchema(self, schema, schemaExtractor = {}):
+    self.schemaInit = schema
+    self.schemaExtractor = schemaExtractor if schemaExtractor != {} else self.schemaExtractor
     dataScemaOrdered = self.orderTable(schema)
     dataScemaOrderedWithNumber = self.addDefaultNumberToTableList(dataScemaOrdered)
     self.schema_to_work = dataScemaOrderedWithNumber
-    self.data = self.generateDatas(self.schema_to_work)
+    return dataScemaOrderedWithNumber
 
   def orderTable(self, dataSchemaWithForeignKey):
     columnsKey = self.schemaExtractor.columnsKey
@@ -73,12 +79,13 @@ class DataGenerator:
     table[self.defaultNumberOfDataToCreateKey] = self.defaultNumberOfDataToCreate
     return table
 
-  def generateDatas(self, dataSchema):
+  def generateDatas(self, dataSchema, schemaExtractor = {}):
     print('### Generation de la data ###')
+    self.schemaExtractor = schemaExtractor if schemaExtractor != {} else self.schemaExtractor
     data = {}
-    print(dataSchema)
     for tableName in dataSchema:
       data[tableName] = self.generateTableData(tableName, dataSchema)
+    self.data = data
     return data
 
   def generateTableData(self, tableName, dataSchema):

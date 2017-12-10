@@ -8,20 +8,20 @@
  * `pip install -r requirements`
 
 ## Exemple
- * Creation de schema : `python ./main.py -if '../sql-file/cuisine.sql'`
- * Creation de data : `python ./main.py -jf './data-schema.json'`
+ * Creation de schema : `python ./main.py -sf ../sql-file/cuisine.sql`
+ * Creation de data : `python ./main.py -schf ./data-schema.json`
 
 
 ## Utilisation général
 Cette application permet a partir d'un fichier SQL de generer de la donnee.
   * Premiere etape : generer un schema correspondant a la base
-  	`python ./main.py -if '{{chemin/vers/le/fichier/sql/fichier.sql}}'`
+  	`python ./main.py -sf '{{chemin/vers/le/fichier/sql/fichier.sql}}'`
   	va generer un resumer de votre base avec le type, la taille, le nom des colonnes, etc
   	ceci va vous permettre de modifier la generation,
   	* numberToCreate : nombre de donnée qui va etre généré
   	* type : permet de choisir des type particulier
   * Deuxieme etape : generer de la donnee a partir du json modifié
-  	`python ./main.py -jf '{{chemin/vers/le/fichier/json/fichier.json}}'`
+  	`python ./main.py -schf '{{chemin/vers/le/fichier/json/fichier.json}}'`
   	va genener la data
 
 ### type suporter
