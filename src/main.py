@@ -34,7 +34,8 @@ class App:
 
 	def fromSqlFileToSchema(self, sqlFile, outputFile):
 		self.request = FileReader.readFileSql(self.inputFile)
-		self.schemaExtractor.autoExtract(self.request)
+		#self.schemaExtractor.autoExtract(self.request)
+		self.schemaExtractor.autoExtractWithSqlParse(self.request)
 		self.dataGenerator.completeSchema(self.schemaExtractor.columnsDataByTable, self.schemaExtractor)
 		FileCreator.generateJsonFile(self.dataGenerator.schema_to_work, outputFile)
 
@@ -44,8 +45,7 @@ class App:
 		formatedData = tools.fromDataToObjectToPrint(self.dataGenerator.data)
 		FileCreator.generateTxtFileFromObject(formatedData, outputFile)
 
-# argument
-# sqlparse
+# referenciel
 
 print(args)
 if __name__ == '__main__':
@@ -64,4 +64,4 @@ if __name__ == '__main__':
 			launcher.fromSqlFileToSchema(args.sqlFile, outputFile)
 	else:
 		parser.print_help()
-	pass
+	

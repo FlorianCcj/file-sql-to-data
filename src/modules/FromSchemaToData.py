@@ -1,4 +1,5 @@
 import random
+import Key
 from faker import Faker
 fake = Faker()
 
@@ -6,11 +7,8 @@ class DataGenerator:
   def __init__(self):
     self.schemaInit = {}
     self.schema_to_work = {}
-    self.orderKey = 'order'
     self.timeout = 50
     self.defaultNumberOfDataToCreate = 10
-    self.defaultNumberOfDataToCreateKey = 'numberOfDataToCreate'
-    self.schemaExtractor = {}
 
     self.data = {}
     self.tableNameGeneratedData = []
@@ -33,11 +31,11 @@ class DataGenerator:
     return dataScemaOrderedWithNumber
 
   def orderTable(self, dataSchemaWithForeignKey):
-    columnsKey = self.schemaExtractor.columnsKey
-    typeKey = self.schemaExtractor.typeKey
-    foreignKeyKey = self.schemaExtractor.foreignKeyKey
-    tableNameKey = self.schemaExtractor.tableNameKey
-    orderKey = self.orderKey
+    columnsKey = Key.columns
+    typeKey = Key.type
+    foreignKeyKey = Key.foreignKey
+    tableNameKey = Key.tableName
+    orderKey = Key.order
     timeout = self.timeout
     numberOfTable = len(dataSchemaWithForeignKey)
     tableAlreadyDone = []
@@ -76,7 +74,7 @@ class DataGenerator:
     return tableWithNumber
 
   def addDefaultNumberToTable(self, table):
-    table[self.defaultNumberOfDataToCreateKey] = self.defaultNumberOfDataToCreate
+    table[Key.defaultNumberOfDataToCreate] = self.defaultNumberOfDataToCreate
     return table
 
   def generateDatas(self, dataSchema, schemaExtractor = {}):
@@ -89,12 +87,12 @@ class DataGenerator:
     return data
 
   def generateTableData(self, tableName, dataSchema):
-    primaryKeyKey = self.schemaExtractor.primaryKeyKey
-    columnsKey = self.schemaExtractor.columnsKey
+    primaryKeyKey = Key.primaryKey
+    columnsKey = Key.columns
     finalTimeout = self.timeout
     if (not tableName in self.tableNameGeneratedData):
       tableData = []
-      numberOfRow = dataSchema[tableName][self.defaultNumberOfDataToCreateKey]
+      numberOfRow = dataSchema[tableName][Key.defaultNumberOfDataToCreate]
       for i in range(numberOfRow):
         tableData.append(self.generateNewRow(dataSchema[tableName][columnsKey], numberOfRow, i, tableName))
         newEntreePrimary = self.primaryColumnKeeper(tableName, tableData[i])
@@ -126,7 +124,7 @@ class DataGenerator:
 
   def generateNewRow(self, columns, numberOfRow, id, tableName):
     print('### Generation d une entree pour la table %s ###'% tableName)
-    uniqueKey = self.schemaExtractor.uniqueKey
+    uniqueKey = Key.unique
     newRow = {}
     for columnName in columns:
       if (tableName not in self.uniqueDatas.keys()):
@@ -199,12 +197,13 @@ class DataGenerator:
 
   def takeRefData(self, column):
     refRecupData = None
-    if (column.has_key('refFile')):
-      print(column['refFile'])
-      if (not self.refData.has_key(column['refFile'])):
-        self.refData[column['refFile']] = self.readJsonFile(column['refFile'])
-      if (self.refData[column['refFile']]):
-        refRecupData = random.choice(self.refData[column['refFile']])
+    refKey = Key.referenceFile
+    if (column.has_key(refKey)):
+      print(column[refKey])
+      if (not self.refData.has_key(column[refKey])):
+        self.refData[column[refKey]] = self.readJsonFile(column[refKey])
+      if (self.refData[column[refKey]]):
+        refRecupData = random.choice(self.refData[column[refKey]])
       else:
         refRecupData = None
     return refRecupData
