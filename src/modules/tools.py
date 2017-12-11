@@ -1,4 +1,5 @@
 import random
+import Key
 from faker import Faker
 fake = Faker()
 import FileReader
@@ -46,6 +47,7 @@ def fromDataToObjectToPrint(data):
 def generateRandomData(type, maxNumber = 10, id = 0, file = '', refData = []):
     # print('### Generation d une column d une entree ###')
     generatedData = None
+    generatedDatas = {}
     if (type):
       if type.strip().lower() == 'varchar':
         generatedData = fake.sentence()
@@ -82,12 +84,14 @@ def generateRandomData(type, maxNumber = 10, id = 0, file = '', refData = []):
       elif type.strip().lower() == 'company':
         generatedData = fake.company()
       elif type.strip().lower() == 'ref':
-        generatedData = self.takeRefData(file, refData)
+        generatedDatas = self.takeRefData(file, refData)
       elif type.strip().lower() == 'id':
         generatedData = id+1
       else:
         generatedData = None
-    return generatedData
+    if (Key.refListData not in generatedDatas.keys()):
+      generatedDatas = {Key.data: generatedData, Key.refListData: None}
+    return generatedDatas
 
 def takeRefData(self, file, refData):
     refRecupData = None
@@ -95,4 +99,4 @@ def takeRefData(self, file, refData):
       refData = FileReader.readJsonFile(file)    
     if(len(refData) > 0):
       refRecupData = random.choice(refData)
-    return refRecupData
+    return {Key.data: refRecupData, Key.refListData: refData} 

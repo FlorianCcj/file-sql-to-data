@@ -18,9 +18,12 @@ type = "type"
 nullable = "nullable"
 notNullable = "not null"
 size = "size"
+ref = "ref"
 
 table = "table"
 column = "column"
 columns = "columns"
 
 referenceFile = "refFile"
+data = "data"
+refListData = "refListData"

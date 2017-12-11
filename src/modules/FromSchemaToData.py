@@ -1,6 +1,7 @@
 import random
 import Key
 from faker import Faker
+import tools
 fake = Faker()
 
 class DataGenerator:
@@ -14,6 +15,7 @@ class DataGenerator:
     self.tableNameGeneratedData = []
     self.uniqueDatas = {}
     self.primaryColumn = {}
+    self.refData = {}
 
     
   def launcher(self, schema, schemaExtractor):
@@ -154,45 +156,17 @@ class DataGenerator:
     if (column['name'] == 'id'):
       generatedData = id+1
     else:
-      if (column.has_key('type')):
-        if column['type'].strip().lower() == 'varchar':
-          generatedData = fake.sentence()
-        elif column['type'].strip().lower().find('varchar') != -1:
-          generatedData = fake.sentence()
-        elif column['type'].strip().lower() == 'LONGTEXT'.lower():
-          generatedData = fake.paragraph()
-        elif column['type'].strip().lower() == 'tinyint':
-          generatedData = fake.boolean()
-        elif column['type'].strip().lower() == 'boolean':
-          generatedData = fake.boolean()
-        elif column['type'].strip().lower().find('tinyint') != -1:
-          generatedData = fake.boolean()
-        elif column['type'].strip().lower() == 'int':
-          generatedData = random.randint(1, numberOfRow)
-        elif column['type'].strip().lower().find('int') != -1:
-          generatedData = random.randint(1, numberOfRow)
-        elif column['type'].strip().lower() == 'name':
-          generatedData = fake.name()
-        elif column['type'].strip().lower() == 'adress':
-          generatedData = fake.adress()
-        elif column['type'].strip().lower() == 'first_name':
-          generatedData = fake.first_name()
-        elif column['type'].strip().lower() == 'last_name':
-          generatedData = fake.last_name()
-        elif column['type'].strip().lower() == 'credit_card_number':
-          generatedData = fake.credit_card_number()
-        elif column['type'].strip().lower() == 'military_ship':
-          generatedData = fake.military_ship()
-        elif column['type'].strip().lower() == 'color':
-          generatedData = fake.hex_color()
-        elif column['type'].strip().lower() == 'catch_phrase_verb':
-          generatedData = fake.catch_phrase_verb()
-        elif column['type'].strip().lower() == 'company':
-          generatedData = fake.company()
-        elif column['type'].strip().lower() == 'ref':
-          generatedData = self.takeRefData(column)
-        else:
-          generatedData = None
+      if (column.has_key(Key.type)):
+        generatedDatas = tools.generateRandomData(
+          column[Key.type], 
+          numberOfRow, 
+          column[Key.referenceFile] if (Key.referenceFile in column.keys()) else '', 
+          self.refData[column[Key.ref]] if (Key.ref in column.keys() and column[Key.ref] in self.refData) else ''
+        )
+        generatedData = generatedDatas[Key.data]
+
+        if (Key.refListData in generatedDatas.keys() and Key.ref in column.keys()):
+          self.refData[column[Key.ref]] = generatedDatas[Key.refListData]
     return generatedData
 
   def takeRefData(self, column):
