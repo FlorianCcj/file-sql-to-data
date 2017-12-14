@@ -128,7 +128,7 @@ def generateRandomData(type, maxNumber = 10, id = 0, file = '', refData = []):
       generatedDatas = {Key.data: generatedData, Key.refListData: None}
     return generatedDatas
 
-def takeRefData(self, file, refData):
+def takeRefData(file, refData):
     refRecupData = None
     if(not len(refData) > 0):
       refData = FileReader.readJsonFile(file)    
@@ -136,3 +136,6 @@ def takeRefData(self, file, refData):
       refRecupData = random.choice(refData)
     return {Key.data: refRecupData, Key.refListData: refData} 
 
+def takeOneElementInArray(dataToRand):
+  randomNum = random.randint(0, len(dataToRand)-1)
+  return dataToRand[randomNum]

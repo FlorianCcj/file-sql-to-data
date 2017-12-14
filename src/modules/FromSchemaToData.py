@@ -147,9 +147,10 @@ class DataGenerator:
       :rtype: liste d'objet par table {table1 : [entre1, entre2]}
     """
     print('### Generation de la data ###')
+    self.schema_to_work = dataSchema if not dataSchema == self.schema_to_work else self.schema_to_work
     data = {}
     for tableName in dataSchema:
-      data[tableName] = self.generateTableData(tableName, dataSchema)
+      data[tableName] = self.generateTableData(tableName)
     self.data = data
     return data
 
@@ -166,25 +167,27 @@ class DataGenerator:
       :rtype: liste d'objet par table {table1 : [entre1, entre2]}
     """
     print('### Generation de la data ###')
+    self.schema_to_work = dataSchema if not dataSchema == self.schema_to_work else self.schema_to_work
     data = {}
     for i in range(len(orderOfTable)):
+      tableName = orderOfTable[i]
     #for tableName in dataSchema:
-      data[orderOfTable[i]] = self.generateTableData(orderOfTable[i], dataSchema)
-    self.data = data
+      if(tableName not in self.data):
+        data[orderOfTable[i]] = self.generateTableData(tableName)
+        self.data[tableName] = data[tableName]
     return data
 
-  def generateTableData(self, tableName, dataSchema):
+  def generateTableData(self, tableName):
     """
       a partir du schema d une table on genere toute les donnees
 
       :param tableName: nom d une table
       :type tableName: string
-      :param dataSchema: schema de la base de donnee
-      :type dataSchema: todo
 
       :return: liste des donnees genere pour une table
       :rtype: array 
     """
+    dataSchema = self.schema_to_work
     primaryKeyKey = Key.primaryKey
     columnsKey = Key.columns
     finalTimeout = self.timeout
@@ -286,19 +289,33 @@ class DataGenerator:
       :return: une donnee generer aleatoirement
       :rtype: str|int
     """
+    foreignData = self.data
     generatedData = None
     if (column['name'] == 'id'):
       generatedData = id+1
     else:
       if (column.has_key(Key.type)):
-        generatedDatas = tools.generateRandomData(
-          column[Key.type], 
-          numberOfRow, 
-          column[Key.referenceFile] if (Key.referenceFile in column.keys()) else '', 
-          self.refData[column[Key.ref]] if (Key.ref in column.keys() and column[Key.ref] in self.refData) else ''
-        )
-        generatedData = generatedDatas[Key.data]
+        if column[Key.type] == Key.foreignKey:
+          if Key.foreignKey in column.keys():
+            foreignColumn = column[Key.foreignKey][Key.columnName]
+            foreignTable = column[Key.foreignKey][Key.tableName]
+            if(foreignTable not in self.data):
+              self.data[foreignTable] = self.generateTableData(foreignTable)
+            oneRandomElementInForeignData = tools.takeOneElementInArray(self.data[foreignTable])
+            generatedData = oneRandomElementInForeignData[foreignColumn]
+          else:
+            print('[Error] column de type foreign key mais pas de table de destination')
+            exit(1)
+          #todo
+        else:
+          generatedDatas = tools.generateRandomData(
+            column[Key.type], 
+            numberOfRow, 
+            column[Key.referenceFile] if (Key.referenceFile in column.keys()) else '', 
+            self.refData[column[Key.ref]] if (Key.ref in column.keys() and column[Key.ref] in self.refData) else ''
+          )
+          generatedData = generatedDatas[Key.data]
 
-        if (Key.refListData in generatedDatas.keys() and Key.ref in column.keys()):
-          self.refData[column[Key.ref]] = generatedDatas[Key.refListData]
+          if (Key.refListData in generatedDatas.keys() and Key.ref in column.keys()):
+            self.refData[column[Key.ref]] = generatedDatas[Key.refListData]
     return generatedData
