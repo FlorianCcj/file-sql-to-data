@@ -1,6 +1,15 @@
 import json
 
 def readFileSql(inputFile):
+  """
+    concatene un fichier en une seul string
+
+    :param inputFile: le fichier a lire
+    :type inputFile: string
+
+    :return: une string avec toutes les lignes misent bout a bout
+    :rtype: string
+  """
   print('### Lecture du fichier SQL ###')
   totalRequest = ''
   try:
@@ -19,6 +28,15 @@ def readFileSql(inputFile):
   return totalRequest
 
 def readJsonFile(jsonFile):
+  """
+    recupere un json d un fichier pour le retourner en objet
+
+    :param inputFile: le fichier a lire
+    :type inputFile: string
+
+    :return: l objet sortit du fichier
+    :rtype: object
+  """
   print('### Lecture du fichier JSON ###')
   try:
     with open(jsonFile, 'r') as file:
