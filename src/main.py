@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 import re
 import json
@@ -35,7 +35,7 @@ class App:
 	def fromSqlFileToSchema(self, sqlFile, outputFile):
 		self.request = FileReader.readFileSql(self.inputFile)
 		self.schemaExtractor.autoExtractWithSqlParse(self.request)
-		self.dataGenerator.completeSchema(self.schemaExtractor.columnsDataByTable, self.schemaExtractor)
+		self.dataGenerator.completeSchema(self.schemaExtractor.columnsDataByTable)
 		FileCreator.generateJsonFile(self.dataGenerator.schema_to_work, outputFile)
 
 	def fromSchemaToData(self, schemaFile, outputFile):

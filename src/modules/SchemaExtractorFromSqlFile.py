@@ -14,8 +14,6 @@ class SchemaExtractor:
     self.foreignKeysColumns = {}
     self.dataSchema = {}
 
-    
-
   def autoExtract(self, sqlRequest):
     self.request = sqlRequest
     self.createRequests = self.extractCreateRequests(self.request)

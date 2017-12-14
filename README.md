@@ -44,3 +44,4 @@ Cette application permet a partir d'un fichier SQL de generer de la donnee.
 ## Note
  * Generer le requirements.txt automatiquement : pip freeze > requirements.txt
  * https://pythontips.com/2013/07/30/20-python-libraries-you-cant-live-without/
+ * Documentation : http://sametmax.com/les-docstrings/

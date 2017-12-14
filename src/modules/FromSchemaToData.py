@@ -19,21 +19,40 @@ class DataGenerator:
     self.refData = {}
 
     
-  def launcher(self, schema, schemaExtractor):
+  def launcher(self, schema):
     self.schemaInit = schema
-    self.schemaExtractor = schemaExtractor
     self.completeSchema(schema)
     self.data = self.generateDatas(self.schema_to_work)
 
-  def completeSchema(self, schema, schemaExtractor = {}):
+  def completeSchema(self, schema):
+    """
+      ajoute un numero d'order et le nombre d entite a creer dans le schema
+      
+      :param schema: le schema d une base de donnee genere par le script auparavant
+      :type schema: todo
+      
+      :return: un schema avec un complement d information (ordre de generation, bombre de donnee par default a generer)
+      :rtype: le meme que le schema
+    """
     self.schemaInit = schema
-    self.schemaExtractor = schemaExtractor if schemaExtractor != {} else self.schemaExtractor
     dataScemaOrdered = self.orderTable(schema)
     dataScemaOrderedWithNumber = self.addDefaultNumberToTableList(dataScemaOrdered)
     self.schema_to_work = dataScemaOrderedWithNumber
     return dataScemaOrderedWithNumber
 
   def orderTable(self, dataSchemaWithForeignKey):
+    """
+      ordonne les tables
+        si il n'y a aucune dependance ajoute directement
+        si il y a des dependance et qu elles sont deja remplis alors on ajoute
+        sinon on boucle
+
+        :param dataSchemaWithForeignKey: un schema de base de donnee
+        :type dataSchemaWithForeignKey: todo
+
+        :return: le meme schema avec un element permettant d ordonnee la creation de la donnee
+        :rtype: todo
+    """
     columnsKey = Key.columns
     typeKey = Key.type
     foreignKeyKey = Key.foreignKey
@@ -58,7 +77,6 @@ class DataGenerator:
               else:
                 if dataSchemaWithForeignKey[tableName][columnsKey][columnName][foreignKeyKey][tableNameKey] not in tableAlreadyDone:
                   save = False 
-
           if(foreignKeyCounter == 0):
             save = True
           if(save == True):
@@ -71,6 +89,15 @@ class DataGenerator:
     return dataSchemaWithForeignKey
 
   def fromSchemaToOrder(self, schema):
+    """
+      recupere les ordres de chaque table et fait un objet avec pour indice l'ordre {1: recette-type, 2:recette}
+      
+      :param schema: un schema de base de donnee
+      :type schema: todo
+
+      :return: un tableau permettant de savoir l ordre de creation
+      :rtype: {1: recette-type, 2:recette, n: nemetable} 
+    """
     orderOfTable = {}
     for tableName in schema:
       if (Key.order in schema[tableName]):
@@ -83,18 +110,43 @@ class DataGenerator:
     return orderOfTable
 
   def addDefaultNumberToTableList(self, tableList):
+    """
+      ajoute un nombre d entite a creer par default a toute les tables dans un schema de base
+
+      :param tableList: objet listant des tables
+      :type tableList: todo
+
+      :return: le meme objet mais avec un nouvel attribut par table pour savoir le nombre d entite a cree
+    """
     tableWithNumber = {}
     for tableName in tableList:
       tableWithNumber[tableName] = self.addDefaultNumberToTable(tableList[tableName])
     return tableWithNumber
 
   def addDefaultNumberToTable(self, table):
+    """ 
+      ajoute un nombre d entite a creer dans un schema de table
+
+      :param table: un schema d une table
+      :type table: object
+
+      :return: le meme schema avec un attribut en plus pour savoir le nombre d'entree a creer
+      :rtype: object
+    """
     table[Key.defaultNumberOfDataToCreate] = self.defaultNumberOfDataToCreate
     return table
 
-  def generateDatas(self, dataSchema, schemaExtractor = {}):
+  def generateDatas(self, dataSchema):
+    """
+      a partir d un schema d une base on genere de la donnee
+
+      :param dataSchema: schema de base de donnee
+      :type dataSchema: todo
+
+      :return: donnee genere par table
+      :rtype: liste d'objet par table {table1 : [entre1, entre2]}
+    """
     print('### Generation de la data ###')
-    self.schemaExtractor = schemaExtractor if schemaExtractor != {} else self.schemaExtractor
     data = {}
     for tableName in dataSchema:
       data[tableName] = self.generateTableData(tableName, dataSchema)
@@ -102,6 +154,17 @@ class DataGenerator:
     return data
 
   def generateTableData(self, tableName, dataSchema):
+    """
+      a partir du schema d une table on genere toute les donnees
+
+      :param tableName: nom d une table
+      :type tableName: string
+      :param dataSchema: schema de la base de donnee
+      :type dataSchema: todo
+
+      :return: liste des donnees genere pour une table
+      :rtype: array 
+    """
     primaryKeyKey = Key.primaryKey
     columnsKey = Key.columns
     finalTimeout = self.timeout
@@ -125,10 +188,22 @@ class DataGenerator:
       self.tableNameGeneratedData.append(tableName)
       return tableData
     else:
-      return {}
-    # return self.data[tableName]
+      return []
 
   def primaryColumnKeeper(self, tableName, newData):
+    """
+      genere a partir d'un nouvel objet
+      un objet avec uniquement les columns ayant pour caracteristique 
+      d etre une primary key
+
+      :param tableName: nom de la table a gerer
+      :type tableName: string
+      :param newData: la nouvelle donnee generee
+      :type newData: todo
+
+      :return: un object uniquement compose de primary key
+
+    """
     returnPrimary = None
     if (self.primaryColumn.has_key(tableName)):
       if (len(self.primaryColumn[tableName]) > 0):
@@ -138,6 +213,21 @@ class DataGenerator:
     return returnPrimary
 
   def generateNewRow(self, columns, numberOfRow, id, tableName):
+    """
+      genere une nouvelle entree
+
+      :param columns: liste des colonnes d une table
+      :type columns: objet d'objet de type column
+      :param numberOfRow: nombre d entree theoriquement generer pour cette table 
+      :type numberOfRow: int
+      :param id: id de la derniere entree generer 
+      :type id: int 
+      :param tableName: nom de la table qui est actuellement gerer 
+      :type tableName: string 
+
+      :return: une entree
+
+    """
     print('### Generation d une entree pour la table %s ###'% tableName)
     uniqueKey = Key.unique
     newRow = {}
@@ -164,7 +254,18 @@ class DataGenerator:
     return newRow
 
   def generateDataColumn(self, column, numberOfRow, id):
-    # print('### Generation d une column d une entree ###')
+    """
+      Genere une donnee en fonction du type de la colonne
+
+      :param column: le schema de la colonne a traite
+      :param numberOfRow: nombre d entree theoriquement generer pour cette table 
+      :type numberOfRow: int
+      :param id: id de la derniere entree generer 
+      :type id: int 
+
+      :return: une donnee generer aleatoirement
+      :rtype: str|int
+    """
     generatedData = None
     if (column['name'] == 'id'):
       generatedData = id+1
