@@ -17,7 +17,14 @@ def update_object(object_init, object_update_container):
     new_object = object_update_container
   return new_object
 
-def fromStringArrayToObject(objectToGenerate):
+def fromStringsArrayToObjects(objectToGenerate, arrayOfString, idMin = 0):
+  # pas gerer pour l instant
+  for name in arrayOfString:
+    new_object = {}
+    for columnName in objectToGenerate:
+      new_object[columnName] = generateRandomData(objectToGenerate[columnName[Key.type]])
+      pass
+    pass
   pass
 
 def fromDataToObjectToPrint(data):
@@ -42,6 +49,34 @@ def fromDataToObjectToPrint(data):
     objectToPrint[lignToPrint-1] = objectToPrint[lignToPrint-1][:len(endInsertValueLign)-1]
     objectToPrint[lignToPrint] = ';'
     lignToPrint += 1  
+  return objectToPrint
+
+def fromDataToOrderedObjectToPrint(data, orderOfTable):
+  objectToPrint = {}
+  lignToPrint = 0
+
+  for i in range(len(orderOfTable)):
+    tableName = orderOfTable[i]
+    beginInsertValueLign = 'INSERT INTO `' + str(tableName) + '` (' 
+    for columnName in data[tableName][0]:
+      beginInsertValueLign = beginInsertValueLign + '`' + str(columnName) + '`, '
+    beginInsertValueLign = beginInsertValueLign[:len(beginInsertValueLign)-2] + ') VALUES '
+    objectToPrint[lignToPrint] = beginInsertValueLign 
+    lignToPrint += 1
+
+    endInsertValueLignInitial = '('
+    for element in data[tableName]:
+      endInsertValueLign = endInsertValueLignInitial
+      for column in element:
+        endInsertValueLign = endInsertValueLign + str(element[column]) + ', '
+      endInsertValueLign = endInsertValueLign[:len(endInsertValueLign)-2] + '),'
+      objectToPrint[lignToPrint] = endInsertValueLign
+      lignToPrint += 1
+    objectToPrint[lignToPrint-1] = objectToPrint[lignToPrint-1][:len(endInsertValueLign)-1]
+    objectToPrint[lignToPrint] = ';'
+    lignToPrint += 1
+  if(not len(data) == len(orderOfTable)):
+    print('//!\\\\ Attention il y a moins de table triees que de table de donnee')  
   return objectToPrint
 
 def generateRandomData(type, maxNumber = 10, id = 0, file = '', refData = []):
@@ -100,3 +135,4 @@ def takeRefData(self, file, refData):
     if(len(refData) > 0):
       refRecupData = random.choice(refData)
     return {Key.data: refRecupData, Key.refListData: refData} 
+

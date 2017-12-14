@@ -8,6 +8,7 @@ class DataGenerator:
   def __init__(self):
     self.schemaInit = {}
     self.schema_to_work = {}
+    self.orderOfTable = {}
     self.timeout = 50
     self.defaultNumberOfDataToCreate = 10
 
@@ -68,6 +69,18 @@ class DataGenerator:
     if (tryTime == timeout):
       print('[Erreur][order] erreur lors de l ordonnancement des tables, l une d elle a une foreign key qui n existe pas')
     return dataSchemaWithForeignKey
+
+  def fromSchemaToOrder(self, schema):
+    orderOfTable = {}
+    for tableName in schema:
+      if (Key.order in schema[tableName]):
+        orderOfTable[schema[tableName][Key.order]] = tableName
+      else:
+        if (Key.nonorder not in orderOfTable):
+          orderOfTable[Key.nonorder] = []
+        orderOfTable[Key.nonorder].append(tableName)
+    self.orderOfTable = orderOfTable
+    return orderOfTable
 
   def addDefaultNumberToTableList(self, tableList):
     tableWithNumber = {}
@@ -168,16 +181,3 @@ class DataGenerator:
         if (Key.refListData in generatedDatas.keys() and Key.ref in column.keys()):
           self.refData[column[Key.ref]] = generatedDatas[Key.refListData]
     return generatedData
-
-  def takeRefData(self, column):
-    refRecupData = None
-    refKey = Key.referenceFile
-    if (column.has_key(refKey)):
-      print(column[refKey])
-      if (not self.refData.has_key(column[refKey])):
-        self.refData[column[refKey]] = self.readJsonFile(column[refKey])
-      if (self.refData[column[refKey]]):
-        refRecupData = random.choice(self.refData[column[refKey]])
-      else:
-        refRecupData = None
-    return refRecupData

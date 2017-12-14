@@ -41,8 +41,10 @@ class App:
 
 	def fromSchemaToData(self, schemaFile, outputFile):
 		schema = FileReader.readJsonFile(schemaFile)
+		orderOfTable = self.dataGenerator.fromSchemaToOrder(schema)
 		self.dataGenerator.generateDatas(schema, self.schemaExtractor)
-		formatedData = tools.fromDataToObjectToPrint(self.dataGenerator.data)
+		# todo : je balance la data mais pas l'ordre
+		formatedData = tools.fromDataToOrderedObjectToPrint(self.dataGenerator.data, orderOfTable)
 		FileCreator.generateTxtFileFromObject(formatedData, outputFile)
 
 # referenciel

@@ -1,5 +1,6 @@
-defaultNumberOfDataToCreate = 'numberOfDataToCreate'
-order = 'order'
+defaultNumberOfDataToCreate = "numberOfDataToCreate"
+order = "order"
+nonorder = "non ordered"
 
 indexSearch = "index"
 primaryKeySearch = "primary"
