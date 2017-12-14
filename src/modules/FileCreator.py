@@ -1,6 +1,14 @@
 import json
 
 def generateJsonFile(data, outputFile):
+  """
+    dump un objet json dans un fichier
+
+    :param data: l'objet a dumper
+    :type data: object
+    :param outputFile: chemin vers le fichier de destination
+    :type outputFile: string
+  """
   try:
     with open(outputFile, 'w') as file:
       file.write(json.dumps(data, indent=2))
@@ -10,6 +18,14 @@ def generateJsonFile(data, outputFile):
     exit(1)
 
 def generateXmlFile(data, outputFile):
+  """
+    genere un xml dans un fichier
+
+    :param data: l'objet a dumper
+    :type data: object
+    :param outputFile: chemin vers le fichier de destination
+    :type outputFile: string
+  """
   root = etree.Element('data')
   try:
     for tableName in data:
@@ -32,6 +48,14 @@ def generateXmlFile(data, outputFile):
     exit(1)
 
 def generateSqlFile(data, outputFile):
+  """
+    passe un fichier en requete sql et le print dans un fichier
+
+    :param data: l'objet a dumper
+    :type data: object
+    :param outputFile: chemin vers le fichier de destination
+    :type outputFile: string
+  """
   fichier = open(outputFile, "w")
   eolSymbole = '\n'
   
@@ -64,6 +88,14 @@ def generateSqlFile(data, outputFile):
   fichier.close()
 
 def generateTxtFileFromArray(data, outputFile):
+  """
+    dump un array json dans un fichier
+
+    :param data: l'array a dumper
+    :type data: array
+    :param outputFile: chemin vers le fichier de destination
+    :type outputFile: string
+  """
   fichier = open(outputFile, "w")
   eolSymbole = '\n'
   
@@ -78,6 +110,14 @@ def generateTxtFileFromArray(data, outputFile):
   fichier.close()
 
 def generateTxtFileFromObject(data, outputFile):
+  """
+    ecrit un objet ligne par ligne dans un fichier
+
+    :param data: l'objet a dumper
+    :type data: object
+    :param outputFile: chemin vers le fichier de destination
+    :type outputFile: string
+  """
   fichier = open(outputFile, "w")
   eolSymbole = '\n'
   
