@@ -34,7 +34,6 @@ class App:
 
 	def fromSqlFileToSchema(self, sqlFile, outputFile):
 		self.request = FileReader.readFileSql(self.inputFile)
-		#self.schemaExtractor.autoExtract(self.request)
 		self.schemaExtractor.autoExtractWithSqlParse(self.request)
 		self.dataGenerator.completeSchema(self.schemaExtractor.columnsDataByTable, self.schemaExtractor)
 		FileCreator.generateJsonFile(self.dataGenerator.schema_to_work, outputFile)
@@ -43,11 +42,8 @@ class App:
 		schema = FileReader.readJsonFile(schemaFile)
 		orderOfTable = self.dataGenerator.fromSchemaToOrder(schema)
 		self.dataGenerator.generateDatas(schema, self.schemaExtractor)
-		# todo : je balance la data mais pas l'ordre
 		formatedData = tools.fromDataToOrderedObjectToPrint(self.dataGenerator.data, orderOfTable)
 		FileCreator.generateTxtFileFromObject(formatedData, outputFile)
-
-# referenciel
 
 print(args)
 if __name__ == '__main__':

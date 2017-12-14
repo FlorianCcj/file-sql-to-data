@@ -107,9 +107,9 @@ class DataGenerator:
     finalTimeout = self.timeout
     if (not tableName in self.tableNameGeneratedData):
       tableData = []
-      numberOfRow = dataSchema[tableName][Key.defaultNumberOfDataToCreate]
-      for i in range(numberOfRow):
-        tableData.append(self.generateNewRow(dataSchema[tableName][columnsKey], numberOfRow, i, tableName))
+      numberOfRowToCreate = dataSchema[tableName][Key.defaultNumberOfDataToCreate]
+      for i in range(numberOfRowToCreate):
+        tableData.append(self.generateNewRow(dataSchema[tableName][columnsKey], numberOfRowToCreate, i, tableName))
         newEntreePrimary = self.primaryColumnKeeper(tableName, tableData[i])
         if (primaryKeyKey not in self.uniqueDatas[tableName].keys()):
           self.uniqueDatas[tableName][primaryKeyKey] = []
@@ -117,7 +117,7 @@ class DataGenerator:
         while (newEntreePrimary in self.uniqueDatas[tableName][primaryKeyKey] and timeout < self.timeout):
           timeout += 1
           del tableData[i]
-          tableData.append(self.generateNewRow(dataSchema[tableName][columnsKey], numberOfRow, i, tableName))
+          tableData.append(self.generateNewRow(dataSchema[tableName][columnsKey], numberOfRowToCreate, i, tableName))
           newEntreePrimary = self.primaryColumnKeeper(tableName, tableData[i])
         self.uniqueDatas[tableName][primaryKeyKey].append(newEntreePrimary)
         if (timeout == finalTimeout):
