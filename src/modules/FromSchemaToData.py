@@ -153,6 +153,26 @@ class DataGenerator:
     self.data = data
     return data
 
+  def generateOrderedDatas(self, dataSchema, orderOfTable):
+    """
+      a partir d un schema d une base on genere de la donnee dans l ordre recuperer par la fonction orderTable
+
+      :param dataSchema: schema de base de donnee
+      :type dataSchema: todo
+      :param orderOfTable: ordonnancement des table
+      :type dataSchema: object
+
+      :return: donnee genere par table
+      :rtype: liste d'objet par table {table1 : [entre1, entre2]}
+    """
+    print('### Generation de la data ###')
+    data = {}
+    for i in range(len(orderOfTable)):
+    #for tableName in dataSchema:
+      data[orderOfTable[i]] = self.generateTableData(orderOfTable[i], dataSchema)
+    self.data = data
+    return data
+
   def generateTableData(self, tableName, dataSchema):
     """
       a partir du schema d une table on genere toute les donnees

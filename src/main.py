@@ -41,7 +41,8 @@ class App:
 	def fromSchemaToData(self, schemaFile, outputFile):
 		schema = FileReader.readJsonFile(schemaFile)
 		orderOfTable = self.dataGenerator.fromSchemaToOrder(schema)
-		self.dataGenerator.generateDatas(schema, self.schemaExtractor)
+		self.dataGenerator.generateOrderedDatas(schema, orderOfTable)
+		# self.dataGenerator.generateDatas(schema)
 		formatedData = tools.fromDataToOrderedObjectToPrint(self.dataGenerator.data, orderOfTable)
 		FileCreator.generateTxtFileFromObject(formatedData, outputFile)
 
