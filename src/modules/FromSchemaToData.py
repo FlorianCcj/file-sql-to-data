@@ -6,25 +6,25 @@ fake = Faker()
 
 class DataGenerator:
   def __init__(self):
-    self.schemaInit = {}
+    self.schema_init = {}
     self.schema_to_work = {}
-    self.orderOfTable = {}
+    self.order_of_table = {}
     self.timeout = 50
-    self.defaultNumberOfDataToCreate = 10
+    self.default_number_of_data_to_create = 10
 
     self.data = {}
-    self.tableNameGeneratedData = []
-    self.uniqueDatas = {}
-    self.primaryColumn = {}
-    self.refData = {}
+    self.table_name_generated_data = []
+    self.unique_datas = {}
+    self.primary_column = {}
+    self.ref_data = {}
 
     
   def launcher(self, schema):
-    self.schemaInit = schema
-    self.completeSchema(schema)
-    self.data = self.generateDatas(self.schema_to_work)
+    self.schema_init = schema
+    self.complete_schema(schema)
+    self.data = self.generate_datas(self.schema_to_work)
 
-  def completeSchema(self, schema):
+  def complete_schema(self, schema):
     """
       ajoute un numero d'order et le nombre d entite a creer dans le schema
       
@@ -34,61 +34,61 @@ class DataGenerator:
       :return: un schema avec un complement d information (ordre de generation, bombre de donnee par default a generer)
       :rtype: le meme que le schema
     """
-    self.schemaInit = schema
-    dataScemaOrdered = self.orderTable(schema)
-    dataScemaOrderedWithNumber = self.addDefaultNumberToTableList(dataScemaOrdered)
-    self.schema_to_work = dataScemaOrderedWithNumber
-    return dataScemaOrderedWithNumber
+    self.schema_init = schema
+    data_schema_ordered = self.order_table(schema)
+    data_schema_ordered_with_number = self.add_default_number_to_table_list(data_schema_ordered)
+    self.schema_to_work = data_schema_ordered_with_number
+    return data_schema_ordered_with_number
 
-  def orderTable(self, dataSchemaWithForeignKey):
+  def order_table(self, data_schema_with_foreign_key):
     """
       ordonne les tables
         si il n'y a aucune dependance ajoute directement
         si il y a des dependance et qu elles sont deja remplis alors on ajoute
         sinon on boucle
 
-        :param dataSchemaWithForeignKey: un schema de base de donnee
-        :type dataSchemaWithForeignKey: todo
+        :param data_schema_with_foreign_key: un schema de base de donnee
+        :type data_schema_with_foreign_key: todo
 
         :return: le meme schema avec un element permettant d ordonnee la creation de la donnee
         :rtype: todo
     """
-    columnsKey = Key.columns
-    typeKey = Key.type
-    foreignKeyKey = Key.foreignKey
-    tableNameKey = Key.tableName
-    orderKey = Key.order
+    columns_key = Key.columns
+    type_key = Key.type
+    foreign_key_key = Key.foreignkey
+    table_name_key = Key.table_name
+    order_key = Key.order
     timeout = self.timeout
-    numberOfTable = len(dataSchemaWithForeignKey)
-    tableAlreadyDone = []
-    numberOfTableDone = len(tableAlreadyDone)
-    tryTime = 0
-    while len(tableAlreadyDone) != numberOfTable and tryTime <= timeout:
-      tryTime += 1
+    number_of_table = len(data_schema_with_foreign_key)
+    table_already_done = []
+    number_of_tableDone = len(table_already_done)
+    try_time = 0
+    while len(table_already_done) != number_of_table and try_time <= timeout:
+      try_time += 1
       save = True
-      for tableName in dataSchemaWithForeignKey:
-        if tableName not in tableAlreadyDone:
-          foreignKeyCounter = 0
-          for columnName in dataSchemaWithForeignKey[tableName][columnsKey]:
-            if dataSchemaWithForeignKey[tableName][columnsKey][columnName][typeKey] == foreignKeyKey:
-              foreignKeyCounter += 1
-              if tableNameKey not in dataSchemaWithForeignKey[tableName][columnsKey][columnName][foreignKeyKey].keys():
+      for table_name in data_schema_with_foreign_key:
+        if table_name not in table_already_done:
+          foreign_key_counter = 0
+          for column_name in data_schema_with_foreign_key[table_name][columns_key]:
+            if data_schema_with_foreign_key[table_name][columns_key][column_name][type_key] == foreign_key_key:
+              foreign_key_counter += 1
+              if table_name_key not in data_schema_with_foreign_key[table_name][columns_key][column_name][foreign_key_key].keys():
                 save = False
               else:
-                if dataSchemaWithForeignKey[tableName][columnsKey][columnName][foreignKeyKey][tableNameKey] not in tableAlreadyDone:
+                if data_schema_with_foreign_key[table_name][columns_key][column_name][foreign_key_key][table_name_key] not in table_already_done:
                   save = False 
-          if(foreignKeyCounter == 0):
+          if(foreign_key_counter == 0):
             save = True
           if(save == True):
-            dataSchemaWithForeignKey[tableName][orderKey] = len(tableAlreadyDone)
-            tableAlreadyDone.append(tableName)
-            tryTime = 0
-      numberOfTableDone = len(tableAlreadyDone)
-    if (tryTime == timeout):
+            data_schema_with_foreign_key[table_name][order_key] = len(table_already_done)
+            table_already_done.append(table_name)
+            try_time = 0
+      number_of_tableDone = len(table_already_done)
+    if (try_time == timeout):
       print('[Erreur][order] erreur lors de l ordonnancement des tables, l une d elle a une foreign key qui n existe pas')
-    return dataSchemaWithForeignKey
+    return data_schema_with_foreign_key
 
-  def fromSchemaToOrder(self, schema):
+  def from_schema_to_order(self, schema):
     """
       recupere les ordres de chaque table et fait un objet avec pour indice l'ordre {1: recette-type, 2:recette}
       
@@ -98,32 +98,32 @@ class DataGenerator:
       :return: un tableau permettant de savoir l ordre de creation
       :rtype: {1: recette-type, 2:recette, n: nemetable} 
     """
-    orderOfTable = {}
-    for tableName in schema:
-      if (Key.order in schema[tableName]):
-        orderOfTable[schema[tableName][Key.order]] = tableName
+    order_of_table = {}
+    for table_name in schema:
+      if (Key.order in schema[table_name]):
+        order_of_table[schema[table_name][Key.order]] = table_name
       else:
-        if (Key.nonorder not in orderOfTable):
-          orderOfTable[Key.nonorder] = []
-        orderOfTable[Key.nonorder].append(tableName)
-    self.orderOfTable = orderOfTable
-    return orderOfTable
+        if (Key.nonorder not in order_of_table):
+          order_of_table[Key.nonorder] = []
+        order_of_table[Key.nonorder].append(table_name)
+    self.order_of_table = order_of_table
+    return order_of_table
 
-  def addDefaultNumberToTableList(self, tableList):
+  def add_default_number_to_table_list(self, table_list):
     """
       ajoute un nombre d entite a creer par default a toute les tables dans un schema de base
 
-      :param tableList: objet listant des tables
-      :type tableList: todo
+      :param table_list: objet listant des tables
+      :type table_list: todo
 
       :return: le meme objet mais avec un nouvel attribut par table pour savoir le nombre d entite a cree
     """
-    tableWithNumber = {}
-    for tableName in tableList:
-      tableWithNumber[tableName] = self.addDefaultNumberToTable(tableList[tableName])
-    return tableWithNumber
+    table_with_number = {}
+    for table_name in table_list:
+      table_with_number[table_name] = self.add_default_number_to_table(table_list[table_name])
+    return table_with_number
 
-  def addDefaultNumberToTable(self, table):
+  def add_default_number_to_table(self, table):
     """ 
       ajoute un nombre d entite a creer dans un schema de table
 
@@ -133,189 +133,189 @@ class DataGenerator:
       :return: le meme schema avec un attribut en plus pour savoir le nombre d'entree a creer
       :rtype: object
     """
-    table[Key.defaultNumberOfDataToCreate] = self.defaultNumberOfDataToCreate
+    table[Key.default_number_of_data_to_create] = self.default_number_of_data_to_create
     return table
 
-  def generateDatas(self, dataSchema):
+  def generate_datas(self, data_schema):
     """
       a partir d un schema d une base on genere de la donnee
 
-      :param dataSchema: schema de base de donnee
-      :type dataSchema: todo
+      :param data_schema: schema de base de donnee
+      :type data_schema: todo
 
       :return: donnee genere par table
       :rtype: liste d'objet par table {table1 : [entre1, entre2]}
     """
     print('### Generation de la data ###')
-    self.schema_to_work = dataSchema if not dataSchema == self.schema_to_work else self.schema_to_work
+    self.schema_to_work = data_schema if not data_schema == self.schema_to_work else self.schema_to_work
     data = {}
-    for tableName in dataSchema:
-      data[tableName] = self.generateTableData(tableName)
+    for table_name in data_schema:
+      data[table_name] = self.generate_table_data(table_name)
     self.data = data
     return data
 
-  def generateOrderedDatas(self, dataSchema, orderOfTable):
+  def generate_ordered_datas(self, data_schema, order_of_table):
     """
-      a partir d un schema d une base on genere de la donnee dans l ordre recuperer par la fonction orderTable
+      a partir d un schema d une base on genere de la donnee dans l ordre recuperer par la fonction order_table
 
-      :param dataSchema: schema de base de donnee
-      :type dataSchema: todo
-      :param orderOfTable: ordonnancement des table
-      :type dataSchema: object
+      :param data_schema: schema de base de donnee
+      :type data_schema: todo
+      :param order_of_table: ordonnancement des table
+      :type data_schema: object
 
       :return: donnee genere par table
       :rtype: liste d'objet par table {table1 : [entre1, entre2]}
     """
     print('### Generation de la data ###')
-    self.schema_to_work = dataSchema if not dataSchema == self.schema_to_work else self.schema_to_work
+    self.schema_to_work = data_schema if not data_schema == self.schema_to_work else self.schema_to_work
     data = {}
-    for i in range(len(orderOfTable)):
-      tableName = orderOfTable[i]
-    #for tableName in dataSchema:
-      if(tableName not in self.data):
-        data[orderOfTable[i]] = self.generateTableData(tableName)
-        self.data[tableName] = data[tableName]
+    for i in range(len(order_of_table)):
+      table_name = order_of_table[i]
+    #for table_name in data_schema:
+      if(table_name not in self.data):
+        data[order_of_table[i]] = self.generate_table_data(table_name)
+        self.data[table_name] = data[table_name]
     return data
 
-  def generateTableData(self, tableName):
+  def generate_table_data(self, table_name):
     """
       a partir du schema d une table on genere toute les donnees
 
-      :param tableName: nom d une table
-      :type tableName: string
+      :param table_name: nom d une table
+      :type table_name: string
 
       :return: liste des donnees genere pour une table
       :rtype: array 
     """
-    dataSchema = self.schema_to_work
-    primaryKeyKey = Key.primaryKey
-    columnsKey = Key.columns
-    finalTimeout = self.timeout
-    if (not tableName in self.tableNameGeneratedData):
-      tableData = []
-      numberOfRowToCreate = dataSchema[tableName][Key.defaultNumberOfDataToCreate]
-      for i in range(numberOfRowToCreate):
-        tableData.append(self.generateNewRow(dataSchema[tableName][columnsKey], numberOfRowToCreate, i, tableName))
-        newEntreePrimary = self.primaryColumnKeeper(tableName, tableData[i])
-        if (primaryKeyKey not in self.uniqueDatas[tableName].keys()):
-          self.uniqueDatas[tableName][primaryKeyKey] = []
+    data_schema = self.schema_to_work
+    primarykey_key = Key.primarykey
+    columns_key = Key.columns
+    final_timeout = self.timeout
+    if (not table_name in self.table_name_generated_data):
+      table_data = []
+      number_of_row_to_create = data_schema[table_name][Key.default_number_of_data_to_create]
+      for i in range(number_of_row_to_create):
+        table_data.append(self.generate_new_row(data_schema[table_name][columns_key], number_of_row_to_create, i, table_name))
+        new_entree_primary = self.primary_column_keeper(table_name, table_data[i])
+        if (primarykey_key not in self.unique_datas[table_name].keys()):
+          self.unique_datas[table_name][primarykey_key] = []
         timeout = 0
-        while (newEntreePrimary in self.uniqueDatas[tableName][primaryKeyKey] and timeout < self.timeout):
+        while (new_entree_primary in self.unique_datas[table_name][primarykey_key] and timeout < self.timeout):
           timeout += 1
-          del tableData[i]
-          tableData.append(self.generateNewRow(dataSchema[tableName][columnsKey], numberOfRowToCreate, i, tableName))
-          newEntreePrimary = self.primaryColumnKeeper(tableName, tableData[i])
-        self.uniqueDatas[tableName][primaryKeyKey].append(newEntreePrimary)
-        if (timeout == finalTimeout):
-          print "[error] [primary generation] Tentative de generation dans la table %s a echoue a cause de la PRIMARY KEY constraint" % tableName
-      self.tableNameGeneratedData.append(tableName)
-      return tableData
+          del table_data[i]
+          table_data.append(self.generate_new_row(data_schema[table_name][columns_key], number_of_row_to_create, i, table_name))
+          new_entree_primary = self.primary_column_keeper(table_name, table_data[i])
+        self.unique_datas[table_name][primarykey_key].append(new_entree_primary)
+        if (timeout == final_timeout):
+          print "[error] [primary generation] Tentative de generation dans la table %s a echoue a cause de la PRIMARY KEY constraint" % table_name
+      self.table_name_generated_data.append(table_name)
+      return table_data
     else:
       return []
 
-  def primaryColumnKeeper(self, tableName, newData):
+  def primary_column_keeper(self, table_name, new_data):
     """
       genere a partir d'un nouvel objet
       un objet avec uniquement les columns ayant pour caracteristique 
       d etre une primary key
 
-      :param tableName: nom de la table a gerer
-      :type tableName: string
-      :param newData: la nouvelle donnee generee
-      :type newData: todo
+      :param table_name: nom de la table a gerer
+      :type table_name: string
+      :param new_data: la nouvelle donnee generee
+      :type new_data: todo
 
       :return: un object uniquement compose de primary key
 
     """
-    returnPrimary = None
-    if (self.primaryColumn.has_key(tableName)):
-      if (len(self.primaryColumn[tableName]) > 0):
-        returnPrimary = {}
-        for primaryColumnIterator in self.primaryColumn[tableName]:
-          returnPrimary[primaryColumnIterator] = newData[primaryColumnIterator]
-    return returnPrimary
+    return_primary = None
+    if (self.primary_column.has_key(table_name)):
+      if (len(self.primary_column[table_name]) > 0):
+        return_primary = {}
+        for primary_column_iterator in self.primary_column[table_name]:
+          return_primary[primary_column_iterator] = new_data[primary_column_iterator]
+    return return_primary
 
-  def generateNewRow(self, columns, numberOfRow, id, tableName):
+  def generate_new_row(self, columns, number_of_row, id, table_name):
     """
       genere une nouvelle entree
 
       :param columns: liste des colonnes d une table
       :type columns: objet d'objet de type column
-      :param numberOfRow: nombre d entree theoriquement generer pour cette table 
-      :type numberOfRow: int
+      :param number_of_row: nombre d entree theoriquement generer pour cette table 
+      :type number_of_row: int
       :param id: id de la derniere entree generer 
       :type id: int 
-      :param tableName: nom de la table qui est actuellement gerer 
-      :type tableName: string 
+      :param table_name: nom de la table qui est actuellement gerer 
+      :type table_name: string 
 
       :return: une entree
 
     """
-    print('### Generation d une entree pour la table %s ###'% tableName)
-    uniqueKey = Key.unique
-    newRow = {}
-    for columnName in columns:
-      if (tableName not in self.uniqueDatas.keys()):
-        self.uniqueDatas[tableName] = {}
-      if (columnName not in self.uniqueDatas[tableName].keys()):
-        self.uniqueDatas[tableName][columnName] = {}
-        self.uniqueDatas[tableName][columnName][uniqueKey] = []
+    print('### Generation d une entree pour la table %s ###'% table_name)
+    unique_key = Key.unique
+    new_row = {}
+    for column_name in columns:
+      if (table_name not in self.unique_datas.keys()):
+        self.unique_datas[table_name] = {}
+      if (column_name not in self.unique_datas[table_name].keys()):
+        self.unique_datas[table_name][column_name] = {}
+        self.unique_datas[table_name][column_name][unique_key] = []
 
-      newData = self.generateDataColumn(columns[columnName], numberOfRow, id = id)
-      if (columns[columnName][uniqueKey]):
+      new_data = self.generate_data_column(columns[column_name], number_of_row, id = id)
+      if (columns[column_name][unique_key]):
         timeout = 0
-        while ((newData in self.uniqueDatas[tableName][columnName][uniqueKey]) and (timeout < self.timeout)) :
-          newData = self.generateDataColumn(columns[columnName], numberOfRow, id = id)
+        while ((new_data in self.unique_datas[table_name][column_name][unique_key]) and (timeout < self.timeout)) :
+          new_data = self.generate_data_column(columns[column_name], number_of_row, id = id)
           timeout += 1
         if timeout == self.timeout:
           # todo : comprendre pourquoi ca marche pas 
-          # print("[error] [unique generation] Tentative de generation de donnees unique dans la table %s pour la colonne %s echoue" %tableName , columnName)
+          # print("[error] [unique generation] Tentative de generation de donnees unique dans la table %s pour la colonne %s echoue" %table_name , column_name)
           print("[error] [unique generation] Tentative de generation de donnees unique dans la table pour la colonne echoue")
 
-      self.uniqueDatas[tableName][columnName][uniqueKey].append(newData)
-      newRow[columnName] = newData
-    return newRow
+      self.unique_datas[table_name][column_name][unique_key].append(new_data)
+      new_row[column_name] = new_data
+    return new_row
 
-  def generateDataColumn(self, column, numberOfRow, id):
+  def generate_data_column(self, column, number_of_row, id):
     """
       Genere une donnee en fonction du type de la colonne
 
       :param column: le schema de la colonne a traite
-      :param numberOfRow: nombre d entree theoriquement generer pour cette table 
-      :type numberOfRow: int
+      :param number_of_row: nombre d entree theoriquement generer pour cette table 
+      :type number_of_row: int
       :param id: id de la derniere entree generer 
       :type id: int 
 
       :return: une donnee generer aleatoirement
       :rtype: str|int
     """
-    foreignData = self.data
-    generatedData = None
+    foreign_data = self.data
+    generated_data = None
     if (column['name'] == 'id'):
-      generatedData = id+1
+      generated_data = id+1
     else:
       if (column.has_key(Key.type)):
-        if column[Key.type] == Key.foreignKey:
-          if Key.foreignKey in column.keys():
-            foreignColumn = column[Key.foreignKey][Key.columnName]
-            foreignTable = column[Key.foreignKey][Key.tableName]
-            if(foreignTable not in self.data):
-              self.data[foreignTable] = self.generateTableData(foreignTable)
-            oneRandomElementInForeignData = tools.takeOneElementInArray(self.data[foreignTable])
-            generatedData = oneRandomElementInForeignData[foreignColumn]
+        if column[Key.type] == Key.foreignkey:
+          if Key.foreignkey in column.keys():
+            foreign_column = column[Key.foreignkey][Key.column_name]
+            foreign_table = column[Key.foreignkey][Key.table_name]
+            if(foreign_table not in self.data):
+              self.data[foreign_table] = self.generate_table_data(foreign_table)
+            one_random_element_in_foreign_data = tools.take_one_element_in_array(self.data[foreign_table])
+            generated_data = one_random_element_in_foreign_data[foreign_column]
           else:
             print('[Error] column de type foreign key mais pas de table de destination')
             exit(1)
           #todo
         else:
-          generatedDatas = tools.generateRandomData(
+          generated_datas = tools.generate_random_data(
             column[Key.type], 
-            numberOfRow, 
-            column[Key.referenceFile] if (Key.referenceFile in column.keys()) else '', 
-            self.refData[column[Key.ref]] if (Key.ref in column.keys() and column[Key.ref] in self.refData) else ''
+            number_of_row, 
+            column[Key.reference_file] if (Key.reference_file in column.keys()) else '', 
+            self.ref_data[column[Key.ref]] if (Key.ref in column.keys() and column[Key.ref] in self.ref_data) else ''
           )
-          generatedData = generatedDatas[Key.data]
+          generated_data = generated_datas[Key.data]
 
-          if (Key.refListData in generatedDatas.keys() and Key.ref in column.keys()):
-            self.refData[column[Key.ref]] = generatedDatas[Key.refListData]
-    return generatedData
+          if (Key.ref_list_data in generated_datas.keys() and Key.ref in column.keys()):
+            self.ref_data[column[Key.ref]] = generated_datas[Key.ref_list_data]
+    return generated_data

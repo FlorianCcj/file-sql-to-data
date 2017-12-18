@@ -1,23 +1,23 @@
 import json
 
-def generateJsonFile(data, outputFile):
+def generate_json_file(data, output_file):
   """
     dump un objet json dans un fichier
 
     :param data: l'objet a dumper
     :type data: object
-    :param outputFile: chemin vers le fichier de destination
-    :type outputFile: string
+    :param outputfile: chemin vers le fichier de destination
+    :type outputfile: string
   """
   try:
-    with open(outputFile, 'w') as file:
+    with open(output_file, 'w') as file:
       file.write(json.dumps(data, indent=2))
   except Exception as e:
     print('Erreur lors de la creation du fichier')
     print(e)
     exit(1)
 
-def generateXmlFile(data, outputFile):
+def generate_xml_file(data, output_file):
   """
     genere un xml dans un fichier
 
@@ -28,15 +28,15 @@ def generateXmlFile(data, outputFile):
   """
   root = etree.Element('data')
   try:
-    for tableName in data:
-      table = etree.SubElement(root, tableName)
-      for elementOfTable in data[tableName]:
-        elementOfXml = etree.SubElement(table, 'element')
-        if(elementOfTable.has_key('id')):
-          elementOfXml.set('id', str(elementOfTable['id']))
-        columnOfXml = None
-        for columnOfTable in elementOfTable:
-          columnOfXml = etree.SubElement(elementOfXml, columnOfTable).text = str(elementOfTable[columnOfTable])
+    for table_name in data:
+      table = etree.SubElement(root, table_name)
+      for element_of_table in data[table_name]:
+        element_of_xml = etree.SubElement(table, 'element')
+        if(element_of_table.has_key('id')):
+          element_of_xml.set('id', str(element_of_table['id']))
+        column_Of_Xml = None
+        for column_of_table in element_of_table:
+          column_of_xml = etree.SubElement(element_of_xml, column_of_table).text = str(element_of_table[column_of_table])
   except:
     print('Erreur de formmat pour la creation de format Xml')
     exit(1)
@@ -47,7 +47,7 @@ def generateXmlFile(data, outputFile):
     print('Probleme rencontre lors de l\'ecriture...')
     exit(1)
 
-def generateSqlFile(data, outputFile):
+def generate_Sql_File(data, output_File):
   """
     passe un fichier en requete sql et le print dans un fichier
 
@@ -56,30 +56,30 @@ def generateSqlFile(data, outputFile):
     :param outputFile: chemin vers le fichier de destination
     :type outputFile: string
   """
-  fichier = open(outputFile, "w")
-  eolSymbole = '\n'
+  fichier = open(output_File, "w")
+  eol_Symbole = '\n'
   
   try:
-    for tableName in data:
-      beginInsertValueLign = 'INSERT INTO ' + str(tableName) + ' (' 
-      for columnName in data[tableName][0]:
-        beginInsertValueLign = beginInsertValueLign + columnName + ', '
-      beginInsertValueLign = beginInsertValueLign[:len(beginInsertValueLign)-2] + ') VALUES '
-      fichier.write(beginInsertValueLign) 
-      fichier.write(eolSymbole)
+    for table_name in data:
+      begin_insert_value_lign = 'INSERT INTO ' + str(table_Name) + ' (' 
+      for column_name in data[table_name][0]:
+        begin_insert_value_lign = begin_insert_value_lign + column_name + ', '
+      begin_insert_value_lign = begin_insert_value_lign[:len(begin_insert_value_lign)-2] + ') VALUES '
+      fichier.write(begin_insert_value_lign) 
+      fichier.write(eol_symbole)
 
-      endInsertValueLignInitial = '('
-      for element in data[tableName]:
-        endInsertValueLign = endInsertValueLignInitial
+      end_insert_value_lign_initial = '('
+      for element in data[table_name]:
+        end_insert_value_lign = end_insert_value_lign_initial
         for column in element:
-          endInsertValueLign = endInsertValueLign + str(element[column]) + ', '
-        endInsertValueLign = endInsertValueLign[:len(endInsertValueLign)-2] + ')'
+          end_insert_value_lign = end_insert_value_lign + str(element[column]) + ', '
+        end_insert_value_lign = end_insert_value_lign[:len(end_insert_value_lign)-2] + ')'
         
-        fichier.write(endInsertValueLign) 
-        fichier.write(eolSymbole)
+        fichier.write(end_insert_value_lign) 
+        fichier.write(eol_symbole)
       fichier.write(';')
-      fichier.write(eolSymbole)
-      fichier.write(eolSymbole)
+      fichier.write(eol_symbole)
+      fichier.write(eol_symbole)
   except:
     print('Erreur de formmat pour la creation de format Sql')
     exit(1)
@@ -87,44 +87,44 @@ def generateSqlFile(data, outputFile):
 
   fichier.close()
 
-def generateTxtFileFromArray(data, outputFile):
+def generate_txt_file_from_array(data, output_file):
   """
     dump un array json dans un fichier
 
     :param data: l'array a dumper
     :type data: array
-    :param outputFile: chemin vers le fichier de destination
-    :type outputFile: string
+    :param outputfile: chemin vers le fichier de destination
+    :type outputfile: string
   """
-  fichier = open(outputFile, "w")
-  eolSymbole = '\n'
+  fichier = open(output_file, "w")
+  eol_symbole = '\n'
   
   try:
     for lign in data:
       fichier.write(lign) 
-      fichier.write(eolSymbole)
+      fichier.write(eol_symbole)
   except:
     print('Erreur lors de l ecriture de tableau dans un fichier')
     exit(1)
 
   fichier.close()
 
-def generateTxtFileFromObject(data, outputFile):
+def generate_txt_file_from_object(data, output_file):
   """
     ecrit un objet ligne par ligne dans un fichier
 
     :param data: l'objet a dumper
     :type data: object
-    :param outputFile: chemin vers le fichier de destination
-    :type outputFile: string
+    :param outputfile: chemin vers le fichier de destination
+    :type outputfile: string
   """
-  fichier = open(outputFile, "w")
-  eolSymbole = '\n'
+  fichier = open(output_file, "w")
+  eol_symbole = '\n'
   
   try:
     for i in range(len(data)):
       fichier.write(data[i]) 
-      fichier.write(eolSymbole)
+      fichier.write(eol_symbole)
   except:
     print('Erreur lors de l ecriture de tableau dans un fichier')
     exit(1)

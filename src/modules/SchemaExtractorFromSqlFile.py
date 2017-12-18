@@ -6,179 +6,179 @@ import Key
 class SchemaExtractor:
   def __init__(self):
     self.request = ""
-    self.createRequests = {}
-    self.columnsRequests = {}
-    self.columnsDataByTable = {}
-    self.uniqueColumns = {}
-    self.primaryKeyColumns = {}
-    self.foreignKeysColumns = {}
-    self.dataSchema = {}
+    self.create_requests = {}
+    self.columns_requests = {}
+    self.columns_data_by_table = {}
+    self.unique_columns = {}
+    self.primarykey_columns = {}
+    self.foreignkeys_columns = {}
+    self.data_schema = {}
 
-  def autoExtract(self, sqlRequest):
-    self.request = sqlRequest
-    self.createRequests = self.extractCreateRequests(self.request)
-    for tableName in self.createRequests:
-      self.columnsRequests[tableName] = self.parseColumnsFromCreateRequest(self.createRequests[tableName], tableName)
-      self.columnsDataByTable[tableName] = {self.columnsKey: {}}
-      for columnNumber in range(len(self.columnsRequests[tableName])):
-        extractData = self.parseColumnDataFromColumnRequest(self.columnsRequests[tableName][columnNumber], tableName)
-        if (self.indexKey in extractData.keys()):
+  def auto_extract(self, sql_request):
+    self.request = sql_request
+    self.create_requests = self.extract_create_requests(self.request)
+    for table_name in self.create_requests:
+      self.columns_requests[table_name] = self.parse_columns_from_create_request(self.create_requests[table_name], table_name)
+      self.columns_data_by_table[table_name] = {Key.columns: {}}
+      for column_number in range(len(self.columns_requests[table_name])):
+        extract_data = self.parse_column_data_from_column_request(self.columns_requests[table_name][column_number], table_name)
+        if (Key.index in extract_data.keys()):
           pass 
-        elif (self.primaryKeyKey in extractData.keys()):
-          for columnIndice in extractData[self.primaryKeyKey][self.columnNameKey]:
-            columnName = columnIndice  
-            if columnName not in self.columnsDataByTable[tableName][self.columnsKey].keys():
-              self.columnsDataByTable[tableName][self.columnsKey][columnName] = {}
-            self.columnsDataByTable[tableName][self.columnsKey][columnName][self.primaryKeyKey] = True
+        elif (Key.primarykey in extract_data.keys()):
+          for column_indice in extract_data[Key.primarykey][Key.column_name]:
+            column_name = column_indice  
+            if column_name not in self.columns_data_by_table[table_name][Key.columns].keys():
+              self.columns_data_by_table[table_name][Key.columns][column_name] = {}
+            self.columns_data_by_table[table_name][Key.columns][column_name][Key.primarykey] = True
 
-            if(tableName not in self.primaryKeyColumns.keys()):
-              self.primaryKeyColumns[tableName] = {}
-            self.primaryKeyColumns[tableName][columnName] = {self.primaryKeyKey: True}
-        elif (self.uniqueKey in extractData.keys()):
-          columnName = extractData[self.uniqueKey][self.columnNameKey]
-          if columnName not in self.columnsDataByTable[tableName][self.columnsKey].keys():
-            self.columnsDataByTable[tableName][self.columnsKey][columnName] = {}
-          self.columnsDataByTable[tableName][self.columnsKey][columnName][self.uniqueKey] = True
+            if(table_name not in self.primarykey_columns.keys()):
+              self.primarykey_columns[table_name] = {}
+            self.primarykey_columns[table_name][column_name] = {Key.primarykey: True}
+        elif (Key.unique in extract_data.keys()):
+          column_name = extract_data[Key.unique][Key.column_name]
+          if column_name not in self.columns_data_by_table[table_name][Key.columns].keys():
+            self.columns_data_by_table[table_name][Key.columns][column_name] = {}
+          self.columns_data_by_table[table_name][Key.columns][column_name][Key.unique] = True
           
-          if(tableName not in self.uniqueColumns.keys()):
-            self.uniqueColumns[tableName] = {}
-          if(columnName not in self.uniqueColumns[tableName].keys()):
-            self.uniqueColumns[tableName][columnName] = True
+          if(table_name not in self.unique_columns.keys()):
+            self.unique_columns[table_name] = {}
+          if(column_name not in self.unique_columns[table_name].keys()):
+            self.unique_columns[table_name][column_name] = True
         else:
-          columnName = extractData[self.columnsKey][self.nameKey]
-          if columnName not in self.columnsDataByTable[tableName][self.columnsKey].keys():
-            self.columnsDataByTable[tableName][self.columnsKey][columnName] = extractData[self.columnsKey]
+          column_name = extract_data[Key.columns][Key.name]
+          if column_name not in self.columns_data_by_table[table_name][Key.columns].keys():
+            self.columns_data_by_table[table_name][Key.columns][column_name] = extract_data[Key.columns]
           else:
-            self.columnsDataByTable[tableName][self.columnsKey][columnName].update(extractData[self.columnsKey])
-          if self.uniqueKey not in self.columnsDataByTable[tableName][self.columnsKey][columnName]:
-             self.columnsDataByTable[tableName][self.columnsKey][columnName][self.uniqueKey] = False
-          if self.primaryKeyKey not in self.columnsDataByTable[tableName][self.columnsKey][columnName]:
-             self.columnsDataByTable[tableName][self.columnsKey][columnName][self.primaryKeyKey] = False 
-    self.parseAltertableRequests(self.request)
-    self.columnsDataByTable = tools.update_object(self.columnsDataByTable, self.foreignKeysColumns)
+            self.columns_data_by_table[table_name][Key.columns][column_name].update(extract_data[Key.columns])
+          if Key.unique not in self.columns_data_by_table[table_name][Key.columns][column_name]:
+             self.columns_data_by_table[table_name][Key.columns][column_name][Key.unique] = False
+          if Key.primarykey not in self.columns_data_by_table[table_name][Key.columns][column_name]:
+             self.columns_data_by_table[table_name][Key.columns][column_name][Key.primarykey] = False 
+    self.parse_altertable_requests(self.request)
+    self.columns_data_by_table = tools.update_object(self.columns_data_by_table, self.foreignkeys_columns)
 
-    return self.columnsDataByTable
+    return self.columns_data_by_table
 
-  def autoExtractWithSqlParse(self, sqlRequest):
-    self.request = sqlRequest
-    self.createRequests = self.extractCreateRequestsWithSqlParse(self.request)
-    for tableName in self.createRequests:
-      self.columnsRequests[tableName] = self.parseColumnsFromCreateRequest(self.createRequests[tableName], tableName)
-      self.columnsDataByTable[tableName] = {Key.columns: {}}
-      for columnNumber in range(len(self.columnsRequests[tableName])):
-        extractData = self.parseColumnDataFromColumnRequest(self.columnsRequests[tableName][columnNumber], tableName)
-        if (Key.index in extractData.keys()):
+  def auto_extract_with_sql_parse(self, sql_request):
+    self.request = sql_request
+    self.create_requests = self.extract_create_requests_with_sql_parse(self.request)
+    for table_name in self.create_requests:
+      self.columns_requests[table_name] = self.parse_columns_from_create_request(self.create_requests[table_name], table_name)
+      self.columns_data_by_table[table_name] = {Key.columns: {}}
+      for column_number in range(len(self.columns_requests[table_name])):
+        extract_data = self.parse_column_data_from_column_request(self.columns_requests[table_name][column_number], table_name)
+        if (Key.index in extract_data.keys()):
           pass 
-        elif (Key.primaryKey in extractData.keys()):
-          for columnIndice in extractData[Key.primaryKey][Key.columnName]:
-            columnName = columnIndice  
-            if columnName not in self.columnsDataByTable[tableName][Key.columns].keys():
-              self.columnsDataByTable[tableName][Key.columns][columnName] = {}
-            self.columnsDataByTable[tableName][Key.columns][columnName][Key.primaryKey] = True
+        elif (Key.primarykey in extract_data.keys()):
+          for column_indice in extract_data[Key.primarykey][Key.column_name]:
+            column_name = column_indice  
+            if column_name not in self.columns_data_by_table[table_name][Key.columns].keys():
+              self.columns_data_by_table[table_name][Key.columns][column_name] = {}
+            self.columns_data_by_table[table_name][Key.columns][column_name][Key.primarykey] = True
 
-            if(tableName not in self.primaryKeyColumns.keys()):
-              self.primaryKeyColumns[tableName] = {}
-            self.primaryKeyColumns[tableName][columnName] = {Key.primaryKey: True}
-        elif (Key.unique in extractData.keys()):
-          columnName = extractData[Key.unique][Key.columnName]
-          if columnName not in self.columnsDataByTable[tableName][Key.columns].keys():
-            self.columnsDataByTable[tableName][Key.columns][columnName] = {}
-          self.columnsDataByTable[tableName][Key.columns][columnName][Key.unique] = True
+            if(table_name not in self.primarykey_columns.keys()):
+              self.primarykey_columns[table_name] = {}
+            self.primarykey_columns[table_name][column_name] = {Key.primarykey: True}
+        elif (Key.unique in extract_data.keys()):
+          column_name = extract_data[Key.unique][Key.column_name]
+          if column_name not in self.columns_data_by_table[table_name][Key.columns].keys():
+            self.columns_data_by_table[table_name][Key.columns][column_name] = {}
+          self.columns_data_by_table[table_name][Key.columns][column_name][Key.unique] = True
           
-          if(tableName not in self.uniqueColumns.keys()):
-            self.uniqueColumns[tableName] = {}
-          if(columnName not in self.uniqueColumns[tableName].keys()):
-            self.uniqueColumns[tableName][columnName] = True
+          if(table_name not in self.unique_columns.keys()):
+            self.unique_columns[table_name] = {}
+          if(column_name not in self.unique_columns[table_name].keys()):
+            self.unique_columns[table_name][column_name] = True
         else:
-          columnName = extractData[Key.columns][Key.name]
-          if columnName not in self.columnsDataByTable[tableName][Key.columns].keys():
-            self.columnsDataByTable[tableName][Key.columns][columnName] = extractData[Key.columns]
+          column_name = extract_data[Key.columns][Key.name]
+          if column_name not in self.columns_data_by_table[table_name][Key.columns].keys():
+            self.columns_data_by_table[table_name][Key.columns][column_name] = extract_data[Key.columns]
           else:
-            self.columnsDataByTable[tableName][Key.columns][columnName].update(extractData[Key.columns])
-          if Key.unique not in self.columnsDataByTable[tableName][Key.columns][columnName]:
-             self.columnsDataByTable[tableName][Key.columns][columnName][Key.unique] = False
-          if Key.primaryKey not in self.columnsDataByTable[tableName][Key.columns][columnName]:
-             self.columnsDataByTable[tableName][Key.columns][columnName][Key.primaryKey] = False 
-    self.parseAltertableRequests(self.request)
-    self.columnsDataByTable = tools.update_object(self.columnsDataByTable, self.foreignKeysColumns)
+            self.columns_data_by_table[table_name][Key.columns][column_name].update(extract_data[Key.columns])
+          if Key.unique not in self.columns_data_by_table[table_name][Key.columns][column_name]:
+             self.columns_data_by_table[table_name][Key.columns][column_name][Key.unique] = False
+          if Key.primarykey not in self.columns_data_by_table[table_name][Key.columns][column_name]:
+             self.columns_data_by_table[table_name][Key.columns][column_name][Key.primarykey] = False 
+    self.parse_altertable_requests(self.request)
+    self.columns_data_by_table = tools.update_object(self.columns_data_by_table, self.foreignkeys_columns)
 
-    return self.columnsDataByTable
+    return self.columns_data_by_table
 
-  def extractCreateRequests(self, request):
+  def extract_create_requests(self, request):
     print('### Recuperation des differente CREATE TABLE ###')
     data = {}
-    tablePattern = r'CREATE TABLE ([^ ]+) \((.+)\).*;'
-    tableMatch = re.findall(tablePattern, request)
-    for table in tableMatch:
-      tableName = table[0].strip()
-      tableRequest = table[1]
-      data[tableName] = tableRequest
-    self.createRequests = data
+    table_pattern = r'CREATE TABLE ([^ ]+) \((.+)\).*;'
+    table_match = re.findall(table_pattern, request)
+    for table in table_match:
+      table_name = table[0].strip()
+      table_request = table[1]
+      data[table_name] = table_request
+    self.create_requests = data
     return data
 
-  def extractCreateRequestsWithSqlParse(self, request):
+  def extract_create_requests_with_sql_parse(self, request):
     data = {}
     stmt = sqlparse.parse(request)
     for i in range(len(stmt)):
       if(stmt[i].get_type() == 'CREATE'):
-        tableName = stmt[i].get_real_name()
-        tableRequest = stmt[i].__str__()
+        table_name = stmt[i].get_real_name()
+        table_request = stmt[i].__str__()
         _, par = stmt[i].token_next_by(i=sqlparse.sql.Parenthesis)
-        data[tableName] = par.value[1:-1]
-    self.createRequests = data
+        data[table_name] = par.value[1:-1]
+    self.create_requests = data
     return data
 
-  def parseColumnsFromCreateRequest(self, tableRequest, tableName):
-    columnPattern = r'(?!\([^ )]+),(?! ?[^ (]+\))'
-    columnMatch = re.split(columnPattern, tableRequest)
-    self.columnsRequests[tableName] = columnMatch
-    return columnMatch
+  def parse_columns_from_create_request(self, table_request, table_name):
+    column_pattern = r'(?!\([^ )]+),(?! ?[^ (]+\))'
+    column_match = re.split(column_pattern, table_request)
+    self.columns_requests[table_name] = column_match
+    return column_match
     
-  def parseColumnDataFromColumnRequest(self, columnRequest, tableName):
-    columnData = {}
-    columnPattern = r'([^ ]+) ([^ (]+)(?: ?\(([^)]+)\))? ?(.+)?'
-    match = re.findall(columnPattern, columnRequest)
+  def parse_column_data_from_column_request(self, column_request, table_name):
+    column_data = {}
+    column_pattern = r'([^ ]+) ([^ (]+)(?: ?\(([^)]+)\))? ?(.+)?'
+    match = re.findall(column_pattern, column_request)
     if match:
-      columDirective = match[0][0].strip()
-      if (columnRequest.lower().strip().find(Key.primaryKeySearch) != -1):
-        patternPrimaryKey = r'PRIMARY KEY ?\((.+)\)'
-        matchPrimaryColumn = re.findall(patternPrimaryKey, columnRequest)
-        if(len(matchPrimaryColumn) > 0):
-          primaryKeys = matchPrimaryColumn[0].split(",")
-          cleanKeys = map(lambda x: x.strip(), primaryKeys)
-        columnData = {Key.primaryKey: {Key.tableName: tableName, Key.columnName: cleanKeys}}
-      elif (columDirective.lower().strip().find(Key.indexSearch) != -1):
-        columnData = {Key.index: {}}
-      elif (columnRequest.lower().strip().find(Key.uniqueSearch) != -1):
-        uniquePattern = r'\((.*)\)'
-        matchUnique = re.findall(uniquePattern, columnRequest)
-        uniqueColumnName = matchUnique[0].strip()
-        columnData = {Key.unique: {Key.tableName: tableName, Key.columnName: uniqueColumnName}}
+      column_directive = match[0][0].strip()
+      if (column_request.lower().strip().find(Key.primarykey_search) != -1):
+        pattern_primarykey = r'PRIMARY KEY ?\((.+)\)'
+        match_primary_column = re.findall(pattern_primarykey, column_request)
+        if(len(match_primary_column) > 0):
+          primarykeys = match_primary_column[0].split(",")
+          clean_keys = map(lambda x: x.strip(), primarykeys)
+        column_data = {Key.primarykey: {Key.table_name: table_name, Key.column_name: clean_keys}}
+      elif (column_directive.lower().strip().find(Key.index_search) != -1):
+        column_data = {Key.index: {}}
+      elif (column_request.lower().strip().find(Key.unique_search) != -1):
+        unique_pattern = r'\((.*)\)'
+        match_unique = re.findall(unique_pattern, column_request)
+        unique_column_name = match_unique[0].strip()
+        column_data = {Key.unique: {Key.table_name: table_name, Key.column_name: unique_column_name}}
       else:
-        columnType = match[0][1]
-        columnData[Key.name] = columDirective
-        columnData[Key.type] = columnType if columnType else None
-        columnData[Key.nullable] = (columnRequest.lower().find(Key.notNullable) != -1)
+        column_type = match[0][1]
+        column_data[Key.name] = column_directive
+        column_data[Key.type] = column_type if column_type else None
+        column_data[Key.nullable] = (column_request.lower().find(Key.not_nullable) != -1)
         try:
-          columnData[Key.size] = int(match[0][2])
+          column_data[Key.size] = int(match[0][2])
         except Exception as e:
-          columnData[Key.size] = None
-        columnData = {Key.columns: columnData}
+          column_data[Key.size] = None
+        column_data = {Key.columns: column_data}
     # je sais pas comment transferer dans les data local
-    return columnData
+    return column_data
 
-  def parseAltertableRequests(self, sqlRequest):
+  def parse_altertable_requests(self, sql_request):
     data = {}
-    foreignKeyPattern = r'ALTER TABLE ([^ ]+) ADD CONSTRAINT FK\_[^ ]+ FOREIGN KEY \(([^ ]+)\) REFERENCES ([^ ]+) \(([^ ]+)\)'
-    foreignKeysMatch = re.findall(foreignKeyPattern, sqlRequest)
-    for foreignKey in foreignKeysMatch:
-      destTableName = foreignKey[0].strip()
-      destColumName = foreignKey[1].strip()
-      srcTableName = foreignKey[2].strip()
-      srcColumName = foreignKey[3].strip()
-      data[destTableName] = {Key.columns: {}} if (destTableName not in data.keys()) else data[destTableName]
-      data[destTableName][Key.columns][destColumName] = {Key.type: Key.foreignKey, Key.foreignKey: {Key.tableName: srcTableName, Key.columnName: srcColumName}}
-    self.foreignKeysColumns = data 
+    foreignkey_pattern = r'ALTER TABLE ([^ ]+) ADD CONSTRAINT FK\_[^ ]+ FOREIGN KEY \(([^ ]+)\) REFERENCES ([^ ]+) \(([^ ]+)\)'
+    foreignkeys_match = re.findall(foreignkey_pattern, sql_request)
+    for foreignkey in foreignkeys_match:
+      dest_table_name = foreignkey[0].strip()
+      dest_column_name = foreignkey[1].strip()
+      src_table_name = foreignkey[2].strip()
+      src_column_name = foreignkey[3].strip()
+      data[dest_table_name] = {Key.columns: {}} if (dest_table_name not in data.keys()) else data[dest_table_name]
+      data[dest_table_name][Key.columns][dest_column_name] = {Key.type: Key.foreignkey, Key.foreignkey: {Key.table_name: src_table_name, Key.column_name: src_column_name}}
+    self.foreignkeys_columns = data 
     return data
 
 

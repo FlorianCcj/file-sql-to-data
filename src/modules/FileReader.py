@@ -1,6 +1,6 @@
 import json
 
-def readFileSql(inputFile):
+def read_file_sql(input_file):
   """
     concatene un fichier en une seul string
 
@@ -11,11 +11,11 @@ def readFileSql(inputFile):
     :rtype: string
   """
   print('### Lecture du fichier SQL ###')
-  totalRequest = ''
+  total_request = ''
   try:
-    with open(inputFile, 'r') as file:
+    with open(input_file, 'r') as file:
       for line in file:
-        totalRequest += line 
+        total_request += line 
   except FileNotFoundError as e:
     print('Le fichier {} n\'existe pas !'.format(e.filename))
     exit(1)
@@ -25,9 +25,9 @@ def readFileSql(inputFile):
   except Exception as e:
     print('Une erreur a empeche l\'ouverture du fichier : {}'.format(e.strerror))
     exit(3)
-  return totalRequest
+  return total_request
 
-def readJsonFile(jsonFile):
+def read_json_file(json_file):
   """
     recupere un json d un fichier pour le retourner en objet
 
@@ -39,10 +39,10 @@ def readJsonFile(jsonFile):
   """
   print('### Lecture du fichier JSON ###')
   try:
-    with open(jsonFile, 'r') as file:
-      dataSchema = json.load(file)
+    with open(json_file, 'r') as file:
+      data_schema = json.load(file)
   except Exception as e:
     print('Erreur lors de la lecture du fichier')
     print(e)
     exit(1)
-  return dataSchema
+  return data_schema

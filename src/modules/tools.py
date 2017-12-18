@@ -17,125 +17,124 @@ def update_object(object_init, object_update_container):
     new_object = object_update_container
   return new_object
 
-def fromStringsArrayToObjects(objectToGenerate, arrayOfString, idMin = 0):
+def from_strings_array_to_objects(object_to_generate, array_of_string, idMin = 0):
   # pas gerer pour l instant
-  for name in arrayOfString:
+  for name in array_of_string:
     new_object = {}
-    for columnName in objectToGenerate:
-      new_object[columnName] = generateRandomData(objectToGenerate[columnName[Key.type]])
+    for column_name in object_to_generate:
+      new_object[column_name] = generate_random_data(object_to_generate[column_name[Key.type]])
       pass
     pass
   pass
 
-def fromDataToObjectToPrint(data):
-  objectToPrint = {}
-  lignToPrint = 0
-  for tableName in data:
-    beginInsertValueLign = 'INSERT INTO `' + str(tableName) + '` (' 
-    for columnName in data[tableName][0]:
-      beginInsertValueLign = beginInsertValueLign + '`' + str(columnName) + '`, '
-    beginInsertValueLign = beginInsertValueLign[:len(beginInsertValueLign)-2] + ') VALUES '
-    objectToPrint[lignToPrint] = beginInsertValueLign 
-    lignToPrint += 1
+def from_data_to_object_to_print(data):
+  object_to_print = {}
+  lign_to_print = 0
+  for table_name in data:
+    begin_insert_value_lign = 'INSERT INTO `' + str(table_name) + '` (' 
+    for column_name in data[table_name][0]:
+      begin_insert_value_lign = begin_insert_value_lign + '`' + str(column_name) + '`, '
+    begin_insert_value_lign = begin_insert_value_lign[:len(begin_insert_value_lign)-2] + ') VALUES '
+    object_to_print[lign_to_print] = begin_insert_value_lign 
+    lign_to_print += 1
 
-    endInsertValueLignInitial = '('
-    for element in data[tableName]:
-      endInsertValueLign = endInsertValueLignInitial
+    end_insert_value_lign_initial = '('
+    for element in data[table_name]:
+      end_insert_value_lign = end_insert_value_lign_initial
       for column in element:
-        endInsertValueLign = endInsertValueLign + str(element[column]) + ', '
-      endInsertValueLign = endInsertValueLign[:len(endInsertValueLign)-2] + '),'
-      objectToPrint[lignToPrint] = endInsertValueLign
-      lignToPrint += 1
-    objectToPrint[lignToPrint-1] = objectToPrint[lignToPrint-1][:len(endInsertValueLign)-1]
-    objectToPrint[lignToPrint] = ';'
-    lignToPrint += 1  
-  return objectToPrint
+        end_insert_value_lign = end_insert_value_lign + str(element[column]) + ', '
+      end_insert_value_lign = end_insert_value_lign[:len(end_insert_value_lign)-2] + '),'
+      object_to_print[lign_to_print] = end_insert_value_lign
+      lign_to_print += 1
+    object_to_print[lign_to_print-1] = object_to_print[lign_to_print-1][:len(end_insert_value_lign)-1]
+    object_to_print[lign_to_print] = ';'
+    lign_to_print += 1  
+  return object_to_print
 
-def fromDataToOrderedObjectToPrint(data, orderOfTable):
-  objectToPrint = {}
-  lignToPrint = 0
+def from_data_to_ordered_object_to_print(data, order_of_table):
+  object_to_print = {}
+  lign_to_print = 0
 
-  for i in range(len(orderOfTable)):
-    tableName = orderOfTable[i]
-    beginInsertValueLign = 'INSERT INTO `' + str(tableName) + '` (' 
-    for columnName in data[tableName][0]:
-      beginInsertValueLign = beginInsertValueLign + '`' + str(columnName) + '`, '
-    beginInsertValueLign = beginInsertValueLign[:len(beginInsertValueLign)-2] + ') VALUES '
-    objectToPrint[lignToPrint] = beginInsertValueLign 
-    lignToPrint += 1
+  for i in range(len(order_of_table)):
+    table_name = order_of_table[i]
+    begin_insert_value_lign = 'INSERT INTO `' + str(table_name) + '` (' 
+    for column_name in data[table_name][0]:
+      begin_insert_value_lign = begin_insert_value_lign + '`' + str(column_name) + '`, '
+    begin_insert_value_lign = begin_insert_value_lign[:len(begin_insert_value_lign)-2] + ') VALUES '
+    object_to_print[lign_to_print] = begin_insert_value_lign 
+    lign_to_print += 1
 
-    endInsertValueLignInitial = '('
-    for element in data[tableName]:
-      endInsertValueLign = endInsertValueLignInitial
+    end_insert_value_lign_initial = '('
+    for element in data[table_name]:
+      end_insert_value_lign = end_insert_value_lign_initial
       for column in element:
-        endInsertValueLign = endInsertValueLign + str(element[column]) + ', '
-      endInsertValueLign = endInsertValueLign[:len(endInsertValueLign)-2] + '),'
-      objectToPrint[lignToPrint] = endInsertValueLign
-      lignToPrint += 1
-    objectToPrint[lignToPrint-1] = objectToPrint[lignToPrint-1][:len(endInsertValueLign)-1]
-    objectToPrint[lignToPrint] = ';'
-    lignToPrint += 1
-  if(not len(data) == len(orderOfTable)):
+        end_insert_value_lign = end_insert_value_lign + str(element[column]) + ', '
+      end_insert_value_lign = end_insert_value_lign[:len(end_insert_value_lign)-2] + '),'
+      object_to_print[lign_to_print] = end_insert_value_lign
+      lign_to_print += 1
+    object_to_print[lign_to_print-1] = object_to_print[lign_to_print-1][:len(end_insert_value_lign)-1]
+    object_to_print[lign_to_print] = ';'
+    lign_to_print += 1
+  if(not len(data) == len(order_of_table)):
     print('//!\\\\ Attention il y a moins de table triees que de table de donnee')  
-  return objectToPrint
+  return object_to_print
 
-def generateRandomData(type, maxNumber = 10, id = 0, file = '', refData = []):
+def generate_random_data(type, max_number = 10, id = 0, file = '', ref_data = []):
     # print('### Generation d une column d une entree ###')
-    generatedData = None
-    generatedDatas = {}
+    generated_data = None
+    generated_datas = {}
     if (type):
       if type.strip().lower() == 'varchar':
-        generatedData = fake.sentence()
+        generated_data = fake.sentence()
       elif type.strip().lower().find('varchar') != -1:
-        generatedData = fake.sentence()
+        generated_data = fake.sentence()
       elif type.strip().lower() == 'LONGTEXT'.lower():
-        generatedData = fake.paragraph()
+        generated_data = fake.paragraph()
       elif type.strip().lower() == 'tinyint':
-        generatedData = fake.boolean()
+        generated_data = fake.boolean()
       elif type.strip().lower() == 'boolean':
-        generatedData = fake.boolean()
+        generated_data = fake.boolean()
       elif type.strip().lower().find('tinyint') != -1:
-        generatedData = fake.boolean()
+        generated_data = fake.boolean()
       elif type.strip().lower() == 'int':
-        generatedData = random.randint(1, maxNumber)
+        generated_data = random.randint(1, max_number)
       elif type.strip().lower().find('int') != -1:
-        generatedData = random.randint(1, maxNumber)
+        generated_data = random.randint(1, max_number)
       elif type.strip().lower() == 'name':
-        generatedData = fake.name()
+        generated_data = fake.name()
       elif type.strip().lower() == 'adress':
-        generatedData = fake.adress()
+        generated_data = fake.adress()
       elif type.strip().lower() == 'first_name':
-        generatedData = fake.first_name()
+        generated_data = fake.first_name()
       elif type.strip().lower() == 'last_name':
-        generatedData = fake.last_name()
+        generated_data = fake.last_name()
       elif type.strip().lower() == 'credit_card_number':
-        generatedData = fake.credit_card_number()
+        generated_data = fake.credit_card_number()
       elif type.strip().lower() == 'military_ship':
-        generatedData = fake.military_ship()
+        generated_data = fake.military_ship()
       elif type.strip().lower() == 'color':
-        generatedData = fake.hex_color()
+        generated_data = fake.hex_color()
       elif type.strip().lower() == 'catch_phrase_verb':
-        generatedData = fake.catch_phrase_verb()
+        generated_data = fake.catch_phrase_verb()
       elif type.strip().lower() == 'company':
-        generatedData = fake.company()
+        generated_data = fake.company()
       elif type.strip().lower() == 'ref':
-        generatedDatas = self.takeRefData(file, refData)
+        generated_datas = self.take_ref_data(file, ref_data)
       elif type.strip().lower() == 'id':
-        generatedData = id+1
+        generated_data = id+1
       else:
-        generatedData = None
-    if (Key.refListData not in generatedDatas.keys()):
-      generatedDatas = {Key.data: generatedData, Key.refListData: None}
-    return generatedDatas
+        generated_data = None
+    if (Key.ref_list_data not in generated_datas.keys()):
+      generated_datas = {Key.data: generated_data, Key.ref_list_data: None}
+    return generated_datas
 
-def takeRefData(file, refData):
-    refRecupData = None
-    if(not len(refData) > 0):
-      refData = FileReader.readJsonFile(file)    
-    if(len(refData) > 0):
-      refRecupData = random.choice(refData)
-    return {Key.data: refRecupData, Key.refListData: refData} 
+def take_ref_data(file, ref_data):
+    ref_recup_data = None
+    if(not len(ref_data) > 0):
+      ref_data = FileReader.read_json_file(file)    
+    if(len(ref_data) > 0):
+      ref_recup_data = random.choice(ref_data)
+    return {Key.data: ref_recup_data, Key.ref_list_data: ref_data} 
 
-def takeOneElementInArray(dataToRand):
-  randomNum = random.randint(0, len(dataToRand)-1)
-  return dataToRand[randomNum]
+def take_one_element_in_array(data_to_rand):
+  return random.choice(data_to_rand)
