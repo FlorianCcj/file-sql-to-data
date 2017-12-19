@@ -12,10 +12,10 @@ def generate_json_file(data, output_file):
     try:
         with open(output_file, 'w') as file:
             file.write(json.dumps(data, indent=2))
-        except Exception as e:
-            print('Erreur lors de la creation du fichier')
-            print(e)
-            exit(1)
+    except Exception as e:
+        print('Erreur lors de la creation du fichier')
+        print(e)
+        exit(1)
 
 
 def generate_xml_file(data, output_file):
@@ -79,9 +79,9 @@ def generate_Sql_File(data, output_File):
                 
                 fichier.write(end_insert_value_lign) 
                 fichier.write(eol_symbole)
-          fichier.write(';')
-          fichier.write(eol_symbole)
-          fichier.write(eol_symbole)
+            fichier.write(';')
+            fichier.write(eol_symbole)
+            fichier.write(eol_symbole)
     except:
         print('Erreur de formmat pour la creation de format Sql')
         exit(1)
