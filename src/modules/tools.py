@@ -1,8 +1,8 @@
 import random
 import Key
+import FileReader
 from faker import Faker
 fake = Faker()
-import FileReader
 
 def update_object(object_init, object_update_container):
   new_object = object_init
@@ -17,6 +17,7 @@ def update_object(object_init, object_update_container):
     new_object = object_update_container
   return new_object
 
+
 def from_strings_array_to_objects(object_to_generate, array_of_string, idMin = 0):
   # pas gerer pour l instant
   for name in array_of_string:
@@ -26,6 +27,7 @@ def from_strings_array_to_objects(object_to_generate, array_of_string, idMin = 0
       pass
     pass
   pass
+
 
 def from_data_to_object_to_print(data):
   object_to_print = {}
@@ -50,6 +52,7 @@ def from_data_to_object_to_print(data):
     object_to_print[lign_to_print] = ';'
     lign_to_print += 1  
   return object_to_print
+
 
 def from_data_to_ordered_object_to_print(data, order_of_table):
   object_to_print = {}
@@ -78,6 +81,7 @@ def from_data_to_ordered_object_to_print(data, order_of_table):
   if(not len(data) == len(order_of_table)):
     print('//!\\\\ Attention il y a moins de table triees que de table de donnee')  
   return object_to_print
+
 
 def generate_random_data(type, max_number = 10, id = 0, file = '', ref_data = []):
     # print('### Generation d une column d une entree ###')
@@ -128,6 +132,7 @@ def generate_random_data(type, max_number = 10, id = 0, file = '', ref_data = []
       generated_datas = {Key.data: generated_data, Key.ref_list_data: None}
     return generated_datas
 
+
 def take_ref_data(file, ref_data):
     ref_recup_data = None
     if(not len(ref_data) > 0):
@@ -135,6 +140,7 @@ def take_ref_data(file, ref_data):
     if(len(ref_data) > 0):
       ref_recup_data = random.choice(ref_data)
     return {Key.data: ref_recup_data, Key.ref_list_data: ref_data} 
+
 
 def take_one_element_in_array(data_to_rand):
   return random.choice(data_to_rand)

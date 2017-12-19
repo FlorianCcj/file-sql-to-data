@@ -27,6 +27,7 @@ def read_file_sql(input_file):
         exit(3)
     return total_request
 
+
 def read_json_file(json_file):
     """
         recupere un json d un fichier pour le retourner en objet
