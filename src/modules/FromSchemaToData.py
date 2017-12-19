@@ -40,7 +40,7 @@ class DataGenerator:
         self.schema_to_work = data_schema_ordered_with_number
         return data_schema_ordered_with_number
 
-    # ce truc de merde marche pas
+    # ce truc de merde marche pas, peut etre un else que j'ai pas mis que le est mal gerer
     def order_table(self, data_schema_with_foreign_key):
         """
             ordonne les tables
