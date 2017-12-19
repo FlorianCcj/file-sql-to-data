@@ -50,3 +50,4 @@ Cette application permet a partir d'un fichier SQL de generer de la donnee.
  * documentation du fichier modules/Key.py
  * documentation du fichier modules/SchemaExtractorFromSqlFile.py
  * documentation du fichier modules/tools.py
+ * ajout de cle a la place de string dans FileCreator

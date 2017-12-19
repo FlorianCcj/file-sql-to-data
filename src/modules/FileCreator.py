@@ -33,7 +33,7 @@ def generate_xml_file(data, output_file):
             table = etree.SubElement(root, table_name)
             for element_of_table in data[table_name]:
                 element_of_xml = etree.SubElement(table, 'element')
-                if(element_of_table.has_key('id')):
+                if('id' in element_of_table.keys()):
                     element_of_xml.set('id', str(element_of_table['id']))
                 column_Of_Xml = None
                 for column_of_table in element_of_table:

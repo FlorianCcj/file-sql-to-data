@@ -228,7 +228,7 @@ class DataGenerator:
 
     """
     return_primary = None
-    if (self.primary_column.has_key(table_name)):
+    if (table_name in self.primary_column.keys()):
       if (len(self.primary_column[table_name]) > 0):
         return_primary = {}
         for primary_column_iterator in self.primary_column[table_name]:
@@ -294,7 +294,7 @@ class DataGenerator:
     if (column['name'] == 'id'):
       generated_data = id+1
     else:
-      if (column.has_key(Key.type)):
+      if (Key.type in column.keys()):
         if column[Key.type] == Key.foreignkey:
           if Key.foreignkey in column.keys():
             foreign_column = column[Key.foreignkey][Key.column_name]
