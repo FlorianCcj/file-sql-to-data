@@ -106,8 +106,8 @@ def generate_random_data(type, max_number = 10, id = 0, file = '', ref_data = []
             generated_data = random.randint(1, max_number)
         elif type.strip().lower() == 'name':
             generated_data = fake.name()
-        elif type.strip().lower() == 'adress':
-            generated_data = fake.adress()
+        elif type.strip().lower() == 'address':
+            generated_data = fake.address()
         elif type.strip().lower() == 'first_name':
             generated_data = fake.first_name()
         elif type.strip().lower() == 'last_name':

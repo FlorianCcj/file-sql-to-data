@@ -36,7 +36,7 @@ Cette application permet a partir d'un fichier SQL de generer de la donnee.
 	* 'name', 
 	* 'first_name', 
 	* 'last_name',
-	* 'adress', 
+	* 'address', 
 	* 'credit_card_number', 
 	* 'military_ship', 
 	* 'catch_phrase_verb', 

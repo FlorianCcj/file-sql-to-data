@@ -17,7 +17,7 @@
   "step": {
     "columns": {
       "text": {
-        "type": "adress"
+        "type": "address"
       }
     }
   },
@@ -52,7 +52,7 @@
   "grade": {
     "columns": {
       "comment": {
-        "type": "adress"
+        "type": "address"
       }
     }
   },
