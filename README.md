@@ -8,8 +8,10 @@
  * `pip install -r requirements` (pour installer sqlparse, faker)
 
 ## Exemple
- * Creation de schema : `python ./main.py -sf ../sql-file/cuisine.sql`
+ * Creation de schema : `python ./main.py -sql ../sql-file/cuisine.sql`
+ * Creation de schema avec schema preparee : `python ./main.py -sql ../sql-file/cuisine.sql -psch ./prepared-schema.json`
  * Creation de data : `python ./main.py -sch ./data-schema.json`
+ * Creation de data avec schema generee et preparee: `python ./main.py -sch ./data-schema.json -psch ./prepared-schema.json`
 
 
 ## Utilisation général
@@ -51,3 +53,4 @@ Cette application permet a partir d'un fichier SQL de generer de la donnee.
  * documentation du fichier modules/SchemaExtractorFromSqlFile.py
  * documentation du fichier modules/tools.py
  * ajout de cle a la place de string dans FileCreator
+ * avec le prepared fichier si on met un order dedans ca risque de planter 

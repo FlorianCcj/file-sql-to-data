@@ -10,7 +10,7 @@
     "numberOfDataToCreate": 50,
     "columns": {
       "name": {
-        "type": "name",
+        "type": "name"
       }
     }
   },
@@ -25,7 +25,7 @@
     "columns": {
       "author": {
         "type": "name"
-      },
+      }
     }
   },
   "ingredient": {
