@@ -1,13 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import re
-import json
 import argparse
-import random
-from lxml import etree
-from faker import Faker
-fake = Faker()
 
 import sys
 sys.path.append('./modules/')

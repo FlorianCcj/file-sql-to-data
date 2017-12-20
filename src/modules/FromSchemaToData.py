@@ -1,8 +1,5 @@
-import random
 import Key
-from faker import Faker
 import tools
-fake = Faker()
 
 class DataGenerator:
     def __init__(self):
