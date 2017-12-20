@@ -88,6 +88,7 @@ def generate_random_data(type, max_number = 10, id = 0, file = '', ref_data = []
     generated_data = None
     generated_datas = {}
     if (type):
+        ### Type classique ###
         if type.strip().lower() == 'varchar':
             generated_data = fake.sentence()
         elif type.strip().lower().find('varchar') != -1:
@@ -104,8 +105,7 @@ def generate_random_data(type, max_number = 10, id = 0, file = '', ref_data = []
             generated_data = random.randint(1, max_number)
         elif type.strip().lower().find('int') != -1:
             generated_data = random.randint(1, max_number)
-        elif type.strip().lower() == 'job':
-            generated_data = fake.job()
+        ### Name ###
         elif type.strip().lower() == 'name':
             generated_data = fake.name()
         elif type.strip().lower() == 'name_male':
@@ -114,6 +114,22 @@ def generate_random_data(type, max_number = 10, id = 0, file = '', ref_data = []
             generated_data = fake.name_female()
         elif type.strip().lower() == 'first_name_female':
             generated_data = fake.first_name_female()
+        elif type.strip().lower() == 'first_name':
+            generated_data = fake.first_name()
+        elif type.strip().lower() == 'last_name':
+            generated_data = fake.last_name()
+        ### Personnal Data ###
+        elif type.strip().lower() == 'job':
+            generated_data = fake.job()
+        elif type.strip().lower() == 'credit_card_number':
+            generated_data = fake.credit_card_number()
+        elif type.strip().lower() == 'military_ship':
+            generated_data = fake.military_ship()
+        elif type.strip().lower() == 'catch_phrase_verb':
+            generated_data = fake.catch_phrase_verb()
+        elif type.strip().lower() == 'company':
+            generated_data = fake.company()
+        ### Place ###
         elif type.strip().lower() == 'state':
             generated_data = fake.state()
         elif type.strip().lower() == 'postalcode':
@@ -126,24 +142,14 @@ def generate_random_data(type, max_number = 10, id = 0, file = '', ref_data = []
             generated_data = fake.street_address()
         elif type.strip().lower() == 'country':
             generated_data = fake.country()
-        elif type.strip().lower() == 'first_name':
-            generated_data = fake.first_name()
-        elif type.strip().lower() == 'last_name':
-            generated_data = fake.last_name()
-        elif type.strip().lower() == 'credit_card_number':
-            generated_data = fake.credit_card_number()
-        elif type.strip().lower() == 'military_ship':
-            generated_data = fake.military_ship()
+        elif type.strip().lower() == 'city':
+            generated_data = fake.city()
+        ### color ###
         elif type.strip().lower() == 'color':
             generated_data = fake.hex_color()
         elif type.strip().lower() == 'color_name':
             generated_data = fake.color_name()
-        elif type.strip().lower() == 'catch_phrase_verb':
-            generated_data = fake.catch_phrase_verb()
-        elif type.strip().lower() == 'company':
-            generated_data = fake.company()
-        elif type.strip().lower() == 'city':
-            generated_data = fake.city()
+        ### Time ###
         elif type.strip().lower() == 'year':
             generated_data = fake.year()
         elif type.strip().lower() == 'month':
@@ -160,10 +166,12 @@ def generate_random_data(type, max_number = 10, id = 0, file = '', ref_data = []
             generated_data = fake.day_of_month()
         elif type.strip().lower() == 'date':
             generated_data = fake.date(pattern="%Y-%m-%d", end_datetime=None)
+        ### File ###
         elif type.strip().lower() == 'file_extension':
             generated_data = fake.file_extension(category=None)
         elif type.strip().lower() == 'file_name':
             generated_data = fake.file_name(category=None, extension=None)
+        
         elif type.strip().lower() == 'ref':
             generated_datas = self.take_ref_data(file, ref_data)
         elif type.strip().lower() == 'id':

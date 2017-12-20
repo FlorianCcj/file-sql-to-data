@@ -28,40 +28,48 @@ Cette application permet a partir d'un fichier SQL de generer de la donnee.
 
 ### type suporter
 
-	* 'varchar', 
-	* 'longtext', 
-	* 'boolean', 
-	* 'tinyint', 
-	* 'int', 
-  * 'job', 
-  * 'name', 
-  * 'name_male', 
-	* 'first_name_female', 
-	* 'first_name', 
-	* 'last_name',
-  * 'state',
-  * 'postalcode',
-  * 'zipcode',
-	* 'address',
-  * 'street_address' 
-  * 'country' 
-	* 'credit_card_number', 
-	* 'military_ship', 
-	* 'catch_phrase_verb', 
-	* 'company',
-  * 'color',
-	* 'color_name',
-  * 'city',
-  * 'year',
-  * 'month',
-  * 'month_name',
-  * 'day_of_week',
-  * 'time',
-  * 'am_pm',
-  * 'date',
-  * 'day_of_month',
-  * 'file_extension',
-  * 'file_name',
+### Type classique ###
+ * varchar
+ * longtext
+ * tinyint
+ * boolean
+ * int
+### Name ###
+ * name
+ * name_male
+ * name_female
+ * first_name_female
+ * first_name
+ * last_name
+### Personnal Data ###
+ * job
+ * credit_card_number
+ * military_ship
+ * catch_phrase_verb
+ * company
+### Place ###
+ * state
+ * postalcode
+ * zipcode
+ * address
+ * street_address
+ * country
+ * city
+### color ###
+ * color
+ * color_name
+### Time ###
+ * year
+ * month
+ * month_name
+ * day_of_week
+ * time
+ * am_pm
+ * day_of_month
+ * date
+### File ###
+ * file_extension
+ * file_name
 
 ## Note
  * Generer le requirements.txt automatiquement : pip freeze > requirements.txt
