@@ -54,7 +54,7 @@ class DataGenerator:
             :return: le meme schema avec un element permettant d ordonnee la creation de la donnee
             :rtype: todo
         """
-        DEBUG = True
+        DEBUG = False
         columns_key = Key.columns
         type_key = Key.type
         foreign_key_key = Key.foreignkey
@@ -67,35 +67,47 @@ class DataGenerator:
         try_time = 0
         while len(table_already_done) != number_of_table and try_time <= timeout:
             try_time += 1
-            save = True
             for table_name in data_schema_with_foreign_key:
                 if(DEBUG):
-                  print('table_already_done')
+                  print('[debug][order] FOR ' + str(len(table_already_done)) + ' table_already_done')
                   print(table_already_done)
-                  print('table_name')
-                  print(table_name)
+                  print('[debug][order] FOR table_name: ' + table_name)
                 if table_name not in table_already_done:
+                    save = True
                     foreign_key_counter = 0
                     for column_name in data_schema_with_foreign_key[table_name][columns_key]:
                         if data_schema_with_foreign_key[table_name][columns_key][column_name][type_key] == foreign_key_key:
                             foreign_key_counter += 1
                             if table_name_key not in data_schema_with_foreign_key[table_name][columns_key][column_name][foreign_key_key].keys():
-                                save = False
+                                save = save and False
+                                print('[error][order] ERROR type: foreign key mais pas de key designant ou aller le chercher ')
                             else:
+                                if(DEBUG):
+                                   print('[debug][order] FK foreignkey pointe vers')
+                                   print(data_schema_with_foreign_key[table_name][columns_key][column_name][foreign_key_key])
                                 if data_schema_with_foreign_key[table_name][columns_key][column_name][foreign_key_key][table_name_key] not in table_already_done:
-                                    save = False 
+                                    if(DEBUG):
+                                        print('[debug][order] FK dependance pas encore creer donc on peut pas sauver')
+                                    save = save and False 
                     if(foreign_key_counter == 0):
                         save = True
                     if(save == True):
                         data_schema_with_foreign_key[table_name][order_key] = len(table_already_done)
                         table_already_done.append(table_name)
+                        if(DEBUG):
+                            print('[debug][order] ADD ' + table_name)                                
                         try_time = 0
+                    if(DEBUG):
+                        print('[debug][order] SAVE ' + str(save))
+                else:
+                    if(DEBUG):
+                        print('[debug][order] DONE already done')
             number_of_tableDone = len(table_already_done)
         if(DEBUG):
-          print('timeout: ' + str(try_time) + '==' + str(timeout))
-          print('lentable' + str(len(table_already_done)) + '!=' + str(number_of_table))
-        if (try_time == timeout):
-            print('[Erreur][order] erreur lors de l ordonnancement des tables, l une d elle a une foreign key qui n existe pas')
+          print('[debug][order] END timeout: ' + str(try_time) + '>=' + str(timeout))
+          print('[debug][order] END len(table)' + str(len(table_already_done)) + '!=' + str(number_of_table))
+        if (try_time >= timeout):
+            print('[error][order] ERROR lors de l ordonnancement des tables, l une d elle a une foreign key qui n existe pas')
         return data_schema_with_foreign_key
 
     def from_schema_to_order(self, schema):

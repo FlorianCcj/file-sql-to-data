@@ -45,7 +45,6 @@ class app:
 		formated_data = tools.from_data_to_ordered_object_to_print(self.data_generator.data, order_of_table)
 		FileCreator.generate_txt_file_from_object(formated_data, output_file)
 
-print(args)
 if __name__ == '__main__':
 	launcher = app()
 	if (args.schema_file):
