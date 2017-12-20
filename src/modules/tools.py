@@ -5,6 +5,17 @@ from faker import Faker
 fake = Faker()
 
 def update_object(object_init, object_update_container):
+    """
+        take all data in the second parameter to add or replace it in the first parameter
+
+        :param object_init: the object which is the base of the copy
+        :type object_init: object
+        :param object_update_containert: the object where we are getting all atribut to add them to the base object
+        :type object_update_container: object
+
+        :return: the fusion of both object
+        :rtype: object
+    """
     new_object = object_init
     if isinstance(new_object, type({})) and isinstance(object_update_container, type({})):
         for element in object_update_container:
@@ -19,6 +30,9 @@ def update_object(object_init, object_update_container):
 
 
 def from_strings_array_to_objects(object_to_generate, array_of_string, idMin = 0):
+    """
+        take a list of string to generate object with it
+    """
     # pas gerer pour l instant
     for name in array_of_string:
         new_object = {}
@@ -30,6 +44,15 @@ def from_strings_array_to_objects(object_to_generate, array_of_string, idMin = 0
 
 
 def from_data_to_object_to_print(data):
+    """
+        generate an object with number as key, and a lign to write in the file as value
+
+        :param data: database in one object
+        :type data: object with key tablenam an value array of table value
+
+        :return: object with all lign to write
+        :rtype: object 
+    """
     object_to_print = {}
     lign_to_print = 0
     for table_name in data:
@@ -55,6 +78,17 @@ def from_data_to_object_to_print(data):
 
 
 def from_data_to_ordered_object_to_print(data, order_of_table):
+    """
+        generate an object with number as key, and a lign to write in the file as value
+
+        :param data: database in one object
+        :type data: object with key tablenam an value array of table value
+        :param order_of_table: order of the table to know which table we have to write in first
+        :type order_of_table: object
+
+        :return: object with all lign to write
+        :rtype: object 
+    """
     object_to_print = {}
     lign_to_print = 0
 
@@ -79,12 +113,28 @@ def from_data_to_ordered_object_to_print(data, order_of_table):
         object_to_print[lign_to_print] = ';'
         lign_to_print += 1
     if(not len(data) == len(order_of_table)):
-        print('//!\\\\ Attention il y a moins de table triees que de table de donnee')  
+        print('[error][from data to lign]//!\\\\ Attention il y a moins de table triees que de table de donnee')  
     return object_to_print
 
 
 def generate_random_data(type, max_number = 10, id = 0, file = '', ref_data = []):
-    # print('### Generation d une column d une entree ###')
+    """
+        generate random data depend on type
+
+        :param type: type of data to generate
+        :type type: string
+        :param max_number: number max of the number to generate
+        :type type: number
+        :param id: id of the last data generated
+        :type id: number
+        :param file: if need to take a data in a list of value from a file
+        :type file: string
+        :param ref_data: if need to take a data in a list of value
+        :type ref_data: array
+
+        :return: generated data
+        :rtype: string|boolean|number
+    """
     generated_data = None
     generated_datas = {}
     if (type):
@@ -184,6 +234,17 @@ def generate_random_data(type, max_number = 10, id = 0, file = '', ref_data = []
 
 
 def take_ref_data(file, ref_data):
+    """
+        take a random data in an array or a file
+
+        :param file: file where to find a data
+        :type file: string
+        :param ref_data: array where to find a data
+        :type ref_data: array
+
+        :return: an object with random data choosen and list of data where to choose
+        :rtype: object
+    """
     ref_recup_data = None
     if(not len(ref_data) > 0):
         ref_data = FileReader.read_json_file(file)    
@@ -193,4 +254,13 @@ def take_ref_data(file, ref_data):
 
 
 def take_one_element_in_array(data_to_rand):
+    """
+        take an element in an array
+
+        :param data_to_rand: array where to take a random value
+        :type data_to_rand: array
+
+        :return: data from the array
+        :rtype: depend on type of values in the array
+    """
     return random.choice(data_to_rand)

@@ -1,3 +1,6 @@
+"""
+  Here we manage all the key word for all the other script
+"""
 default_number_of_data_to_create = "numberOfDataToCreate"
 order = "order"
 nonorder = "non ordered"

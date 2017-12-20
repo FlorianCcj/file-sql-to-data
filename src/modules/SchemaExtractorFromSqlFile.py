@@ -15,6 +15,15 @@ class SchemaExtractor:
         self.data_schema = {}
 
     def auto_extract(self, sql_request):
+        """
+            Extract all the schema from the sql create table requests
+
+            :param sql_request: create resquests
+            :type sql_request: string
+
+            :return: schema summing up the database
+            :rtype: object
+        """
         self.request = sql_request
         self.create_requests = self.extract_create_requests(self.request)
         for table_name in self.create_requests:
@@ -60,6 +69,15 @@ class SchemaExtractor:
         return self.columns_data_by_table
 
     def auto_extract_with_sql_parse(self, sql_request):
+        """
+            Extract all the schema from the sql create table requests
+
+            :param sql_request: create resquests
+            :type sql_request: string
+
+            :return: schema summing up the database
+            :rtype: object
+        """
         self.request = sql_request
         self.create_requests = self.extract_create_requests_with_sql_parse(self.request)
         for table_name in self.create_requests:
@@ -105,6 +123,15 @@ class SchemaExtractor:
         return self.columns_data_by_table
 
     def extract_create_requests(self, request):
+        """
+            extract create request one by one from the create requests
+
+            :param request: create requests
+            :type request: string
+
+            :return: object with tablename as key, create request as value
+            :rtype: object
+        """
         print('### Recuperation des differente CREATE TABLE ###')
         data = {}
         table_pattern = r'CREATE TABLE ([^ ]+) \((.+)\).*;'
@@ -117,6 +144,15 @@ class SchemaExtractor:
         return data
 
     def extract_create_requests_with_sql_parse(self, request):
+        """
+            extract create request one by one from the create requests
+
+            :param request: create requests
+            :type request: string
+
+            :return: object with tablename as key, create request as value
+            :rtype: object
+        """
         data = {}
         stmt = sqlparse.parse(request)
         for i in range(len(stmt)):
@@ -129,12 +165,34 @@ class SchemaExtractor:
         return data
 
     def parse_columns_from_create_request(self, table_request, table_name):
+        """
+            take columns in a request
+
+            :param table_request: a create request
+            :type table_request: string
+            :param table_name: name of the table 
+            :type table_name: string
+
+            :return: array off column request
+            :rtype: array of string
+        """
         column_pattern = r'(?!\([^ )]+),(?! ?[^ (]+\))'
         column_match = re.split(column_pattern, table_request)
         self.columns_requests[table_name] = column_match
         return column_match
         
     def parse_column_data_from_column_request(self, column_request, table_name):
+        """
+            take all data in a column request
+
+            :param column_request: a column create request
+            :type column_request: string
+            :param table_name: name of the table 
+            :type table_name: string
+
+            :return: object with all caracteristic of the column
+            :rtype: object
+        """
         column_data = {}
         column_pattern = r'([^ ]+) ([^ (]+)(?: ?\(([^)]+)\))? ?(.+)?'
         match = re.findall(column_pattern, column_request)
@@ -168,6 +226,15 @@ class SchemaExtractor:
         return column_data
 
     def parse_altertable_requests(self, sql_request):
+        """
+            recupere les donnees dans une requete d alteration de la base
+
+            :param sql_request: un requete alter table
+            :type sql_request: string
+
+            :return: objet decrivant la relation foreign key
+            :rtype: object
+        """
         data = {}
         foreignkey_pattern = r'ALTER TABLE ([^ ]+) ADD CONSTRAINT FK\_[^ ]+ FOREIGN KEY \(([^ ]+)\) REFERENCES ([^ ]+) \(([^ ]+)\)'
         foreignkeys_match = re.findall(foreignkey_pattern, sql_request)

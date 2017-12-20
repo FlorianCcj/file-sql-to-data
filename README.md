@@ -27,49 +27,48 @@ Cette application permet a partir d'un fichier SQL de generer de la donnee.
   	va genener la data
 
 ### type suporter
-
-### Type classique ###
- * varchar
- * longtext
- * tinyint
- * boolean
- * int
-### Name ###
- * name
- * name_male
- * name_female
- * first_name_female
- * first_name
- * last_name
-### Personnal Data ###
- * job
- * credit_card_number
- * military_ship
- * catch_phrase_verb
- * company
-### Place ###
- * state
- * postalcode
- * zipcode
- * address
- * street_address
- * country
- * city
-### color ###
+ * Type classique
+   * varchar
+   * longtext
+   * tinyint
+   * boolean
+   * int
+ * Name
+   * name
+   * name_male
+   * name_female
+   * first_name_female
+   * first_name
+   * last_name
+ * Personnal Data
+   * job
+   * credit_card_number
+   * military_ship
+   * catch_phrase_verb
+   * company
+ * Place
+   * state
+   * postalcode
+   * zipcode
+   * address
+   * street_address
+   * country
+   * city
  * color
- * color_name
-### Time ###
- * year
- * month
- * month_name
- * day_of_week
- * time
- * am_pm
- * day_of_month
- * date
-### File ###
- * file_extension
- * file_name
+   * color
+   * color_name
+ * Time
+   * year
+   * month
+   * month_name
+   * day_of_week
+   * time
+   * am_pm
+   * day_of_month
+   * date
+ * File
+   * file_extension
+   * file_name
 
 ## Note
  * Generer le requirements.txt automatiquement : pip freeze > requirements.txt
@@ -78,7 +77,4 @@ Cette application permet a partir d'un fichier SQL de generer de la donnee.
 
 ## Todo
  * documentation du fichier modules/Key.py
- * documentation du fichier modules/SchemaExtractorFromSqlFile.py
- * documentation du fichier modules/tools.py
- * ajout de cle a la place de string dans FileCreator
  * avec le prepared fichier si on met un order dedans ca risque de planter 
