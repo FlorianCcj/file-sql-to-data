@@ -40,7 +40,6 @@ class DataGenerator:
         self.schema_to_work = data_schema_ordered_with_number
         return data_schema_ordered_with_number
 
-    # ce truc de merde marche pas, peut etre un else que j'ai pas mis que le est mal gerer
     def order_table(self, data_schema_with_foreign_key):
         """
             ordonne les tables
@@ -85,7 +84,11 @@ class DataGenerator:
                                 if(DEBUG):
                                    print('[debug][order] FK foreignkey pointe vers')
                                    print(data_schema_with_foreign_key[table_name][columns_key][column_name][foreign_key_key])
-                                if data_schema_with_foreign_key[table_name][columns_key][column_name][foreign_key_key][table_name_key] not in table_already_done:
+                                pointed_table = data_schema_with_foreign_key[table_name][columns_key][column_name][foreign_key_key][table_name_key]   
+                                if pointed_table not in table_already_done:
+                                    if(pointed_table == table_name):
+                                        # todo
+                                        print('[error][order] FK la table pointer est la meme que la table contenante ... j ai pas gerer ce cas')
                                     if(DEBUG):
                                         print('[debug][order] FK dependance pas encore creer donc on peut pas sauver')
                                     save = save and False 
@@ -318,6 +321,7 @@ class DataGenerator:
             if (Key.type in column.keys()):
                 if column[Key.type] == Key.foreignkey:
                     if Key.foreignkey in column.keys():
+                        # todo : gerer si la table s'auto reference (qu'une colonne ait pour foreign key la table en cours de creation)
                         foreign_column = column[Key.foreignkey][Key.column_name]
                         foreign_table = column[Key.foreignkey][Key.table_name]
                         if(foreign_table not in self.data):

@@ -9,7 +9,7 @@
 
 ## Exemple
  * Creation de schema : `python ./main.py -sf ../sql-file/cuisine.sql`
- * Creation de data : `python ./main.py -schf ./data-schema.json`
+ * Creation de data : `python ./main.py -sch ./data-schema.json`
 
 
 ## Utilisation général

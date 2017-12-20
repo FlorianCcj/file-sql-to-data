@@ -18,9 +18,10 @@ from FromSchemaToData import *
 import tools
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-sf','--sql_file', help = 'sql file schema to generate data')
-parser.add_argument('-of','--output_file', help = 'json file which resume the schema')
-parser.add_argument('-schf','--schema_file', help = 'json file which resume the schema to generate data')
+parser.add_argument('-sql','--sql_file', help = 'sql file schema to generate data')
+parser.add_argument('-out','--output_file', help = 'json file which resume the schema')
+parser.add_argument('-sch','--schema', help = 'json file which resume the schema to generate data')
+parser.add_argument('-psch','--prepared_schema', help = 'json file with some prepared parametters')
 parser.add_argument('-y','--yes', help = 'permit to ignore the json verification and use default value', action='store_true')
 args = parser.parse_args()
 
@@ -47,9 +48,9 @@ class app:
 
 if __name__ == '__main__':
 	launcher = app()
-	if (args.schema_file):
+	if (args.schema):
 		output_file = args.output_file if args.output_file else './data.sql'
-		launcher.from_schema_to_data(args.schema_file, output_file)
+		launcher.from_schema_to_data(args.schema, output_file)
 	elif (args.sql_file):
 		if args.yes:
 			output_file = './data-schema.json'
