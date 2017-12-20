@@ -1,4 +1,6 @@
 # CHANGELOG
+ * typography correction: adress => address
+
 ## 2.0.1
  * if there is some attribute in the schema that we can prepared, we can give it
 
