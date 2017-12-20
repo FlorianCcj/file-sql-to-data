@@ -54,6 +54,7 @@ class DataGenerator:
             :return: le meme schema avec un element permettant d ordonnee la creation de la donnee
             :rtype: todo
         """
+        DEBUG = True
         columns_key = Key.columns
         type_key = Key.type
         foreign_key_key = Key.foreignkey
@@ -68,6 +69,11 @@ class DataGenerator:
             try_time += 1
             save = True
             for table_name in data_schema_with_foreign_key:
+                if(DEBUG):
+                  print('table_already_done')
+                  print(table_already_done)
+                  print('table_name')
+                  print(table_name)
                 if table_name not in table_already_done:
                     foreign_key_counter = 0
                     for column_name in data_schema_with_foreign_key[table_name][columns_key]:
@@ -85,6 +91,9 @@ class DataGenerator:
                         table_already_done.append(table_name)
                         try_time = 0
             number_of_tableDone = len(table_already_done)
+        if(DEBUG):
+          print('timeout: ' + str(try_time) + '==' + str(timeout))
+          print('lentable' + str(len(table_already_done)) + '!=' + str(number_of_table))
         if (try_time == timeout):
             print('[Erreur][order] erreur lors de l ordonnancement des tables, l une d elle a une foreign key qui n existe pas')
         return data_schema_with_foreign_key
@@ -208,7 +217,7 @@ class DataGenerator:
                     new_entree_primary = self.primary_column_keeper(table_name, table_data[i])
                 self.unique_datas[table_name][primarykey_key].append(new_entree_primary)
                 if (timeout == final_timeout):
-                    print "[error] [primary generation] Tentative de generation dans la table %s a echoue a cause de la PRIMARY KEY constraint" % table_name
+                    print("[error] [primary generation] Tentative de generation dans la table %s a echoue a cause de la PRIMARY KEY constraint" % table_name)
             self.table_name_generated_data.append(table_name)
             return table_data
         else:

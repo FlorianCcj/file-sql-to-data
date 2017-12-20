@@ -5,7 +5,7 @@
  * pip
 
 ## Install
- * `pip install -r requirements`
+ * `pip install -r requirements` (pour installer sqlparse, faker)
 
 ## Exemple
  * Creation de schema : `python ./main.py -sf ../sql-file/cuisine.sql`

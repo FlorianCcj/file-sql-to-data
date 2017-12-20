@@ -1,501 +1,494 @@
 {
-  "recipe_type": {
-    "numberOfDataToCreate": 10, 
-    "order": 0, 
+  "unit": {
+    "numberOfDataToCreate": 10,
+    "order": 0,
     "columns": {
-      "id": {
-        "name": "id", 
-        "nullable": true, 
-        "primary key": true, 
-        "unique": false, 
-        "type": "INT", 
-        "size": null
-      }, 
       "name": {
-        "name": "name", 
-        "nullable": true, 
-        "primary key": false, 
-        "unique": true, 
-        "type": "VARCHAR", 
-        "size": 255
+        "name": "name",
+        "primary key": false,
+        "size": 255,
+        "unique": true,
+        "nullable": true,
+        "type": "VARCHAR"
+      },
+      "symbol": {
+        "name": "symbol",
+        "primary key": false,
+        "size": 255,
+        "unique": false,
+        "nullable": true,
+        "type": "VARCHAR"
+      },
+      "id": {
+        "name": "id",
+        "primary key": true,
+        "size": null,
+        "unique": false,
+        "nullable": true,
+        "type": "INT"
       }
     }
-  }, 
-  "grade": {
-    "numberOfDataToCreate": 10, 
-    "order": 8, 
+  },
+  "ingredient": {
+    "numberOfDataToCreate": 10,
+    "order": 5,
     "columns": {
-      "comment": {
-        "name": "comment", 
-        "nullable": false, 
-        "primary key": false, 
-        "unique": false, 
-        "type": "LONGTEXT", 
-        "size": null
-      }, 
-      "type_id": {
-        "name": "type_id", 
-        "nullable": true, 
-        "foreignKey": {
-          "columnName": "id", 
-          "tableName": "grade_type"
-        }, 
-        "primary key": false, 
-        "unique": false, 
-        "type": "foreignKey", 
-        "size": null
-      }, 
-      "unit_id": {
-        "name": "unit_id", 
-        "nullable": false, 
-        "foreignKey": {
-          "columnName": "id", 
-          "tableName": "unit"
-        }, 
-        "primary key": false, 
-        "unique": false, 
-        "type": "foreignKey", 
-        "size": null
-      }, 
-      "value": {
-        "name": "value", 
-        "nullable": false, 
-        "primary key": false, 
-        "unique": false, 
-        "type": "INT", 
-        "size": null
-      }, 
-      "variant_id": {
-        "name": "variant_id", 
-        "nullable": true, 
-        "foreignKey": {
-          "columnName": "id", 
-          "tableName": "variant"
-        }, 
-        "primary key": false, 
-        "unique": false, 
-        "type": "foreignKey", 
-        "size": null
-      }, 
-      "id": {
-        "name": "id", 
-        "nullable": true, 
-        "primary key": true, 
-        "unique": false, 
-        "type": "INT", 
-        "size": null
-      }
-    }
-  }, 
-  "recipe": {
-    "numberOfDataToCreate": 10, 
-    "order": 1, 
-    "columns": {
-      "id": {
-        "name": "id", 
-        "nullable": true, 
-        "primary key": true, 
-        "unique": false, 
-        "type": "INT", 
-        "size": null
-      }, 
       "name": {
-        "name": "name", 
-        "nullable": true, 
-        "primary key": false, 
-        "unique": true, 
-        "type": "VARCHAR", 
-        "size": 255
-      }
-    }
-  }, 
-  "grade_type": {
-    "numberOfDataToCreate": 10, 
-    "order": 2, 
-    "columns": {
+        "name": "name",
+        "primary key": false,
+        "size": 255,
+        "unique": false,
+        "nullable": true,
+        "type": "VARCHAR"
+      },
       "id": {
-        "name": "id", 
-        "nullable": true, 
-        "primary key": true, 
-        "unique": false, 
-        "type": "INT", 
-        "size": null
-      }, 
-      "name": {
-        "name": "name", 
-        "nullable": true, 
-        "primary key": false, 
-        "unique": true, 
-        "type": "VARCHAR", 
-        "size": 255
+        "name": "id",
+        "primary key": true,
+        "size": null,
+        "unique": false,
+        "nullable": true,
+        "type": "INT"
       }
     }
-  }, 
-  "material": {
-    "numberOfDataToCreate": 10, 
-    "order": 3, 
-    "columns": {
-      "id": {
-        "name": "id", 
-        "nullable": true, 
-        "primary key": true, 
-        "unique": false, 
-        "type": "INT", 
-        "size": null
-      }, 
-      "name": {
-        "name": "name", 
-        "nullable": true, 
-        "primary key": false, 
-        "unique": true, 
-        "type": "VARCHAR", 
-        "size": 255
-      }
-    }
-  }, 
-  "variant": {
-    "numberOfDataToCreate": 10, 
-    "order": 4, 
-    "columns": {
-      "comment": {
-        "name": "comment", 
-        "nullable": false, 
-        "primary key": false, 
-        "unique": false, 
-        "type": "LONGTEXT", 
-        "size": null
-      }, 
-      "main_variant": {
-        "name": "main_variant", 
-        "nullable": false, 
-        "primary key": false, 
-        "unique": false, 
-        "type": "TINYINT", 
-        "size": 1
-      }, 
-      "author": {
-        "name": "author", 
-        "nullable": true, 
-        "primary key": false, 
-        "unique": false, 
-        "type": "VARCHAR", 
-        "size": 255
-      }, 
-      "visible": {
-        "name": "visible", 
-        "nullable": false, 
-        "primary key": false, 
-        "unique": false, 
-        "type": "TINYINT", 
-        "size": 1
-      }, 
-      "recipe_id": {
-        "name": "recipe_id", 
-        "nullable": false, 
-        "foreignKey": {
-          "columnName": "id", 
-          "tableName": "recipe"
-        }, 
-        "primary key": false, 
-        "unique": false, 
-        "type": "foreignKey", 
-        "size": null
-      }, 
-      "id": {
-        "name": "id", 
-        "nullable": true, 
-        "primary key": true, 
-        "unique": false, 
-        "type": "INT", 
-        "size": null
-      }
-    }
-  }, 
+  },
   "ingredientQuantity": {
-    "numberOfDataToCreate": 10, 
-    "order": 9, 
+    "numberOfDataToCreate": 10,
     "columns": {
-      "unit_id": {
-        "name": "unit_id", 
-        "nullable": true, 
+      "quantity": {
+        "name": "quantity",
+        "primary key": false,
+        "size": null,
+        "unique": false,
+        "nullable": true,
+        "type": "INT"
+      },
+      "variant_id": {
+        "name": "variant_id",
+        "primary key": false,
+        "size": null,
+        "unique": false,
+        "nullable": true,
+        "type": "foreignKey",
         "foreignKey": {
-          "columnName": "id", 
-          "tableName": "unit"
-        }, 
-        "primary key": false, 
-        "unique": false, 
-        "type": "foreignKey", 
-        "size": null
-      }, 
+          "tableName": "variant",
+          "columnName": "id"
+        }
+      },
       "ingredient_id": {
-        "name": "ingredient_id", 
-        "nullable": true, 
+        "name": "ingredient_id",
+        "primary key": false,
+        "size": null,
+        "unique": false,
+        "nullable": true,
+        "type": "foreignKey",
         "foreignKey": {
-          "columnName": "id", 
-          "tableName": "ingredient"
-        }, 
-        "primary key": false, 
-        "unique": false, 
-        "type": "foreignKey", 
-        "size": null
-      }, 
-      "quantity": {
-        "name": "quantity", 
-        "nullable": true, 
-        "primary key": false, 
-        "unique": false, 
-        "type": "INT", 
-        "size": null
-      }, 
+          "tableName": "ingredient",
+          "columnName": "id"
+        }
+      },
+      "unit_id": {
+        "name": "unit_id",
+        "primary key": false,
+        "size": null,
+        "unique": false,
+        "nullable": true,
+        "type": "foreignKey",
+        "foreignKey": {
+          "tableName": "unit",
+          "columnName": "id"
+        }
+      },
       "id": {
-        "name": "id", 
-        "nullable": true, 
-        "primary key": true, 
-        "unique": false, 
-        "type": "INT", 
-        "size": null
-      }, 
-      "variant_id": {
-        "name": "variant_id", 
-        "nullable": true, 
-        "foreignKey": {
-          "columnName": "id", 
-          "tableName": "variant"
-        }, 
-        "primary key": false, 
-        "unique": false, 
-        "type": "foreignKey", 
-        "size": null
+        "name": "id",
+        "primary key": true,
+        "size": null,
+        "unique": false,
+        "nullable": true,
+        "type": "INT"
       }
     }
-  }, 
-  "step": {
-    "numberOfDataToCreate": 10, 
-    "order": 10, 
-    "columns": {
-      "text": {
-        "name": "text", 
-        "nullable": false, 
-        "primary key": false, 
-        "unique": false, 
-        "type": "VARCHAR", 
-        "size": 255
-      }, 
-      "picture": {
-        "name": "picture", 
-        "nullable": false, 
-        "primary key": false, 
-        "unique": false, 
-        "type": "LONGTEXT", 
-        "size": null
-      }, 
-      "id": {
-        "name": "id", 
-        "nullable": true, 
-        "primary key": true, 
-        "unique": false, 
-        "type": "INT", 
-        "size": null
-      }, 
-      "variant_id": {
-        "name": "variant_id", 
-        "nullable": false, 
-        "foreignKey": {
-          "columnName": "id", 
-          "tableName": "variant"
-        }, 
-        "primary key": false, 
-        "unique": false, 
-        "type": "foreignKey", 
-        "size": null
-      }
-    }
-  }, 
-  "materialQuantity": {
-    "numberOfDataToCreate": 10, 
-    "order": 11, 
-    "columns": {
-      "quantity": {
-        "name": "quantity", 
-        "nullable": true, 
-        "primary key": false, 
-        "unique": false, 
-        "type": "INT", 
-        "size": null
-      }, 
-      "id": {
-        "name": "id", 
-        "nullable": true, 
-        "primary key": true, 
-        "unique": false, 
-        "type": "INT", 
-        "size": null
-      }, 
-      "material_id": {
-        "name": "material_id", 
-        "nullable": true, 
-        "foreignKey": {
-          "columnName": "id", 
-          "tableName": "material"
-        }, 
-        "primary key": false, 
-        "unique": false, 
-        "type": "foreignKey", 
-        "size": null
-      }, 
-      "variant_id": {
-        "name": "variant_id", 
-        "nullable": true, 
-        "foreignKey": {
-          "columnName": "id", 
-          "tableName": "variant"
-        }, 
-        "primary key": false, 
-        "unique": false, 
-        "type": "foreignKey", 
-        "size": null
-      }
-    }
-  }, 
-  "variant_material_quantity": {
-    "numberOfDataToCreate": 10, 
-    "order": 13, 
-    "columns": {
-      "material_quantity_id": {
-        "name": "material_quantity_id", 
-        "nullable": true, 
-        "foreignKey": {
-          "columnName": "id", 
-          "tableName": "materialQuantity"
-        }, 
-        "primary key": true, 
-        "unique": false, 
-        "type": "foreignKey", 
-        "size": null
-      }, 
-      "variant_id": {
-        "name": "variant_id", 
-        "nullable": true, 
-        "foreignKey": {
-          "columnName": "id", 
-          "tableName": "variant"
-        }, 
-        "primary key": true, 
-        "unique": false, 
-        "type": "foreignKey", 
-        "size": null
-      }
-    }
-  }, 
-  "variant_recipe_type": {
-    "numberOfDataToCreate": 10, 
-    "order": 6, 
-    "columns": {
-      "recipe_type_id": {
-        "name": "recipe_type_id", 
-        "nullable": true, 
-        "foreignKey": {
-          "columnName": "id", 
-          "tableName": "recipe_type"
-        }, 
-        "primary key": true, 
-        "unique": false, 
-        "type": "foreignKey", 
-        "size": null
-      }, 
-      "variant_id": {
-        "name": "variant_id", 
-        "nullable": true, 
-        "foreignKey": {
-          "columnName": "id", 
-          "tableName": "variant"
-        }, 
-        "primary key": true, 
-        "unique": false, 
-        "type": "foreignKey", 
-        "size": null
-      }
-    }
-  }, 
+  },
   "variant_ingredient_quantity": {
-    "numberOfDataToCreate": 10, 
-    "order": 12, 
+    "numberOfDataToCreate": 10,
     "columns": {
       "ingredient_quantity_id": {
-        "name": "ingredient_quantity_id", 
-        "nullable": true, 
+        "name": "ingredient_quantity_id",
+        "primary key": true,
+        "size": null,
+        "unique": false,
+        "nullable": true,
+        "type": "foreignKey",
         "foreignKey": {
-          "columnName": "id", 
-          "tableName": "ingredientQuantity"
-        }, 
-        "primary key": true, 
-        "unique": false, 
-        "type": "foreignKey", 
-        "size": null
-      }, 
+          "tableName": "ingredientQuantity",
+          "columnName": "id"
+        }
+      },
       "variant_id": {
-        "name": "variant_id", 
-        "nullable": true, 
+        "name": "variant_id",
+        "primary key": true,
+        "size": null,
+        "unique": false,
+        "nullable": true,
+        "type": "foreignKey",
         "foreignKey": {
-          "columnName": "id", 
-          "tableName": "variant"
-        }, 
-        "primary key": true, 
-        "unique": false, 
-        "type": "foreignKey", 
-        "size": null
+          "tableName": "variant",
+          "columnName": "id"
+        }
       }
     }
-  }, 
-  "unit": {
-    "numberOfDataToCreate": 10, 
-    "order": 5, 
+  },
+  "material": {
+    "numberOfDataToCreate": 10,
+    "order": 2,
     "columns": {
-      "symbol": {
-        "name": "symbol", 
-        "nullable": true, 
-        "primary key": false, 
-        "unique": false, 
-        "type": "VARCHAR", 
-        "size": 255
-      }, 
-      "id": {
-        "name": "id", 
-        "nullable": true, 
-        "primary key": true, 
-        "unique": false, 
-        "type": "INT", 
-        "size": null
-      }, 
       "name": {
-        "name": "name", 
-        "nullable": true, 
-        "primary key": false, 
-        "unique": true, 
-        "type": "VARCHAR", 
-        "size": 255
+        "name": "name",
+        "primary key": false,
+        "size": 255,
+        "unique": true,
+        "nullable": true,
+        "type": "VARCHAR"
+      },
+      "id": {
+        "name": "id",
+        "primary key": true,
+        "size": null,
+        "unique": false,
+        "nullable": true,
+        "type": "INT"
       }
     }
-  }, 
-  "ingredient": {
-    "numberOfDataToCreate": 10, 
-    "order": 7, 
+  },
+  "grade_type": {
+    "numberOfDataToCreate": 10,
+    "order": 3,
     "columns": {
-      "id": {
-        "name": "id", 
-        "nullable": true, 
-        "primary key": true, 
-        "unique": false, 
-        "type": "INT", 
-        "size": null
-      }, 
       "name": {
-        "name": "name", 
-        "nullable": true, 
-        "primary key": false, 
-        "unique": false, 
-        "type": "VARCHAR", 
-        "size": 255
+        "name": "name",
+        "primary key": false,
+        "size": 255,
+        "unique": true,
+        "nullable": true,
+        "type": "VARCHAR"
+      },
+      "id": {
+        "name": "id",
+        "primary key": true,
+        "size": null,
+        "unique": false,
+        "nullable": true,
+        "type": "INT"
+      }
+    }
+  },
+  "variant_recipe_type": {
+    "numberOfDataToCreate": 10,
+    "columns": {
+      "recipe_type_id": {
+        "name": "recipe_type_id",
+        "primary key": true,
+        "size": null,
+        "unique": false,
+        "nullable": true,
+        "type": "foreignKey",
+        "foreignKey": {
+          "tableName": "recipe_type",
+          "columnName": "id"
+        }
+      },
+      "variant_id": {
+        "name": "variant_id",
+        "primary key": true,
+        "size": null,
+        "unique": false,
+        "nullable": true,
+        "type": "foreignKey",
+        "foreignKey": {
+          "tableName": "variant",
+          "columnName": "id"
+        }
+      }
+    }
+  },
+  "grade": {
+    "numberOfDataToCreate": 10,
+    "columns": {
+      "comment": {
+        "name": "comment",
+        "primary key": false,
+        "size": null,
+        "unique": false,
+        "nullable": false,
+        "type": "LONGTEXT"
+      },
+      "value": {
+        "name": "value",
+        "primary key": false,
+        "size": null,
+        "unique": false,
+        "nullable": false,
+        "type": "INT"
+      },
+      "id": {
+        "name": "id",
+        "primary key": true,
+        "size": null,
+        "unique": false,
+        "nullable": true,
+        "type": "INT"
+      },
+      "variant_id": {
+        "name": "variant_id",
+        "primary key": false,
+        "size": null,
+        "unique": false,
+        "nullable": true,
+        "type": "foreignKey",
+        "foreignKey": {
+          "tableName": "variant",
+          "columnName": "id"
+        }
+      },
+      "unit_id": {
+        "name": "unit_id",
+        "primary key": false,
+        "size": null,
+        "unique": false,
+        "nullable": false,
+        "type": "foreignKey",
+        "foreignKey": {
+          "tableName": "unit",
+          "columnName": "id"
+        }
+      },
+      "type_id": {
+        "name": "type_id",
+        "primary key": false,
+        "size": null,
+        "unique": false,
+        "nullable": true,
+        "type": "foreignKey",
+        "foreignKey": {
+          "tableName": "grade_type",
+          "columnName": "id"
+        }
+      }
+    }
+  },
+  "recipe": {
+    "numberOfDataToCreate": 10,
+    "order": 1,
+    "columns": {
+      "name": {
+        "name": "name",
+        "primary key": false,
+        "size": 255,
+        "unique": true,
+        "nullable": true,
+        "type": "VARCHAR"
+      },
+      "id": {
+        "name": "id",
+        "primary key": true,
+        "size": null,
+        "unique": false,
+        "nullable": true,
+        "type": "INT"
+      }
+    }
+  },
+  "recipe_type": {
+    "numberOfDataToCreate": 10,
+    "order": 4,
+    "columns": {
+      "name": {
+        "name": "name",
+        "primary key": false,
+        "size": 255,
+        "unique": true,
+        "nullable": true,
+        "type": "VARCHAR"
+      },
+      "id": {
+        "name": "id",
+        "primary key": true,
+        "size": null,
+        "unique": false,
+        "nullable": true,
+        "type": "INT"
+      }
+    }
+  },
+  "step": {
+    "numberOfDataToCreate": 10,
+    "columns": {
+      "picture": {
+        "name": "picture",
+        "primary key": false,
+        "size": null,
+        "unique": false,
+        "nullable": false,
+        "type": "LONGTEXT"
+      },
+      "text": {
+        "name": "text",
+        "primary key": false,
+        "size": 255,
+        "unique": false,
+        "nullable": false,
+        "type": "VARCHAR"
+      },
+      "variant_id": {
+        "name": "variant_id",
+        "primary key": false,
+        "size": null,
+        "unique": false,
+        "nullable": false,
+        "type": "foreignKey",
+        "foreignKey": {
+          "tableName": "variant",
+          "columnName": "id"
+        }
+      },
+      "id": {
+        "name": "id",
+        "primary key": true,
+        "size": null,
+        "unique": false,
+        "nullable": true,
+        "type": "INT"
+      }
+    }
+  },
+  "variant": {
+    "numberOfDataToCreate": 10,
+    "order": 6,
+    "columns": {
+      "visible": {
+        "name": "visible",
+        "primary key": false,
+        "size": 1,
+        "unique": false,
+        "nullable": false,
+        "type": "TINYINT"
+      },
+      "recipe_id": {
+        "name": "recipe_id",
+        "primary key": false,
+        "size": null,
+        "unique": false,
+        "nullable": false,
+        "type": "foreignKey",
+        "foreignKey": {
+          "tableName": "recipe",
+          "columnName": "id"
+        }
+      },
+      "id": {
+        "name": "id",
+        "primary key": true,
+        "size": null,
+        "unique": false,
+        "nullable": true,
+        "type": "INT"
+      },
+      "author": {
+        "name": "author",
+        "primary key": false,
+        "size": 255,
+        "unique": false,
+        "nullable": true,
+        "type": "VARCHAR"
+      },
+      "main_variant": {
+        "name": "main_variant",
+        "primary key": false,
+        "size": 1,
+        "unique": false,
+        "nullable": false,
+        "type": "TINYINT"
+      },
+      "comment": {
+        "name": "comment",
+        "primary key": false,
+        "size": null,
+        "unique": false,
+        "nullable": false,
+        "type": "LONGTEXT"
+      }
+    }
+  },
+  "materialQuantity": {
+    "numberOfDataToCreate": 10,
+    "columns": {
+      "material_id": {
+        "name": "material_id",
+        "primary key": false,
+        "size": null,
+        "unique": false,
+        "nullable": true,
+        "type": "foreignKey",
+        "foreignKey": {
+          "tableName": "material",
+          "columnName": "id"
+        }
+      },
+      "variant_id": {
+        "name": "variant_id",
+        "primary key": false,
+        "size": null,
+        "unique": false,
+        "nullable": true,
+        "type": "foreignKey",
+        "foreignKey": {
+          "tableName": "variant",
+          "columnName": "id"
+        }
+      },
+      "quantity": {
+        "name": "quantity",
+        "primary key": false,
+        "size": null,
+        "unique": false,
+        "nullable": true,
+        "type": "INT"
+      },
+      "id": {
+        "name": "id",
+        "primary key": true,
+        "size": null,
+        "unique": false,
+        "nullable": true,
+        "type": "INT"
+      }
+    }
+  },
+  "variant_material_quantity": {
+    "numberOfDataToCreate": 10,
+    "columns": {
+      "material_quantity_id": {
+        "name": "material_quantity_id",
+        "primary key": true,
+        "size": null,
+        "unique": false,
+        "nullable": true,
+        "type": "foreignKey",
+        "foreignKey": {
+          "tableName": "materialQuantity",
+          "columnName": "id"
+        }
+      },
+      "variant_id": {
+        "name": "variant_id",
+        "primary key": true,
+        "size": null,
+        "unique": false,
+        "nullable": true,
+        "type": "foreignKey",
+        "foreignKey": {
+          "tableName": "variant",
+          "columnName": "id"
+        }
       }
     }
   }
