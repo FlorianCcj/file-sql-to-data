@@ -15,6 +15,7 @@ class DataGenerator:
         self.primary_column = {}
         self.ref_data = {}
 
+    
     def launcher(self, schema):
         self.schema_init = schema
         self.complete_schema(schema)

@@ -1,0 +1,66 @@
+{
+  "grade_type": {
+    "columns": {
+      "name": {
+        "type": "first_name"
+      }
+    }
+  },
+  "recipe_type": {
+    "numberOfDataToCreate": 50,
+    "columns": {
+      "name": {
+        "type": "name"
+      }
+    }
+  },
+  "step": {
+    "columns": {
+      "text": {
+        "type": "address"
+      }
+    }
+  },
+  "variant": {
+    "columns": {
+      "author": {
+        "type": "name"
+      }
+    }
+  },
+  "ingredient": {
+    "columns": {
+      "name": {
+        "type": "name"
+      }
+    }
+  },
+  "unit": {
+    "columns": {
+      "name": {
+        "type": "name"
+      }
+    }
+  },
+  "material": {
+    "columns": {
+      "name": {
+        "type": "name"
+      }
+    }
+  },
+  "grade": {
+    "columns": {
+      "comment": {
+        "type": "address"
+      }
+    }
+  },
+  "recipe": {
+    "columns": {
+      "name": {
+        "type": "name"
+      }
+    }
+  }
+}

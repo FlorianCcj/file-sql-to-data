@@ -1,6 +1,6 @@
 {
   "recipe_type": {
-    "numberOfDataToCreate": 10, 
+    "numberOfDataToCreate": 50, 
     "order": 0, 
     "columns": {
       "id": {
@@ -16,7 +16,7 @@
         "nullable": true, 
         "primary key": false, 
         "unique": true, 
-        "type": "VARCHAR", 
+        "type": "name", 
         "size": 255
       }
     }
@@ -30,7 +30,7 @@
         "nullable": false, 
         "primary key": false, 
         "unique": false, 
-        "type": "LONGTEXT", 
+        "type": "adress", 
         "size": null
       }, 
       "type_id": {
@@ -104,7 +104,7 @@
         "nullable": true, 
         "primary key": false, 
         "unique": true, 
-        "type": "VARCHAR", 
+        "type": "name", 
         "size": 255
       }
     }
@@ -126,7 +126,7 @@
         "nullable": true, 
         "primary key": false, 
         "unique": true, 
-        "type": "VARCHAR", 
+        "type": "first_name", 
         "size": 255
       }
     }
@@ -148,7 +148,7 @@
         "nullable": true, 
         "primary key": false, 
         "unique": true, 
-        "type": "VARCHAR", 
+        "type": "name", 
         "size": 255
       }
     }
@@ -178,7 +178,7 @@
         "nullable": true, 
         "primary key": false, 
         "unique": false, 
-        "type": "VARCHAR", 
+        "type": "name", 
         "size": 255
       }, 
       "visible": {
@@ -278,7 +278,7 @@
         "nullable": false, 
         "primary key": false, 
         "unique": false, 
-        "type": "VARCHAR", 
+        "type": "adress", 
         "size": 255
       }, 
       "picture": {
@@ -472,7 +472,7 @@
         "nullable": true, 
         "primary key": false, 
         "unique": true, 
-        "type": "VARCHAR", 
+        "type": "name", 
         "size": 255
       }
     }
@@ -494,7 +494,7 @@
         "nullable": true, 
         "primary key": false, 
         "unique": false, 
-        "type": "VARCHAR", 
+        "type": "name", 
         "size": 255
       }
     }

@@ -14,6 +14,60 @@ class SchemaExtractor:
         self.foreignkeys_columns = {}
         self.data_schema = {}
 
+    def auto_extract(self, sql_request):
+        """
+            Extract all the schema from the sql create table requests
+
+            :param sql_request: create resquests
+            :type sql_request: string
+
+            :return: schema summing up the database
+            :rtype: object
+        """
+        self.request = sql_request
+        self.create_requests = self.extract_create_requests(self.request)
+        for table_name in self.create_requests:
+            self.columns_requests[table_name] = self.parse_columns_from_create_request(self.create_requests[table_name], table_name)
+            self.columns_data_by_table[table_name] = {Key.columns: {}}
+            for column_number in range(len(self.columns_requests[table_name])):
+                extract_data = self.parse_column_data_from_column_request(self.columns_requests[table_name][column_number], table_name)
+                if (Key.index in extract_data.keys()):
+                    pass 
+                elif (Key.primarykey in extract_data.keys()):
+                    for column_indice in extract_data[Key.primarykey][Key.column_name]:
+                        column_name = column_indice  
+                        if column_name not in self.columns_data_by_table[table_name][Key.columns].keys():
+                            self.columns_data_by_table[table_name][Key.columns][column_name] = {}
+                        self.columns_data_by_table[table_name][Key.columns][column_name][Key.primarykey] = True
+
+                        if(table_name not in self.primarykey_columns.keys()):
+                            self.primarykey_columns[table_name] = {}
+                        self.primarykey_columns[table_name][column_name] = {Key.primarykey: True}
+                elif (Key.unique in extract_data.keys()):
+                    column_name = extract_data[Key.unique][Key.column_name]
+                    if column_name not in self.columns_data_by_table[table_name][Key.columns].keys():
+                        self.columns_data_by_table[table_name][Key.columns][column_name] = {}
+                    self.columns_data_by_table[table_name][Key.columns][column_name][Key.unique] = True
+                    
+                    if(table_name not in self.unique_columns.keys()):
+                        self.unique_columns[table_name] = {}
+                    if(column_name not in self.unique_columns[table_name].keys()):
+                        self.unique_columns[table_name][column_name] = True
+                else:
+                    column_name = extract_data[Key.columns][Key.name]
+                    if column_name not in self.columns_data_by_table[table_name][Key.columns].keys():
+                        self.columns_data_by_table[table_name][Key.columns][column_name] = extract_data[Key.columns]
+                    else:
+                        self.columns_data_by_table[table_name][Key.columns][column_name].update(extract_data[Key.columns])
+                    if Key.unique not in self.columns_data_by_table[table_name][Key.columns][column_name]:
+                        self.columns_data_by_table[table_name][Key.columns][column_name][Key.unique] = False
+                    if Key.primarykey not in self.columns_data_by_table[table_name][Key.columns][column_name]:
+                        self.columns_data_by_table[table_name][Key.columns][column_name][Key.primarykey] = False 
+        self.parse_altertable_requests(self.request)
+        self.columns_data_by_table = tools.update_object(self.columns_data_by_table, self.foreignkeys_columns)
+
+        return self.columns_data_by_table
+
     def auto_extract_with_sql_parse(self, sql_request):
         """
             Extract all the schema from the sql create table requests
@@ -193,3 +247,5 @@ class SchemaExtractor:
             data[dest_table_name][Key.columns][dest_column_name] = {Key.type: Key.foreignkey, Key.foreignkey: {Key.table_name: src_table_name, Key.column_name: src_column_name}}
         self.foreignkeys_columns = data 
         return data
+
+
